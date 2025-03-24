@@ -3,7 +3,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import SearchService from './search.service';
-import { type ISearch } from '@/shared/model/search.model';
+import { type ISearch, Search } from '@/shared/model/search.model';
 import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
@@ -16,9 +16,12 @@ export default defineComponent({
     const dateFormat = useDateFormat();
     const searchService = inject('searchService', () => new SearchService());
     const alertService = inject('alertService', () => useAlertService(), true);
+    const isSaving = ref(false);
+    const search: Ref<ISearch> = ref(new Search());
 
     const searches: Ref<ISearch[]> = ref([]);
     const isFetching = ref(false);
+    const newSearchName = ref('');
 
     const retrieveSearches = async () => {
       isFetching.value = true;
@@ -42,6 +45,7 @@ export default defineComponent({
 
     const removeId: Ref<number | null> = ref(null);
     const removeEntity = ref<any>(null);
+    const createEntity = ref<any>(null);
 
     const prepareRemove = (instance: ISearch) => {
       removeId.value = instance.id;
@@ -77,6 +81,32 @@ export default defineComponent({
       router.push({ name: 'SearchEdit', params: { searchId } });
     };
 
+    const openCreateModal = () => {
+      createEntity.value.show();
+    };
+
+    const closeCreateModal = () => {
+      createEntity.value.hide();
+    };
+
+    const saveSearch = () => {
+      isSaving.value = true;
+      searchService()
+        .create(search.value)
+        .then(param => {
+          isSaving.value = false;
+          alertService.showSuccess(t$('pampaInsightsApp.search.created', { param: param.id }).toString());
+          closeCreateModal();
+          router.go(0);
+        })
+        .catch(error => {
+          isSaving.value = false;
+          alertService.showHttpError(error.response);
+          closeCreateModal();
+          router.go(0);
+        });
+    };
+
     return {
       searches,
       handleSyncList,
@@ -89,6 +119,15 @@ export default defineComponent({
       removeSearch,
       toggleFavorite,
       goToEdit,
+      createEntity,
+      closeCreateModal,
+      openCreateModal,
+      newSearchName,
+      isSaving,
+      search,
+      searchService,
+      alertService,
+      saveSearch,
       t$,
       ...dateFormat,
     };

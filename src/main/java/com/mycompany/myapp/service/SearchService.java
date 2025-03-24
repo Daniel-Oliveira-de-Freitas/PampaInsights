@@ -4,6 +4,9 @@ import com.mycompany.myapp.domain.Search;
 import com.mycompany.myapp.repository.SearchRepository;
 import com.mycompany.myapp.service.dto.SearchDTO;
 import com.mycompany.myapp.service.mapper.SearchMapper;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +43,7 @@ public class SearchService {
     public SearchDTO save(SearchDTO searchDTO) {
         LOG.debug("Request to save Search : {}", searchDTO);
         Search search = searchMapper.toEntity(searchDTO);
+        search.setCreateDate(LocalDateTime.now().atZone(ZoneId.of("America/Sao_Paulo")).toInstant());
         search = searchRepository.save(search);
         return searchMapper.toDto(search);
     }

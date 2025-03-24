@@ -7,12 +7,10 @@
           <font-awesome-icon icon="sync" :spin="isFetching"></font-awesome-icon>
           <span v-text="t$('pampaInsightsApp.search.home.refreshListLabel')"></span>
         </button>
-        <router-link :to="{ name: 'SearchCreate' }">
-          <button id="jh-create-entity" class="btn btn-primary">
-            <font-awesome-icon icon="plus" />
-            <span v-text="t$('pampaInsightsApp.search.home.createLabel')"></span>
-          </button>
-        </router-link>
+        <button id="jh-create-entity" class="btn btn-primary" @click="openCreateModal">
+          <font-awesome-icon icon="plus" />
+          <span v-text="t$('pampaInsightsApp.search.home.createLabel')"></span>
+        </button>
       </div>
     </h2>
 
@@ -26,7 +24,7 @@
         <div class="card search-card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <button @click="toggleFavorite(search)" class="btn btn-secondary">
-              <font-awesome-icon :icon="search.favorite ? 'star' : ['far', 'star']" class="text-warning" />
+              <font-awesome-icon :icon="['fas', 'star']" :class="{ 'text-warning': search.favorite, 'text-white': !search.favorite }" />
             </button>
             <button @click="prepareRemove(search)" class="btn btn-secondary">
               <font-awesome-icon icon="trash" class="text-danger" />
@@ -39,6 +37,21 @@
         </div>
       </div>
     </div>
+
+    <b-modal ref="createEntity" id="createEntity">
+      <template #modal-title>
+        <span>Nova Pesquisa</span>
+      </template>
+      <div class="modal-body">
+        <b-form-group label="Nome da Pesquisa">
+          <b-form-input v-model="search.name" placeholder="Digite o nome da pesquisa"></b-form-input>
+        </b-form-group>
+      </div>
+      <template #modal-footer>
+        <button class="btn btn-secondary" @click="closeCreateModal">Cancelar</button>
+        <button class="btn btn-primary" @click="saveSearch">Salvar</button>
+      </template>
+    </b-modal>
 
     <b-modal ref="removeEntity" id="removeEntity">
       <template #modal-title>
