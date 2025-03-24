@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20250322011401"
+  },
+  "changelogDate": "20250322011401",
+  "dto": "mapstruct",
+  "entityType": "domain",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "favorite",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "createDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "Search",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass",
+  "skipFakeData": true
+}

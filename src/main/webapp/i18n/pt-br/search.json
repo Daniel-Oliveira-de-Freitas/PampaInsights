@@ -1,0 +1,26 @@
+{
+  "pampaInsightsApp": {
+    "search": {
+      "home": {
+        "title": "Searches",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Search",
+        "createOrEditLabel": "Criar ou editar Search",
+        "notFound": "Nenhum Search encontrado"
+      },
+      "created": "Um novo Search foi criado com o identificador { param }",
+      "updated": "Um Search foi atualizado com o identificador { param }",
+      "deleted": "Um Search foi excluído com o identificador { param }",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Search { id }?"
+      },
+      "detail": {
+        "title": "Search"
+      },
+      "id": "ID",
+      "name": "Name",
+      "favorite": "Favorite",
+      "createDate": "Create Date"
+    }
+  }
+}

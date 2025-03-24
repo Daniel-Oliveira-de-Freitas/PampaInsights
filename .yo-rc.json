@@ -14,7 +14,7 @@
     "devDatabaseType": "h2Disk",
     "enableHibernateCache": true,
     "enableTranslation": true,
-    "entities": [],
+    "entities": ["Search"],
     "feignClient": null,
     "jhipsterVersion": "8.9.0",
     "jwtSecretKey": "Y2VkNjY1MWMwMjYzMjMzMmEwMjRmYjY4Yzg3NWY2MzVjZGQ1NDk1Yjc2YTI4NDQyZmQxMmM1Y2FmNGZkNmRkMjlmYTI5MTUxODM0MWUwYjg1NGI2YWU5NDVjMjFmNWVmYzRkYTgxODY4Mjc2M2IzMDNhNDI0M2RjMTIwNTFmYTY=",
