@@ -97,13 +97,13 @@ export default defineComponent({
           isSaving.value = false;
           alertService.showSuccess(t$('pampaInsightsApp.search.created', { param: param.id }).toString());
           closeCreateModal();
-          router.go(0);
+          handleSyncList();
         })
         .catch(error => {
           isSaving.value = false;
           alertService.showHttpError(error.response);
           closeCreateModal();
-          router.go(0);
+          handleSyncList();
         });
     };
 
