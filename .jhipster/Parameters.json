@@ -1,0 +1,46 @@
+{
+  "annotations": {
+    "changelogDate": "20250324011401"
+  },
+  "changelogDate": "20250324011401",
+  "dto": "mapstruct",
+  "entityType": "domain",
+  "fields": [
+    {
+      "fieldName": "terms",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "webSite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "instagram",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "facebook",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "linkedin",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "x",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "Parameters",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass",
+  "skipFakeData": true
+}
