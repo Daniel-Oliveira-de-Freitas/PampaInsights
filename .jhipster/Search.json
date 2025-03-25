@@ -1,6 +1,9 @@
 {
-  "annotations": {},
+  "annotations": {
+    "changelogDate": "20250325192126"
+  },
   "applications": "*",
+  "dto": "mapstruct",
   "fields": [
     {
       "fieldName": "name",
@@ -19,27 +22,33 @@
   "relationships": [
     {
       "otherEntityName": "filter",
+      "otherEntityRelationshipName": "search",
       "relationshipName": "filter",
-      "relationshipSide": "left",
+      "relationshipSide": "right",
       "relationshipType": "one-to-one"
     },
     {
       "otherEntityName": "parameter",
-      "relationshipName": "parameters",
-      "relationshipSide": "left",
+      "otherEntityRelationshipName": "search",
+      "relationshipName": "parameter",
+      "relationshipSide": "right",
       "relationshipType": "one-to-one"
     },
     {
       "otherEntityName": "comment",
-      "relationshipName": "comments",
+      "otherEntityRelationshipName": "search",
+      "relationshipName": "comment",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "user",
+      "otherEntityRelationshipName": "search",
       "relationshipName": "user",
-      "relationshipSide": "left",
+      "relationshipSide": "right",
       "relationshipType": "many-to-one"
     }
-  ]
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
 }

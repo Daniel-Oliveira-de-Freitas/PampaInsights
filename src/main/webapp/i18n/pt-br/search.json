@@ -20,7 +20,11 @@
       "id": "ID",
       "name": "Name",
       "favorite": "Favorite",
-      "createDate": "Create Date"
+      "createDate": "Create Date",
+      "filter": "Filter",
+      "parameter": "Parameter",
+      "comment": "Comment",
+      "user": "User"
     }
   }
 }

@@ -1,6 +1,9 @@
 {
-  "annotations": {},
+  "annotations": {
+    "changelogDate": "20250325191826"
+  },
   "applications": "*",
+  "dto": "mapstruct",
   "fields": [
     {
       "fieldName": "name",
@@ -27,8 +30,10 @@
     {
       "otherEntityName": "search",
       "relationshipName": "search",
-      "relationshipSide": "right",
+      "relationshipSide": "left",
       "relationshipType": "one-to-one"
     }
-  ]
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
 }

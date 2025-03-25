@@ -1,8 +1,13 @@
 package com.mycompany.myapp.service.dto;
 
+import com.mycompany.myapp.domain.Comment;
+import com.mycompany.myapp.domain.Filter;
+import com.mycompany.myapp.domain.Parameter;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.mycompany.myapp.domain.Search} entity.
@@ -17,6 +22,14 @@ public class SearchDTO implements Serializable {
     private Boolean favorite;
 
     private Instant createDate;
+
+    private UserDTO user;
+
+    private FilterDTO filter;
+
+    private ParameterDTO parameter;
+
+    private Set<CommentDTO> comments = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -50,6 +63,38 @@ public class SearchDTO implements Serializable {
         this.createDate = createDate;
     }
 
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
+    public FilterDTO getFilter() {
+        return filter;
+    }
+
+    public void setFilter(FilterDTO filter) {
+        this.filter = filter;
+    }
+
+    public ParameterDTO getParameter() {
+        return parameter;
+    }
+
+    public void setParameter(ParameterDTO parameter) {
+        this.parameter = parameter;
+    }
+
+    public Set<CommentDTO> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<CommentDTO> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -79,6 +124,7 @@ public class SearchDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", favorite='" + getFavorite() + "'" +
             ", createDate='" + getCreateDate() + "'" +
+            ", user=" + getUser() +
             "}";
     }
 }

@@ -1,0 +1,31 @@
+{
+  "pampaInsightsApp": {
+    "parameter": {
+      "home": {
+        "title": "Parameters",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Parameter",
+        "createOrEditLabel": "Criar ou editar Parameter",
+        "notFound": "Nenhum Parameter encontrado"
+      },
+      "created": "Um novo Parameter foi criado com o identificador { param }",
+      "updated": "Um Parameter foi atualizado com o identificador { param }",
+      "deleted": "Um Parameter foi excluído com o identificador { param }",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Parameter { id }?"
+      },
+      "detail": {
+        "title": "Parameter"
+      },
+      "id": "ID",
+      "terms": "Terms",
+      "webSite": "Web Site",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "linkedin": "Linkedin",
+      "x": "X",
+      "createDate": "Create Date",
+      "search": "Search"
+    }
+  }
+}

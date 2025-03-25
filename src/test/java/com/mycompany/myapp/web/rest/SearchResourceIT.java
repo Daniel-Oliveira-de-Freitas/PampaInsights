@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Search;
 import com.mycompany.myapp.repository.SearchRepository;
+import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.service.dto.SearchDTO;
 import com.mycompany.myapp.service.mapper.SearchMapper;
 import jakarta.persistence.EntityManager;
@@ -56,6 +57,9 @@ class SearchResourceIT {
 
     @Autowired
     private SearchRepository searchRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private SearchMapper searchMapper;
