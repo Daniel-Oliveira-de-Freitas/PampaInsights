@@ -1,0 +1,31 @@
+{
+  "annotations": {},
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "body",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sentiment",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "author",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "name": "Comment",
+  "relationships": [
+    {
+      "otherEntityName": "search",
+      "relationshipName": "search",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ]
+}

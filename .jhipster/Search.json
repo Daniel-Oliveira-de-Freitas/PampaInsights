@@ -1,10 +1,6 @@
 {
-  "annotations": {
-    "changelogDate": "20250322011401"
-  },
-  "changelogDate": "20250322011401",
-  "dto": "mapstruct",
-  "entityType": "domain",
+  "annotations": {},
+  "applications": "*",
   "fields": [
     {
       "fieldName": "name",
@@ -19,12 +15,31 @@
       "fieldType": "Instant"
     }
   ],
-  "jpaMetamodelFiltering": false,
   "name": "Search",
-  "pagination": "no",
-  "readOnly": false,
-  "relationships": [],
-  "searchEngine": "no",
-  "service": "serviceClass",
-  "skipFakeData": true
+  "relationships": [
+    {
+      "otherEntityName": "filter",
+      "relationshipName": "filter",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "parameter",
+      "relationshipName": "parameters",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "comment",
+      "relationshipName": "comments",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ]
 }

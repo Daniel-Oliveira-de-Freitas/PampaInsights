@@ -1,0 +1,34 @@
+{
+  "annotations": {},
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "visualization",
+      "fieldType": "Visualization",
+      "fieldValues": "ALL,WEB,SOCIAL"
+    },
+    {
+      "fieldName": "typeOfChart",
+      "fieldType": "TypeOfChart",
+      "fieldValues": "PIZZA,COLUNAS,BARRAS"
+    },
+    {
+      "fieldName": "emotions",
+      "fieldType": "Emotions",
+      "fieldValues": "ALL,POSITIVE,NEGATIVE"
+    }
+  ],
+  "name": "Filter",
+  "relationships": [
+    {
+      "otherEntityName": "search",
+      "relationshipName": "search",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    }
+  ]
+}

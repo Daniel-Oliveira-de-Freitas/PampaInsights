@@ -1,0 +1,77 @@
+entity Search {
+	name String
+    favorite Boolean
+	createDate Instant
+}
+
+entity User {
+}
+
+entity Parameter {
+	terms String
+	webSite String
+	instagram String
+	facebook String
+    linkedin String
+    x String
+	createDate Instant
+}
+
+entity Filter {
+	name String
+    visualization Visualization
+    typeOfChart TypeOfChart
+    emotions Emotions
+}
+
+entity Comment {
+	body String
+	sentiment Long
+    author String
+    createDate Instant
+}
+
+enum Visualization {
+    ALL, WEB, SOCIAL
+}
+
+enum TypeOfChart {
+    PIZZA, COLUNAS, BARRAS
+}
+
+enum Emotions {
+    ALL, POSITIVE, NEGATIVE
+}
+
+relationship OneToOne {
+	Search{filter} to Filter
+}
+
+relationship OneToOne {
+	Filter{search} to Search
+}
+
+relationship OneToOne {
+	Search{parameters} to Parameter
+}
+
+relationship OneToOne {
+	Parameter{search} to Search
+}
+
+relationship OneToMany {
+	Search{comments} to Comment
+}
+
+relationship ManyToOne {
+	Comment{search} to Search
+}
+
+relationship ManyToOne {
+	Search{user} to User
+}
+
+relationship OneToMany {
+	User{search} to Search
+}
+
