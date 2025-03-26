@@ -1,0 +1,28 @@
+{
+  "pampaInsightsApp": {
+    "filter": {
+      "home": {
+        "title": "Filters",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Filter",
+        "createOrEditLabel": "Criar ou editar Filter",
+        "notFound": "Nenhum Filter encontrado"
+      },
+      "created": "Um novo Filter foi criado com o identificador { param }",
+      "updated": "Um Filter foi atualizado com o identificador { param }",
+      "deleted": "Um Filter foi excluído com o identificador { param }",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Filter { id }?"
+      },
+      "detail": {
+        "title": "Filter"
+      },
+      "id": "ID",
+      "name": "Name",
+      "visualization": "Visualization",
+      "typeOfChart": "Type Of Chart",
+      "emotions": "Emotions",
+      "search": "Search"
+    }
+  }
+}

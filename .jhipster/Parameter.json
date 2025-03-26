@@ -1,10 +1,9 @@
 {
   "annotations": {
-    "changelogDate": "20250324011401"
+    "changelogDate": "20250325191827"
   },
-  "changelogDate": "20250324011401",
+  "applications": "*",
   "dto": "mapstruct",
-  "entityType": "domain",
   "fields": [
     {
       "fieldName": "terms",
@@ -35,12 +34,16 @@
       "fieldType": "Instant"
     }
   ],
-  "jpaMetamodelFiltering": false,
-  "name": "Parameters",
-  "pagination": "no",
-  "readOnly": false,
-  "relationships": [],
+  "name": "Parameter",
+  "relationships": [
+    {
+      "otherEntityName": "search",
+      "otherEntityRelationshipName": "parameter",
+      "relationshipName": "search",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    }
+  ],
   "searchEngine": "no",
-  "service": "serviceClass",
-  "skipFakeData": true
+  "service": "serviceClass"
 }

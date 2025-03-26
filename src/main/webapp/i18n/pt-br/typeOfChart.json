@@ -1,0 +1,10 @@
+{
+  "pampaInsightsApp": {
+    "TypeOfChart": {
+      "null": "",
+      "PIZZA": "PIZZA",
+      "COLUNAS": "COLUNAS",
+      "BARRAS": "BARRAS"
+    }
+  }
+}
