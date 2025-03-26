@@ -131,10 +131,20 @@ public class SearchResource {
     /**
      * {@code GET  /searches} : get all the searches.
      *
+     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of searches in body.
      */
     @GetMapping("")
-    public List<SearchDTO> getAllSearches() {
+    public List<SearchDTO> getAllSearches(@RequestParam(name = "filter", required = false) String filter) {
+        if ("filter-is-null".equals(filter)) {
+            LOG.debug("REST request to get all Searchs where filter is null");
+            return searchService.findAllWhereFilterIsNull();
+        }
+
+        if ("parameter-is-null".equals(filter)) {
+            LOG.debug("REST request to get all Searchs where parameter is null");
+            return searchService.findAllWhereParameterIsNull();
+        }
         LOG.debug("REST request to get all Searches");
         return searchService.findAll();
     }

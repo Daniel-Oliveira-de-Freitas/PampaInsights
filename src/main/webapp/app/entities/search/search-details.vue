@@ -24,6 +24,12 @@
           <dd>
             <span v-if="search.createDate">{{ formatDateLong(search.createDate) }}</span>
           </dd>
+          <dt>
+            <span v-text="t$('pampaInsightsApp.search.user')"></span>
+          </dt>
+          <dd>
+            {{ search.user ? search.user.id : '' }}
+          </dd>
         </dl>
         <button type="submit" @click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.back')"></span>

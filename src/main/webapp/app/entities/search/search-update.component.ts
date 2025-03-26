@@ -7,6 +7,7 @@ import SearchService from './search.service';
 import { useDateFormat, useValidation } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
+import UserService from '@/entities/user/user.service';
 import { type ISearch, Search } from '@/shared/model/search.model';
 
 export default defineComponent({
@@ -17,6 +18,8 @@ export default defineComponent({
     const alertService = inject('alertService', () => useAlertService(), true);
 
     const search: Ref<ISearch> = ref(new Search());
+    const userService = inject('userService', () => new UserService());
+    const users: Ref<Array<any>> = ref([]);
     const isSaving = ref(false);
     const currentLanguage = inject('currentLanguage', () => computed(() => navigator.language ?? 'pt-br'), true);
 
@@ -39,12 +42,26 @@ export default defineComponent({
       retrieveSearch(route.params.searchId);
     }
 
+    const initRelationships = () => {
+      userService()
+        .retrieve()
+        .then(res => {
+          users.value = res.data;
+        });
+    };
+
+    initRelationships();
+
     const { t: t$ } = useI18n();
     const validations = useValidation();
     const validationRules = {
       name: {},
       favorite: {},
       createDate: {},
+      filter: {},
+      parameter: {},
+      comments: {},
+      user: {},
     };
     const v$ = useVuelidate(validationRules, search as any);
     v$.value.$validate();
@@ -56,6 +73,7 @@ export default defineComponent({
       previousState,
       isSaving,
       currentLanguage,
+      users,
       v$,
       ...useDateFormat({ entityRef: search }),
       t$,

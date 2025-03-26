@@ -1,0 +1,10 @@
+{
+  "pampaInsightsApp": {
+    "Visualization": {
+      "null": "",
+      "ALL": "ALL",
+      "WEB": "WEB",
+      "SOCIAL": "SOCIAL"
+    }
+  }
+}

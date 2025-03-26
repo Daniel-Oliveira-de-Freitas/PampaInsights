@@ -1,16 +1,19 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.Search;
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.SearchRepository;
+import com.mycompany.myapp.repository.UserRepository;
+import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.dto.SearchDTO;
 import com.mycompany.myapp.service.mapper.SearchMapper;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -29,9 +32,12 @@ public class SearchService {
 
     private final SearchMapper searchMapper;
 
-    public SearchService(SearchRepository searchRepository, SearchMapper searchMapper) {
+    private final UserRepository userRepository;
+
+    public SearchService(SearchRepository searchRepository, SearchMapper searchMapper, UserRepository userRepository) {
         this.searchRepository = searchRepository;
         this.searchMapper = searchMapper;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -44,6 +50,8 @@ public class SearchService {
         LOG.debug("Request to save Search : {}", searchDTO);
         Search search = searchMapper.toEntity(searchDTO);
         search.setCreateDate(LocalDateTime.now().atZone(ZoneId.of("America/Sao_Paulo")).toInstant());
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()).orElseThrow();
+        search.setUser(user);
         search = searchRepository.save(search);
         return searchMapper.toDto(search);
     }
@@ -90,6 +98,32 @@ public class SearchService {
     public List<SearchDTO> findAll() {
         LOG.debug("Request to get all Searches");
         return searchRepository.findAll().stream().map(searchMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     *  Get all the searches where Filter is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<SearchDTO> findAllWhereFilterIsNull() {
+        LOG.debug("Request to get all searches where Filter is null");
+        return StreamSupport.stream(searchRepository.findAll().spliterator(), false)
+            .filter(search -> search.getFilter() == null)
+            .map(searchMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     *  Get all the searches where Parameter is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<SearchDTO> findAllWhereParameterIsNull() {
+        LOG.debug("Request to get all searches where Parameter is null");
+        return StreamSupport.stream(searchRepository.findAll().spliterator(), false)
+            .filter(search -> search.getParameter() == null)
+            .map(searchMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

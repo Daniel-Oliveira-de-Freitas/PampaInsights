@@ -104,7 +104,7 @@ describe('Service Tests', () => {
       });
 
       it('should partial update a Search', async () => {
-        const patchObject = { name: 'BBBBBB', ...new Search() };
+        const patchObject = { name: 'BBBBBB', favorite: true, ...new Search() };
         const returnedFromService = Object.assign(patchObject, elemDefault);
 
         const expected = { createDate: currentDate, ...returnedFromService };

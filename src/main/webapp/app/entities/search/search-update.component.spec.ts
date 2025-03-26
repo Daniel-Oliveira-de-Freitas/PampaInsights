@@ -9,6 +9,8 @@ import SearchService from './search.service';
 import { DATE_TIME_LONG_FORMAT } from '@/shared/composables/date-format';
 import AlertService from '@/shared/alert/alert.service';
 
+import UserService from '@/entities/user/user.service';
+
 type SearchUpdateComponentType = InstanceType<typeof SearchUpdate>;
 
 let route: Partial<RouteLocation>;
@@ -52,6 +54,11 @@ describe('Component Tests', () => {
         provide: {
           alertService,
           searchService: () => searchServiceStub,
+
+          userService: () =>
+            sinon.createStubInstance<UserService>(UserService, {
+              retrieve: sinon.stub().resolves({}),
+            } as any),
         },
       };
     });

@@ -51,6 +51,19 @@
               />
             </div>
           </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="t$('pampaInsightsApp.search.user')" for="search-user"></label>
+            <select class="form-control" id="search-user" data-cy="user" name="user" v-model="search.user">
+              <option :value="null"></option>
+              <option
+                :value="search.user && userOption.id === search.user.id ? search.user : userOption"
+                v-for="userOption in users"
+                :key="userOption.id"
+              >
+                {{ userOption.id }}
+              </option>
+            </select>
+          </div>
         </div>
         <div>
           <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" @click="previousState()">
