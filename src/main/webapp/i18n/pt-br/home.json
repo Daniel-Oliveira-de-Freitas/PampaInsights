@@ -1,19 +1,29 @@
 {
   "home": {
-    "title": "Bem vindo, Java Hipster!",
-    "subtitle": "Esta é a página principal",
-    "logged": {
-      "message": "Você está logado como \"{ username }\"."
+    "subtitle": {
+      "p1": "Maximizando",
+      "p2": " o Potencial da Sua Marca com ",
+      "p3": "Brand Mentions"
     },
-    "question": "Em caso de dúvida sobre o JHipster:",
-    "link": {
-      "homepage": "Página principal JHipster",
-      "stackoverflow": "JHipster no Stack Overflow",
-      "bugtracker": "JHipster bug tracker",
-      "chat": "Sala de bate-papo pública JHipster",
-      "follow": "siga {'@'}jhipster no Twitter"
+    "question1": {
+      "p1": "O que é ",
+      "p2": "Brand Mention",
+      "p3": "?"
     },
-    "like": "Se você gosta do JHipster, não se esqueça de avaliar no",
-    "github": "GitHub"
+    "res1": "É o uso estratégico de menções à marca em diferentes plataformas, como redes sociais, sites de avaliações e blogs",
+    "question2": {
+      "p1": "Como as menções à marca ",
+      "p2": "impactam",
+      "p3": " a ",
+      "p4": "visibilidade",
+      "p5": " e ",
+      "p6": "reputação",
+      "p7": "?"
+    },
+    "ul": {
+      "li1": "Credibilidade e Confiança",
+      "li2": "Aumento de Exposição Online",
+      "li3": "Avaliação da Percepção do Consumidor"
+    }
   }
 }
