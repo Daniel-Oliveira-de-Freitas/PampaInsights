@@ -22,6 +22,7 @@
               data-cy="terms"
               :class="{ valid: !v$.terms.$invalid, invalid: v$.terms.$invalid }"
               v-model="v$.terms.$model"
+              :readonly="!isEditing"
             />
           </div>
           <div class="form-group">
@@ -34,6 +35,7 @@
               data-cy="webSite"
               :class="{ valid: !v$.webSite.$invalid, invalid: v$.webSite.$invalid }"
               v-model="v$.webSite.$model"
+              :readonly="!isEditing"
             />
           </div>
           <div class="form-group">
@@ -46,6 +48,7 @@
               data-cy="instagram"
               :class="{ valid: !v$.instagram.$invalid, invalid: v$.instagram.$invalid }"
               v-model="v$.instagram.$model"
+              :readonly="!isEditing"
             />
           </div>
           <div class="form-group">
@@ -58,6 +61,7 @@
               data-cy="facebook"
               :class="{ valid: !v$.facebook.$invalid, invalid: v$.facebook.$invalid }"
               v-model="v$.facebook.$model"
+              :readonly="!isEditing"
             />
           </div>
           <div class="form-group">
@@ -70,6 +74,7 @@
               data-cy="linkedin"
               :class="{ valid: !v$.linkedin.$invalid, invalid: v$.linkedin.$invalid }"
               v-model="v$.linkedin.$model"
+              :readonly="!isEditing"
             />
           </div>
           <div class="form-group">
@@ -82,6 +87,7 @@
               data-cy="x"
               :class="{ valid: !v$.x.$invalid, invalid: v$.x.$invalid }"
               v-model="v$.x.$model"
+              :readonly="!isEditing"
             />
           </div>
           <div class="form-group">
@@ -96,21 +102,9 @@
                 :class="{ valid: !v$.createDate.$invalid, invalid: v$.createDate.$invalid }"
                 :value="convertDateTimeFromServer(v$.createDate.$model)"
                 @change="updateInstantField('createDate', $event)"
+                :readonly="!isEditing"
               />
             </div>
-          </div>
-          <div class="form-group">
-            <label class="form-control-label" v-text="t$('pampaInsightsApp.parameter.search')" for="parameter-search"></label>
-            <select class="form-control" id="parameter-search" data-cy="search" name="search" v-model="parameter.search">
-              <option :value="null"></option>
-              <option
-                :value="parameter.search && searchOption.id === parameter.search.id ? parameter.search : searchOption"
-                v-for="searchOption in searches"
-                :key="searchOption.id"
-              >
-                {{ searchOption.id }}
-              </option>
-            </select>
           </div>
         </div>
         <div>
@@ -124,7 +118,12 @@
             :disabled="v$.$invalid || isSaving"
             class="btn btn-primary"
           >
-            <font-awesome-icon icon="save"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.save')"></span>
+            <font-awesome-icon :icon="isEditing ? 'save' : 'edit'" />
+            &nbsp;<span v-text="isEditing ? 'Salvar' : 'Editar'"></span>
+          </button>
+          <button type="button" class="btn btn-secondary" @click="searchComments()">
+            <font-awesome-icon icon="search" />
+            &nbsp;<span>Buscar Comentários</span>
           </button>
         </div>
       </form>
@@ -132,3 +131,39 @@
   </div>
 </template>
 <script lang="ts" src="./parameter-update.component.ts"></script>
+<style scoped>
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 100%;
+  background: rgba(45, 42, 42, 0.3);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.invalid {
+  border-color: red;
+}
+</style>

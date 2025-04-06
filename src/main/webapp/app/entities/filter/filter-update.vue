@@ -84,19 +84,6 @@
               </option>
             </select>
           </div>
-          <div class="form-group">
-            <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.search')" for="filter-search"></label>
-            <select class="form-control" id="filter-search" data-cy="search" name="search" v-model="filter.search">
-              <option :value="null"></option>
-              <option
-                :value="filter.search && searchOption.id === filter.search.id ? filter.search : searchOption"
-                v-for="searchOption in searches"
-                :key="searchOption.id"
-              >
-                {{ searchOption.id }}
-              </option>
-            </select>
-          </div>
         </div>
         <div>
           <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" @click="previousState()">
@@ -116,4 +103,47 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" src="./filter-update.component.ts"></script>
+
+<style scoped>
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100%;
+  background: rgba(45, 42, 42, 0.9);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-content {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.sidebar-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.invalid {
+  border-color: red;
+}
+</style>

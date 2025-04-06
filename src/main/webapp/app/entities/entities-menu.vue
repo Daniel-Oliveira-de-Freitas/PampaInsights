@@ -1,9 +1,9 @@
 <template>
   <div>
-    <b-dropdown-item to="/search">
-      <font-awesome-icon icon="asterisk" />
-      <span v-text="t$('global.menu.entities.search')"></span>
-    </b-dropdown-item>
+    <!--    <b-dropdown-item to="/search">-->
+    <!--      <font-awesome-icon icon="asterisk" />-->
+    <!--      <span v-text="t$('global.menu.entities.search')"></span>-->
+    <!--    </b-dropdown-item>-->
     <b-dropdown-item to="/comment">
       <font-awesome-icon icon="asterisk" />
       <span v-text="t$('global.menu.entities.comment')"></span>

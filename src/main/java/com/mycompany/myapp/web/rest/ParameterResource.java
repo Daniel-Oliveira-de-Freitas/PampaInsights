@@ -47,13 +47,14 @@ public class ParameterResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new parameterDTO, or with status {@code 400 (Bad Request)} if the parameter has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("")
-    public ResponseEntity<ParameterDTO> createParameter(@RequestBody ParameterDTO parameterDTO) throws URISyntaxException {
+    @PostMapping("/{searchId}")
+    public ResponseEntity<ParameterDTO> createParameter(@RequestBody ParameterDTO parameterDTO, @PathVariable("searchId") Long searchId)
+        throws URISyntaxException {
         LOG.debug("REST request to save Parameter : {}", parameterDTO);
         if (parameterDTO.getId() != null) {
             throw new BadRequestAlertException("A new parameter cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        parameterDTO = parameterService.save(parameterDTO);
+        parameterDTO = parameterService.save(parameterDTO, searchId);
         return ResponseEntity.created(new URI("/api/parameters/" + parameterDTO.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, parameterDTO.getId().toString()))
             .body(parameterDTO);
@@ -149,6 +150,13 @@ public class ParameterResource {
     public ResponseEntity<ParameterDTO> getParameter(@PathVariable("id") Long id) {
         LOG.debug("REST request to get Parameter : {}", id);
         Optional<ParameterDTO> parameterDTO = parameterService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(parameterDTO);
+    }
+
+    @GetMapping("/search/{SearchId}")
+    public ResponseEntity<ParameterDTO> getParameterBySearchId(@PathVariable("SearchId") Long SearchId) {
+        LOG.debug("REST request to get Parameter by search id: {}", SearchId);
+        Optional<ParameterDTO> parameterDTO = parameterService.findBySearchId(SearchId);
         return ResponseUtil.wrapOrNotFound(parameterDTO);
     }
 

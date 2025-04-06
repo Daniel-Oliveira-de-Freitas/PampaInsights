@@ -18,6 +18,19 @@ export default class ParameterService {
     });
   }
 
+  public findBySearchId(SearchId: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      axios
+        .get(`${baseApiUrl}/search/${SearchId}`)
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
   public retrieve(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       axios
@@ -44,10 +57,10 @@ export default class ParameterService {
     });
   }
 
-  public create(entity: IParameter): Promise<IParameter> {
+  public create(entity: IParameter, searchId: any): Promise<IParameter> {
     return new Promise<IParameter>((resolve, reject) => {
       axios
-        .post(`${baseApiUrl}`, entity)
+        .post(`${baseApiUrl}/${searchId}`, entity)
         .then(res => {
           resolve(res.data);
         })

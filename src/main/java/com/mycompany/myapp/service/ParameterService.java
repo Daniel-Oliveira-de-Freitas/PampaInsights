@@ -1,7 +1,9 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.Parameter;
+import com.mycompany.myapp.domain.Search;
 import com.mycompany.myapp.repository.ParameterRepository;
+import com.mycompany.myapp.repository.SearchRepository;
 import com.mycompany.myapp.service.dto.ParameterDTO;
 import com.mycompany.myapp.service.mapper.ParameterMapper;
 import java.util.LinkedList;
@@ -25,10 +27,12 @@ public class ParameterService {
     private final ParameterRepository parameterRepository;
 
     private final ParameterMapper parameterMapper;
+    private final SearchRepository searchRepository;
 
-    public ParameterService(ParameterRepository parameterRepository, ParameterMapper parameterMapper) {
+    public ParameterService(ParameterRepository parameterRepository, ParameterMapper parameterMapper, SearchRepository searchRepository) {
         this.parameterRepository = parameterRepository;
         this.parameterMapper = parameterMapper;
+        this.searchRepository = searchRepository;
     }
 
     /**
@@ -37,9 +41,11 @@ public class ParameterService {
      * @param parameterDTO the entity to save.
      * @return the persisted entity.
      */
-    public ParameterDTO save(ParameterDTO parameterDTO) {
+    public ParameterDTO save(ParameterDTO parameterDTO, Long searchId) {
         LOG.debug("Request to save Parameter : {}", parameterDTO);
         Parameter parameter = parameterMapper.toEntity(parameterDTO);
+        Search search = searchRepository.findById(searchId).get();
+        parameter.setSearch(search);
         parameter = parameterRepository.save(parameter);
         return parameterMapper.toDto(parameter);
     }
@@ -98,6 +104,12 @@ public class ParameterService {
     public Optional<ParameterDTO> findOne(Long id) {
         LOG.debug("Request to get Parameter : {}", id);
         return parameterRepository.findById(id).map(parameterMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<ParameterDTO> findBySearchId(Long SearchId) {
+        LOG.debug("Request to get Parameter by search id: {}", SearchId);
+        return parameterRepository.findBySearchId(SearchId).map(parameterMapper::toDto);
     }
 
     /**
