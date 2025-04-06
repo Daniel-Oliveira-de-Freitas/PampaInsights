@@ -1,14 +1,22 @@
-import { type Ref, defineComponent, inject, onMounted, ref } from 'vue';
+import { type Ref, defineComponent, inject, onMounted, ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import CommentService from './comment.service';
 import { type IComment } from '@/shared/model/comment.model';
 import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
+import { Pie } from 'vue-chartjs';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import eventBus from '../../../../../event-bus.ts';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default defineComponent({
   compatConfig: { MODE: 3 },
   name: 'Comment',
+  components: {
+    PieChart: Pie as any,
+  },
   setup() {
     const { t: t$ } = useI18n();
     const dateFormat = useDateFormat();
@@ -38,29 +46,34 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      await retrieveComments();
+      eventBus.on('search-comments', retrieveComments);
     });
 
-    const removeId: Ref<number> = ref(null);
-    const removeEntity = ref<any>(null);
-    const prepareRemove = (instance: IComment) => {
-      removeId.value = instance.id;
-      removeEntity.value.show();
-    };
-    const closeDialog = () => {
-      removeEntity.value.hide();
-    };
-    const removeComment = async () => {
-      try {
-        await commentService().delete(removeId.value);
-        const message = t$('pampaInsightsApp.comment.deleted', { param: removeId.value }).toString();
-        alertService.showInfo(message, { variant: 'danger' });
-        removeId.value = null;
-        retrieveComments();
-        closeDialog();
-      } catch (error) {
-        alertService.showHttpError(error.response);
-      }
+    const sentimentCounts = computed(() => {
+      let positive = 0,
+        negative = 0,
+        neutral = 0;
+      comments.value.forEach(comment => {
+        if (comment.sentiment > 0) positive++;
+        else if (comment.sentiment < 0) negative++;
+        else neutral++;
+      });
+      return { positive, negative, neutral };
+    });
+
+    const sentimentData = computed(() => ({
+      labels: ['Positivo', 'Negativo', 'Neutro'],
+      datasets: [
+        {
+          data: [sentimentCounts.value.positive, sentimentCounts.value.negative, sentimentCounts.value.neutral],
+          backgroundColor: ['green', 'red', 'gray'],
+        },
+      ],
+    }));
+
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
     };
 
     return {
@@ -69,12 +82,9 @@ export default defineComponent({
       isFetching,
       retrieveComments,
       clear,
+      sentimentData,
+      chartOptions,
       ...dateFormat,
-      removeId,
-      removeEntity,
-      prepareRemove,
-      closeDialog,
-      removeComment,
       t$,
     };
   },

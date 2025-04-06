@@ -5,7 +5,7 @@
         "title": "Parameters",
         "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Parameter",
-        "createOrEditLabel": "Criar ou editar Parameter",
+        "createOrEditLabel": "Parametros",
         "notFound": "Nenhum Parameter encontrado"
       },
       "created": "Um novo Parameter foi criado com o identificador { param }",
@@ -18,7 +18,7 @@
         "title": "Parameter"
       },
       "id": "ID",
-      "terms": "Terms",
+      "terms": "Termos(Palavra Chave)",
       "webSite": "Web Site",
       "instagram": "Instagram",
       "facebook": "Facebook",

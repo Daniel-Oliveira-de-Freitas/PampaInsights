@@ -31,7 +31,7 @@ export default defineComponent({
     const emotionsValues: Ref<string[]> = ref(Object.keys(Emotions));
     const isSaving = ref(false);
     const currentLanguage = inject('currentLanguage', () => computed(() => navigator.language ?? 'pt-br'), true);
-
+    const showSidebar = ref(true);
     const route = useRoute();
     const router = useRouter();
 
@@ -72,6 +72,14 @@ export default defineComponent({
     const v$ = useVuelidate(validationRules, filter as any);
     v$.value.$validate();
 
+    const toggleSidebar = () => {
+      showSidebar.value = !showSidebar.value;
+    };
+
+    const closeSidebar = () => {
+      showSidebar.value = false;
+    };
+
     return {
       filterService,
       alertService,
@@ -83,6 +91,9 @@ export default defineComponent({
       isSaving,
       currentLanguage,
       searches,
+      toggleSidebar,
+      closeSidebar,
+      showSidebar,
       v$,
       t$,
     };

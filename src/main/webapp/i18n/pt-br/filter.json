@@ -5,7 +5,7 @@
         "title": "Filters",
         "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Filter",
-        "createOrEditLabel": "Criar ou editar Filter",
+        "createOrEditLabel": "Filtros",
         "notFound": "Nenhum Filter encontrado"
       },
       "created": "Um novo Filter foi criado com o identificador { param }",
@@ -18,10 +18,10 @@
         "title": "Filter"
       },
       "id": "ID",
-      "name": "Name",
-      "visualization": "Visualization",
-      "typeOfChart": "Type Of Chart",
-      "emotions": "Emotions",
+      "name": "Nome",
+      "visualization": "Tipo de Visualisação",
+      "typeOfChart": "Tipo de Gráfico",
+      "emotions": "Emoções",
       "search": "Search"
     }
   }

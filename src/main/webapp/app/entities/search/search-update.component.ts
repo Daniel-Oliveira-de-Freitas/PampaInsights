@@ -9,8 +9,16 @@ import { useAlertService } from '@/shared/alert/alert.service';
 
 import UserService from '@/entities/user/user.service';
 import { type ISearch, Search } from '@/shared/model/search.model';
+import ParameterUpdate from '@/entities/parameter/parameter-update.vue';
+import FilterUpdate from '@/entities/filter/filter-update.vue';
+import Comment from '@/entities/comment/comment.vue';
 
 export default defineComponent({
+  components: {
+    comment: Comment,
+    'filter-update': FilterUpdate,
+    'parameter-update': ParameterUpdate,
+  },
   compatConfig: { MODE: 3 },
   name: 'SearchUpdate',
   setup() {

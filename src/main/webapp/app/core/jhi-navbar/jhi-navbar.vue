@@ -24,6 +24,12 @@
             <span v-text="t$('global.menu.home')"></span>
           </span>
         </b-nav-item>
+        <b-nav-item to="/search" exact>
+          <span>
+            <font-awesome-icon icon="search" />
+            <span v-text="t$('global.menu.entities.search')"></span>
+          </span>
+        </b-nav-item>
         <b-nav-item-dropdown right id="entity-menu" v-if="authenticated" active-class="active" class="pointer" data-cy="entity">
           <template #button-content>
             <span class="navbar-dropdown-menu">
