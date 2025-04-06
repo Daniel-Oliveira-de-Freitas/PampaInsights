@@ -146,7 +146,7 @@ public class SearchResource {
             return searchService.findAllWhereParameterIsNull();
         }
         LOG.debug("REST request to get all Searches");
-        return searchService.findAll();
+        return searchService.findAllByUserId();
     }
 
     /**

@@ -100,6 +100,16 @@ public class SearchService {
         return searchRepository.findAll().stream().map(searchMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Transactional(readOnly = true)
+    public List<SearchDTO> findAllByUserId() {
+        LOG.debug("Request to get all Searches by UserId");
+        return searchRepository
+            .findByUserIsCurrentUser()
+            .stream()
+            .map(searchMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
     /**
      *  Get all the searches where Filter is {@code null}.
      *  @return the list of entities.
