@@ -1,65 +1,62 @@
 <template>
-  <div class="home row">
-    <div class="col-md-3">
-      <span class="hipster img-fluid rounded"></span>
-    </div>
-    <div class="col-md-9">
-      <h1 class="display-4" v-text="t$('home.title')"></h1>
-      <p class="lead" v-text="t$('home.subtitle')"></p>
+  <div class="home container-fluid p-0">
+    <div class="" v-if="!authenticated">
+      <div class="row bg-gray-primary p-5" style="border-radius: 25px 25px 0px 0px">
+        <div class="col-md-6">
+          <h2 class="display-5 mb-5">
+            <span class="text-purple">{{ t$('home.subtitle.p1') }}</span>
+            {{ t$('home.subtitle.p2') }}
+            <span class="text-purple">{{ t$('home.subtitle.p3') }}</span>
+          </h2>
 
-      <div>
-        <div class="alert alert-success" v-if="authenticated">
-          <span v-if="username" v-text="t$('home.logged.message', { username: username })"></span>
+          <div class="my-5">
+            <h3>
+              {{ t$('home.question1.p1') }}
+              <span class="text-purple">{{ t$('home.question1.p2') }}</span>
+              {{ t$('home.question1.p3') }}
+            </h3>
+            <p v-text="t$('home.res1')"></p>
+          </div>
+          <div class="my-5">
+            <h3>
+              {{ t$('home.question2.p1') }}
+              <span class="text-purple">{{ t$('home.question2.p2') }}</span>
+              {{ t$('home.question2.p3') }}
+              <span class="text-purple">{{ t$('home.question2.p4') }}</span>
+              {{ t$('home.question2.p5') }}
+              <span class="text-purple">{{ t$('home.question2.p6') }}</span>
+              {{ t$('home.question2.p7') }}
+            </h3>
+            <ul>
+              <li v-text="t$('home.ul.li1')"></li>
+              <li v-text="t$('home.ul.li2')"></li>
+              <li v-text="t$('home.ul.li3')"></li>
+            </ul>
+          </div>
         </div>
 
-        <div class="alert alert-warning" v-if="!authenticated">
-          <span v-text="t$('global.messages.info.authenticated.prefix')"></span>
-          <a class="alert-link" @click="openLogin()" v-text="t$('global.messages.info.authenticated.link')"></a
-          ><span v-html="t$('global.messages.info.authenticated.suffix')"></span>
-        </div>
-        <div class="alert alert-warning" v-if="!authenticated">
-          <span v-text="t$('global.messages.info.register.noaccount')"></span>&nbsp;
-          <router-link class="alert-link" to="/register" v-text="t$('global.messages.info.register.link')"></router-link>
+        <div class="col-md-6 mx-auto d-flex align-items-center">
+          <div class="mx-auto">
+            <b-carousel
+              id="carousel-1"
+              v-model="slide"
+              :interval="4000"
+              controls
+              indicators
+              background="#44475A"
+              img-width="80"
+              img-height="40"
+              style="text-shadow: 1px 1px 2px #333"
+              @sliding-start="onSlideStart"
+              @sliding-end="onSlideEnd"
+            >
+              <b-carousel-slide img-src="/content/images/example1.png"></b-carousel-slide>
+
+              <b-carousel-slide img-src="/content/images/example2.png"> </b-carousel-slide>
+            </b-carousel>
+          </div>
         </div>
       </div>
-
-      <p v-text="t$('home.question')"></p>
-
-      <ul>
-        <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" v-text="t$('home.link.homepage')"></a></li>
-        <li>
-          <a
-            href="https://stackoverflow.com/tags/jhipster/info"
-            target="_blank"
-            rel="noopener noreferrer"
-            v-text="t$('home.link.stackoverflow')"
-          ></a>
-        </li>
-        <li>
-          <a
-            href="https://github.com/jhipster/generator-jhipster/issues?state=open"
-            target="_blank"
-            rel="noopener noreferrer"
-            v-text="t$('home.link.bugtracker')"
-          ></a>
-        </li>
-        <li>
-          <a
-            href="https://gitter.im/jhipster/generator-jhipster"
-            target="_blank"
-            rel="noopener noreferrer"
-            v-text="t$('home.link.chat')"
-          ></a>
-        </li>
-        <li>
-          <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" v-text="t$('home.link.follow')"></a>
-        </li>
-      </ul>
-
-      <p>
-        <span v-text="t$('home.like')"></span>
-        <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" v-text="t$('home.github')"></a>!
-      </p>
     </div>
   </div>
 </template>

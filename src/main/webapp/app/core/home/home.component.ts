@@ -9,17 +9,27 @@ export default defineComponent({
     const loginService = inject<LoginService>('loginService');
 
     const authenticated = inject<ComputedRef<boolean>>('authenticated');
-    const username = inject<ComputedRef<string>>('currentUsername');
+    const slide = 0;
+    let sliding = true;
 
     const openLogin = () => {
-      loginService.openLogin();
+      loginService?.openLogin();
+    };
+    const onSlideStart = (_: number) => {
+      sliding = true;
+    };
+    const onSlideEnd = (_: number) => {
+      sliding = false;
     };
 
     return {
       authenticated,
-      username,
       openLogin,
       t$: useI18n().t,
+      onSlideStart,
+      onSlideEnd,
+      sliding,
+      slide,
     };
   },
 });

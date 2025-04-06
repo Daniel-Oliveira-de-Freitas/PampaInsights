@@ -1,8 +1,8 @@
 <template>
-  <b-navbar data-cy="navbar" toggleable="md" type="dark" class="bg-dark">
-    <b-navbar-brand class="logo" b-link to="/">
-      <span class="logo-img"></span>
-      <span v-text="t$('global.title')" class="navbar-title"></span> <span class="navbar-version">{{ version }}</span>
+  <b-navbar data-cy="navbar" toggleable="md" type="dark" class="bg-gray-secondary">
+    <b-navbar-brand class="logo px-0" b-link to="/">
+      <span class="logo-img px-0"></span>
+      <!-- <span v-text="t$('global.title')" class="navbar-title"></span> <span class="navbar-version">{{ version }}</span> -->
     </b-navbar-brand>
     <b-navbar-toggle
       right
@@ -168,18 +168,17 @@
 }
 
 .logo .logo-img {
-  height: 45px;
+  height: 60px;
+  width: 300px;
   display: inline-block;
   vertical-align: middle;
-  width: 45px;
 }
 
 .logo-img {
   height: 100%;
-  background: url('/content/images/logo-jhipster.png') no-repeat center center;
+  background: url('/content/images/logo_final.png') no-repeat center center;
   background-size: contain;
   width: 100%;
   filter: drop-shadow(0 0 0.05rem white);
-  margin: 0 5px;
 }
 </style>
