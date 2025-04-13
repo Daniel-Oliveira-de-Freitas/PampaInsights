@@ -14,10 +14,23 @@ import { Visualization } from '@/shared/model/enumerations/visualization.model';
 import { TypeOfChart } from '@/shared/model/enumerations/type-of-chart.model';
 import { Emotions } from '@/shared/model/enumerations/emotions.model';
 import eventBus from '../../../../../event-bus.ts';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { Pie, Bar } from 'vue-chartjs';
+
+ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 export default defineComponent({
+  computed: {
+    TypeOfChart() {
+      return TypeOfChart;
+    },
+  },
   compatConfig: { MODE: 3 },
   name: 'FilterUpdate',
+  components: {
+    PieChart: Pie as any,
+    BarChart: Bar as any,
+  },
   props: {
     searchId: {
       type: [Number] as PropType<number | undefined>,
@@ -30,6 +43,7 @@ export default defineComponent({
     const filter: Ref<IFilter> = ref(new Filter());
 
     const searchService = inject('searchService', () => new SearchService());
+    const selectedChartData: any = ref(null);
 
     const searches: Ref<ISearch[]> = ref([]);
     const visualizationValues: Ref<string[]> = ref(Object.keys(Visualization));
@@ -41,12 +55,13 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const isEditing = ref(false);
+    const showChart = ref(false);
 
     const previousState = () => router.go(-1);
 
     const refreshState = () => router.go(0);
 
-    const retrieveFilter = async filterId => {
+    const retrieveFilter = async (filterId: any) => {
       try {
         filter.value = await filterService().findBySearchId(filterId);
       } catch (error) {
@@ -55,6 +70,9 @@ export default defineComponent({
     };
 
     onMounted(async () => {
+      eventBus.on('sentiment-data', data => {
+        selectedChartData.value = data;
+      });
       await retrieveFilter(props.searchId);
     });
 
@@ -88,6 +106,10 @@ export default defineComponent({
       showSidebar.value = false;
     };
 
+    const applyFilters = () => {
+      showChart.value = true;
+    };
+
     return {
       filterService,
       alertService,
@@ -102,8 +124,11 @@ export default defineComponent({
       searches,
       toggleSidebar,
       closeSidebar,
+      applyFilters,
       showSidebar,
       isEditing,
+      selectedChartData,
+      showChart,
       v$,
       t$,
     };
@@ -138,10 +163,6 @@ export default defineComponent({
           });
       }
     },
-    typeChart() {
-      eventBus.emit('search-comments');
-    },
-
     toggleEdit() {
       this.isEditing = !this.isEditing;
     },

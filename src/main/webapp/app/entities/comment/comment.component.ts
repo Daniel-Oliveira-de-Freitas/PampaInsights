@@ -34,6 +34,7 @@ export default defineComponent({
       try {
         const res = await commentService().retrieve();
         comments.value = res.data;
+        eventBus.emit('sentiment-data', sentimentData.value);
       } catch (err) {
         alertService.showHttpError(err.response);
       } finally {
@@ -41,12 +42,9 @@ export default defineComponent({
       }
     };
 
-    const handleSyncList = () => {
-      retrieveComments();
-    };
-
     onMounted(async () => {
       eventBus.on('search-comments', retrieveComments);
+      await retrieveComments();
     });
 
     const sentimentCounts = computed(() => {
@@ -78,7 +76,6 @@ export default defineComponent({
 
     return {
       comments,
-      handleSyncList,
       isFetching,
       retrieveComments,
       clear,

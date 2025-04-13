@@ -53,6 +53,7 @@
               id="filter-typeOfChart"
               data-cy="typeOfChart"
             >
+              <option :value="null"></option>
               <option
                 v-for="typeOfChart in typeOfChartValues"
                 :key="typeOfChart"
@@ -108,10 +109,29 @@
             </div>
           </div>
 
-          <button :disabled="isEditing" type="button" class="btn btn-secondary w-100 mb-4 mt-4" @click="">
+          <button :disabled="isEditing" type="button" class="btn btn-secondary w-100 mb-4 mt-4" @click="applyFilters">
             <font-awesome-icon icon="search" />
             &nbsp;<span>Aplicar Filtros</span>
           </button>
+        </div>
+        <div class="mt-4" v-if="showChart && !isEditing">
+          <div v-if="v$.typeOfChart.$model === TypeOfChart.PIZZA && selectedChartData">
+            <PieChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
+          </div>
+
+          <div v-else-if="v$.typeOfChart.$model === TypeOfChart.BARRAS && selectedChartData">
+            <BarChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
+          </div>
+
+          <div v-else-if="v$.typeOfChart.$model === TypeOfChart.COLUNAS && selectedChartData">
+            <BarChart
+              :data="selectedChartData"
+              :options="{ indexAxis: 'y', responsive: true, maintainAspectRatio: false }"
+              style="height: 300px"
+            />
+          </div>
+
+          <div v-else class="text-center text-muted">Nenhum gráfico selecionado.</div>
         </div>
       </form>
     </div>

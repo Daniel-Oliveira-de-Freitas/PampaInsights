@@ -7,9 +7,6 @@
     <div class="alert alert-warning" v-if="!isFetching && comments && comments.length === 0">
       <span v-text="t$('pampaInsightsApp.comment.home.notFound')"></span>
     </div>
-    <div v-if="comments.length > 0" class="chart-container">
-      <PieChart :data="sentimentData" :options="chartOptions" />
-    </div>
     <div v-if="comments && comments.length > 0" class="comments-container mt-5 overflow-auto p-2" style="max-height: 70vh">
       <div v-for="comment in comments" :key="comment.id" class="comment-bubble">
         <div class="comment-content">
