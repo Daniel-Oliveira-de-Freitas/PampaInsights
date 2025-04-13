@@ -47,13 +47,14 @@ public class FilterResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new filterDTO, or with status {@code 400 (Bad Request)} if the filter has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("")
-    public ResponseEntity<FilterDTO> createFilter(@RequestBody FilterDTO filterDTO) throws URISyntaxException {
+    @PostMapping("/{searchId}")
+    public ResponseEntity<FilterDTO> createFilter(@RequestBody FilterDTO filterDTO, @PathVariable("searchId") Long searchId)
+        throws URISyntaxException {
         LOG.debug("REST request to save Filter : {}", filterDTO);
         if (filterDTO.getId() != null) {
             throw new BadRequestAlertException("A new filter cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        filterDTO = filterService.save(filterDTO);
+        filterDTO = filterService.save(filterDTO, searchId);
         return ResponseEntity.created(new URI("/api/filters/" + filterDTO.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, filterDTO.getId().toString()))
             .body(filterDTO);
@@ -149,6 +150,13 @@ public class FilterResource {
     public ResponseEntity<FilterDTO> getFilter(@PathVariable("id") Long id) {
         LOG.debug("REST request to get Filter : {}", id);
         Optional<FilterDTO> filterDTO = filterService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(filterDTO);
+    }
+
+    @GetMapping("/search/{searchId}")
+    public ResponseEntity<FilterDTO> getFilterBySearchId(@PathVariable("searchId") Long searchId) {
+        LOG.debug("REST request to get Filter by search id: {}", searchId);
+        Optional<FilterDTO> filterDTO = filterService.findBySearchId(searchId);
         return ResponseUtil.wrapOrNotFound(filterDTO);
     }
 

@@ -8,13 +8,10 @@
           v-text="t$('pampaInsightsApp.filter.home.createOrEditLabel')"
         ></h2>
         <div>
-          <div class="form-group" v-if="filter.id">
-            <label for="id" v-text="t$('global.field.id')"></label>
-            <input type="text" class="form-control" id="id" name="id" v-model="filter.id" readonly />
-          </div>
           <div class="form-group">
             <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.name')" for="filter-name"></label>
             <input
+              :readonly="!isEditing"
               type="text"
               class="form-control"
               name="name"
@@ -27,6 +24,7 @@
           <div class="form-group">
             <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.visualization')" for="filter-visualization"></label>
             <select
+              :disabled="!isEditing"
               class="form-control"
               name="visualization"
               :class="{ valid: !v$.visualization.$invalid, invalid: v$.visualization.$invalid }"
@@ -47,6 +45,7 @@
           <div class="form-group">
             <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.typeOfChart')" for="filter-typeOfChart"></label>
             <select
+              :disabled="!isEditing"
               class="form-control"
               name="typeOfChart"
               :class="{ valid: !v$.typeOfChart.$invalid, invalid: v$.typeOfChart.$invalid }"
@@ -67,6 +66,7 @@
           <div class="form-group">
             <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.emotions')" for="filter-emotions"></label>
             <select
+              :disabled="!isEditing"
               class="form-control"
               name="emotions"
               :class="{ valid: !v$.emotions.$invalid, invalid: v$.emotions.$invalid }"
@@ -85,18 +85,32 @@
             </select>
           </div>
         </div>
-        <div>
-          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" @click="previousState()">
-            <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.cancel')"></span>
-          </button>
-          <button
-            type="submit"
-            id="save-entity"
-            data-cy="entityCreateSaveButton"
-            :disabled="v$.$invalid || isSaving"
-            class="btn btn-primary"
-          >
-            <font-awesome-icon icon="save"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.save')"></span>
+        <div class="d-flex flex-column">
+          <div class="d-flex justify-content-between mb-2">
+            <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" @click="previousState()">
+              <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.cancel')"></span>
+            </button>
+            <div>
+              <button v-if="!isEditing" type="button" id="edit-save" class="btn btn-info me-2" @click="toggleEdit()">
+                <font-awesome-icon icon="edit"></font-awesome-icon>&nbsp;<span>Editar</span>
+              </button>
+              <button
+                v-if="isEditing"
+                type="submit"
+                id="save-entity"
+                data-cy="entityCreateSaveButton"
+                :disabled="v$.$invalid || isSaving"
+                class="btn btn-primary"
+              >
+                <font-awesome-icon icon="save" />
+                &nbsp;<span>Salvar</span>
+              </button>
+            </div>
+          </div>
+
+          <button :disabled="isEditing" type="button" class="btn btn-secondary w-100 mb-4 mt-4" @click="">
+            <font-awesome-icon icon="search" />
+            &nbsp;<span>Aplicar Filtros</span>
           </button>
         </div>
       </form>

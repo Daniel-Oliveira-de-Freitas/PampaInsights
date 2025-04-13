@@ -153,10 +153,10 @@ public class ParameterResource {
         return ResponseUtil.wrapOrNotFound(parameterDTO);
     }
 
-    @GetMapping("/search/{SearchId}")
-    public ResponseEntity<ParameterDTO> getParameterBySearchId(@PathVariable("SearchId") Long SearchId) {
-        LOG.debug("REST request to get Parameter by search id: {}", SearchId);
-        Optional<ParameterDTO> parameterDTO = parameterService.findBySearchId(SearchId);
+    @GetMapping("/search/{searchId}")
+    public ResponseEntity<ParameterDTO> getParameterBySearchId(@PathVariable("searchId") Long searchId) {
+        LOG.debug("REST request to get Parameter by search id: {}", searchId);
+        Optional<ParameterDTO> parameterDTO = parameterService.findBySearchId(searchId);
         return ResponseUtil.wrapOrNotFound(parameterDTO);
     }
 

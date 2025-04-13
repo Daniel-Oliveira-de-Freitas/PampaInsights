@@ -24,7 +24,7 @@
             <span v-text="t$('global.menu.home')"></span>
           </span>
         </b-nav-item>
-        <b-nav-item to="/search" exact>
+        <b-nav-item to="/search" exact v-if="authenticated">
           <span>
             <font-awesome-icon icon="search" />
             <span v-text="t$('global.menu.entities.search')"></span>

@@ -42,15 +42,17 @@
       <template #modal-title>
         <span>Nova Pesquisa</span>
       </template>
-      <div class="modal-body">
-        <b-form-group label="Nome da Pesquisa">
-          <b-form-input v-model="search.name" placeholder="Digite o nome da pesquisa"></b-form-input>
-        </b-form-group>
-      </div>
-      <template #modal-footer>
-        <button class="btn btn-secondary" @click="closeCreateModal">Cancelar</button>
-        <button class="btn btn-primary" @click="saveSearch">Salvar</button>
-      </template>
+      <b-form @submit.prevent="saveSearch">
+        <div class="modal-body">
+          <b-form-group label="Nome da Pesquisa" @submit.prevent="saveSearch">
+            <b-form-input v-model="search.name" placeholder="Digite o nome da pesquisa"></b-form-input>
+          </b-form-group>
+        </div>
+        <template #modal-footer>
+          <button type="button" class="btn btn-secondary" @click="closeCreateModal">Cancelar</button>
+          <button type="submit" class="btn btn-primary" @click="saveSearch">Salvar</button>
+        </template>
+      </b-form>
     </b-modal>
 
     <b-modal ref="removeEntity" id="removeEntity">

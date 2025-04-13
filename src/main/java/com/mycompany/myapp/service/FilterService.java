@@ -1,7 +1,9 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.Filter;
+import com.mycompany.myapp.domain.Search;
 import com.mycompany.myapp.repository.FilterRepository;
+import com.mycompany.myapp.repository.SearchRepository;
 import com.mycompany.myapp.service.dto.FilterDTO;
 import com.mycompany.myapp.service.mapper.FilterMapper;
 import java.util.LinkedList;
@@ -25,21 +27,26 @@ public class FilterService {
     private final FilterRepository filterRepository;
 
     private final FilterMapper filterMapper;
+    private final SearchRepository searchRepository;
 
-    public FilterService(FilterRepository filterRepository, FilterMapper filterMapper) {
+    public FilterService(FilterRepository filterRepository, FilterMapper filterMapper, SearchRepository searchRepository) {
         this.filterRepository = filterRepository;
         this.filterMapper = filterMapper;
+        this.searchRepository = searchRepository;
     }
 
     /**
      * Save a filter.
      *
      * @param filterDTO the entity to save.
+     * @param searchId
      * @return the persisted entity.
      */
-    public FilterDTO save(FilterDTO filterDTO) {
+    public FilterDTO save(FilterDTO filterDTO, Long searchId) {
         LOG.debug("Request to save Filter : {}", filterDTO);
         Filter filter = filterMapper.toEntity(filterDTO);
+        Search search = searchRepository.findById(searchId).get();
+        filter.setSearch(search);
         filter = filterRepository.save(filter);
         return filterMapper.toDto(filter);
     }
@@ -98,6 +105,12 @@ public class FilterService {
     public Optional<FilterDTO> findOne(Long id) {
         LOG.debug("Request to get Filter : {}", id);
         return filterRepository.findById(id).map(filterMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<FilterDTO> findBySearchId(Long searchId) {
+        LOG.debug("Request to get Filter by search id : {}", searchId);
+        return filterRepository.findBySearchId(searchId).map(filterMapper::toDto);
     }
 
     /**

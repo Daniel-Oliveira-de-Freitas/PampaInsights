@@ -39,6 +39,7 @@ public class ParameterService {
      * Save a parameter.
      *
      * @param parameterDTO the entity to save.
+     * @param searchId
      * @return the persisted entity.
      */
     public ParameterDTO save(ParameterDTO parameterDTO, Long searchId) {
@@ -107,9 +108,9 @@ public class ParameterService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<ParameterDTO> findBySearchId(Long SearchId) {
-        LOG.debug("Request to get Parameter by search id: {}", SearchId);
-        return parameterRepository.findBySearchId(SearchId).map(parameterMapper::toDto);
+    public Optional<ParameterDTO> findBySearchId(Long searchId) {
+        LOG.debug("Request to get Parameter by search id: {}", searchId);
+        return parameterRepository.findBySearchId(searchId).map(parameterMapper::toDto);
     }
 
     /**

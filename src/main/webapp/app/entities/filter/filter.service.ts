@@ -18,6 +18,19 @@ export default class FilterService {
     });
   }
 
+  public findBySearchId(SearchId: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      axios
+        .get(`${baseApiUrl}/search/${SearchId}`)
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
   public retrieve(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       axios
@@ -44,10 +57,10 @@ export default class FilterService {
     });
   }
 
-  public create(entity: IFilter): Promise<IFilter> {
+  public create(entity: IFilter, searchId: any): Promise<IFilter> {
     return new Promise<IFilter>((resolve, reject) => {
       axios
-        .post(`${baseApiUrl}`, entity)
+        .post(`${baseApiUrl}/${searchId}`, entity)
         .then(res => {
           resolve(res.data);
         })

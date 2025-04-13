@@ -8,10 +8,6 @@
           v-text="t$('pampaInsightsApp.parameter.home.createOrEditLabel')"
         ></h2>
         <div>
-          <div class="form-group" v-if="parameter.id">
-            <label for="id" v-text="t$('global.field.id')"></label>
-            <input type="text" class="form-control" id="id" name="id" v-model="parameter.id" readonly />
-          </div>
           <div class="form-group">
             <label class="form-control-label" v-text="t$('pampaInsightsApp.parameter.terms')" for="parameter-terms"></label>
             <input
@@ -90,38 +86,31 @@
               :readonly="!isEditing"
             />
           </div>
-          <div class="form-group">
-            <label class="form-control-label" v-text="t$('pampaInsightsApp.parameter.createDate')" for="parameter-createDate"></label>
-            <div class="d-flex">
-              <input
-                id="parameter-createDate"
-                data-cy="createDate"
-                type="datetime-local"
-                class="form-control"
-                name="createDate"
-                :class="{ valid: !v$.createDate.$invalid, invalid: v$.createDate.$invalid }"
-                :value="convertDateTimeFromServer(v$.createDate.$model)"
-                @change="updateInstantField('createDate', $event)"
-                :readonly="!isEditing"
-              />
+        </div>
+        <div class="d-flex flex-column">
+          <div class="d-flex justify-content-between mb-2">
+            <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" @click="previousState()">
+              <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.cancel')"></span>
+            </button>
+            <div>
+              <button v-if="!isEditing" type="button" id="edit-save" class="btn btn-info me-2" @click="toggleEdit()">
+                <font-awesome-icon icon="edit"></font-awesome-icon>&nbsp;<span>Editar</span>
+              </button>
+              <button
+                v-if="isEditing"
+                type="submit"
+                id="save-entity"
+                data-cy="entityCreateSaveButton"
+                :disabled="v$.$invalid || isSaving"
+                class="btn btn-primary"
+              >
+                <font-awesome-icon icon="save" />
+                &nbsp;<span>Salvar</span>
+              </button>
             </div>
           </div>
-        </div>
-        <div>
-          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" @click="previousState()">
-            <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.cancel')"></span>
-          </button>
-          <button
-            type="submit"
-            id="save-entity"
-            data-cy="entityCreateSaveButton"
-            :disabled="v$.$invalid || isSaving"
-            class="btn btn-primary"
-          >
-            <font-awesome-icon :icon="isEditing ? 'save' : 'edit'" />
-            &nbsp;<span v-text="isEditing ? 'Salvar' : 'Editar'"></span>
-          </button>
-          <button type="button" class="btn btn-secondary" @click="searchComments()">
+
+          <button :disabled="isEditing" type="button" class="btn btn-secondary w-100 mb-4 mt-4" @click="searchComments()">
             <font-awesome-icon icon="search" />
             &nbsp;<span>Buscar Comentários</span>
           </button>

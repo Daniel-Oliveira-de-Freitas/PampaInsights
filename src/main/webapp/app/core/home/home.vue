@@ -1,6 +1,6 @@
 <template>
   <div class="home container-fluid p-0">
-    <div class="" v-if="!authenticated">
+    <div class="">
       <div class="row bg-gray-primary p-5" style="border-radius: 25px 25px 0px 0px">
         <div class="col-md-6">
           <h2 class="display-5 mb-5">

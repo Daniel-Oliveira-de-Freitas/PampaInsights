@@ -43,16 +43,20 @@ export default defineComponent({
 
     const previousState = () => router.go(-1);
 
-    const retrieveParameter = async (searchId: number | undefined) => {
+    const refreshState = () => router.go(0);
+
+    const retrieveParameter = async (searchId: any) => {
       try {
         parameter.value = await parameterService().findBySearchId(searchId);
+        console.log('Pesquisa sem Parametros');
       } catch (error) {
-        alertService.showHttpError((error as any).response);
+        console.log('Pesquisa sem Parametros');
       }
     };
 
-    retrieveParameter(props.searchId);
-    isEditing.value = !parameter.value.id;
+    onMounted(async () => {
+      await retrieveParameter(props.searchId);
+    });
 
     const initRelationships = () => {
       searchService()
@@ -93,6 +97,7 @@ export default defineComponent({
       alertService,
       parameter,
       previousState,
+      refreshState,
       isSaving,
       isFetching,
       currentLanguage,
@@ -116,7 +121,8 @@ export default defineComponent({
         try {
           const param = await this.parameterService().update(this.parameter);
           this.alertService.showInfo(this.t$('pampaInsightsApp.parameter.updated', { param: param.id }));
-          this.previousState();
+          this.isEditing = false;
+          this.refreshState();
         } catch (error) {
           this.alertService.showHttpError(error.response);
         } finally {
@@ -126,7 +132,8 @@ export default defineComponent({
         try {
           const param = await this.parameterService().create(this.parameter, this.searchId);
           this.alertService.showSuccess(this.t$('pampaInsightsApp.parameter.created', { param: param.id }).toString());
-          this.previousState();
+          this.refreshState();
+          this.isEditing = false;
         } catch (error) {
           this.alertService.showHttpError(error.response);
         } finally {
@@ -134,7 +141,6 @@ export default defineComponent({
         }
       }
     },
-
     searchComments() {
       eventBus.emit('search-comments');
     },

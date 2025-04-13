@@ -43,6 +43,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
 import { faSmile } from '@fortawesome/free-solid-svg-icons/faSmile';
 import { faFrown } from '@fortawesome/free-solid-svg-icons/faFrown';
 import { faMeh } from '@fortawesome/free-solid-svg-icons/faMeh';
+import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 
 const datetimeFormats: IntlDateTimeFormats = {
   'pt-br': {
@@ -118,6 +119,7 @@ export function initFortAwesome(vue) {
     faSmile,
     faFrown,
     faMeh,
+    faEdit,
   );
 }
 export function initI18N(opts: any = {}) {

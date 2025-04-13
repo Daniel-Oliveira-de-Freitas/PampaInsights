@@ -1,4 +1,4 @@
-import { type Ref, computed, defineComponent, inject, ref } from 'vue';
+import { computed, defineComponent, inject, onMounted, type PropType, type Ref, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
@@ -13,11 +13,17 @@ import { Filter, type IFilter } from '@/shared/model/filter.model';
 import { Visualization } from '@/shared/model/enumerations/visualization.model';
 import { TypeOfChart } from '@/shared/model/enumerations/type-of-chart.model';
 import { Emotions } from '@/shared/model/enumerations/emotions.model';
+import eventBus from '../../../../../event-bus.ts';
 
 export default defineComponent({
   compatConfig: { MODE: 3 },
   name: 'FilterUpdate',
-  setup() {
+  props: {
+    searchId: {
+      type: [Number] as PropType<number | undefined>,
+    },
+  },
+  setup(props) {
     const filterService = inject('filterService', () => new FilterService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -34,21 +40,23 @@ export default defineComponent({
     const showSidebar = ref(true);
     const route = useRoute();
     const router = useRouter();
+    const isEditing = ref(false);
 
     const previousState = () => router.go(-1);
 
+    const refreshState = () => router.go(0);
+
     const retrieveFilter = async filterId => {
       try {
-        const res = await filterService().find(filterId);
-        filter.value = res;
+        filter.value = await filterService().findBySearchId(filterId);
       } catch (error) {
-        alertService.showHttpError(error.response);
+        console.log('Pesquisa sem Filtros');
       }
     };
 
-    if (route.params?.filterId) {
-      retrieveFilter(route.params.filterId);
-    }
+    onMounted(async () => {
+      await retrieveFilter(props.searchId);
+    });
 
     const initRelationships = () => {
       searchService()
@@ -85,6 +93,7 @@ export default defineComponent({
       alertService,
       filter,
       previousState,
+      refreshState,
       visualizationValues,
       typeOfChartValues,
       emotionsValues,
@@ -94,6 +103,7 @@ export default defineComponent({
       toggleSidebar,
       closeSidebar,
       showSidebar,
+      isEditing,
       v$,
       t$,
     };
@@ -107,7 +117,7 @@ export default defineComponent({
           .update(this.filter)
           .then(param => {
             this.isSaving = false;
-            this.previousState();
+            this.refreshState();
             this.alertService.showInfo(this.t$('pampaInsightsApp.filter.updated', { param: param.id }));
           })
           .catch(error => {
@@ -116,10 +126,10 @@ export default defineComponent({
           });
       } else {
         this.filterService()
-          .create(this.filter)
+          .create(this.filter, this.searchId)
           .then(param => {
             this.isSaving = false;
-            this.previousState();
+            this.refreshState();
             this.alertService.showSuccess(this.t$('pampaInsightsApp.filter.created', { param: param.id }).toString());
           })
           .catch(error => {
@@ -127,6 +137,13 @@ export default defineComponent({
             this.alertService.showHttpError(error.response);
           });
       }
+    },
+    typeChart() {
+      eventBus.emit('search-comments');
+    },
+
+    toggleEdit() {
+      this.isEditing = !this.isEditing;
     },
   },
 });
