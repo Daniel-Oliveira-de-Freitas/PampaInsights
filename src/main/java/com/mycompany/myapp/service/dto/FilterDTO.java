@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service.dto;
 
 import com.mycompany.myapp.domain.enumeration.Emotions;
+import com.mycompany.myapp.domain.enumeration.SentimentAnalysisType;
 import com.mycompany.myapp.domain.enumeration.TypeOfChart;
 import com.mycompany.myapp.domain.enumeration.Visualization;
 import java.io.Serializable;
@@ -14,7 +15,7 @@ public class FilterDTO implements Serializable {
 
     private Long id;
 
-    private String name;
+    private SentimentAnalysisType sentimentAnalysisType;
 
     private Visualization visualization;
 
@@ -32,12 +33,12 @@ public class FilterDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public SentimentAnalysisType getSentimentAnalysisType() {
+        return sentimentAnalysisType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSentimentAnalysisType(SentimentAnalysisType sentimentAnalysisType) {
+        this.sentimentAnalysisType = sentimentAnalysisType;
     }
 
     public Visualization getVisualization() {
@@ -98,7 +99,7 @@ public class FilterDTO implements Serializable {
     public String toString() {
         return "FilterDTO{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
+            ", name='" + getSentimentAnalysisType() + "'" +
             ", visualization='" + getVisualization() + "'" +
             ", typeOfChart='" + getTypeOfChart() + "'" +
             ", emotions='" + getEmotions() + "'" +

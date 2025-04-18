@@ -18,7 +18,7 @@
         "title": "Filter"
       },
       "id": "ID",
-      "name": "Nome",
+      "sentimentAnalysisType": "Análise de Sentimentos",
       "visualization": "Tipo de Visualisação",
       "typeOfChart": "Tipo de Gráfico",
       "emotions": "Emoções",

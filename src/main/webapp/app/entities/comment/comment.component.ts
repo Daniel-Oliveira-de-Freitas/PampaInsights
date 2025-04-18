@@ -1,4 +1,4 @@
-import { type Ref, defineComponent, inject, onMounted, ref, computed } from 'vue';
+import { computed, defineComponent, inject, onMounted, ref, type Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import CommentService from './comment.service';
@@ -6,7 +6,7 @@ import { type IComment } from '@/shared/model/comment.model';
 import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 import { Pie } from 'vue-chartjs';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import eventBus from '../../../../../event-bus.ts';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -42,9 +42,27 @@ export default defineComponent({
       }
     };
 
-    onMounted(async () => {
-      eventBus.on('search-comments', retrieveComments);
-      await retrieveComments();
+    const retrieveCommentsApi = async (url: string) => {
+      isFetching.value = true;
+      try {
+        const res = await commentService().retrieveCommentApi(url);
+        comments.value = res.comments;
+        console.log('res', res.comments);
+        eventBus.emit('sentiment-data', sentimentData.value);
+      } catch (err) {
+        alertService.showHttpError(err?.response ?? { data: { message: err.message }, status: 500 });
+      } finally {
+        isFetching.value = false;
+      }
+    };
+
+    onMounted(() => {
+      eventBus.on('url', async (url: string) => {
+        console.log('comment', url);
+        if (url) {
+          await retrieveCommentsApi(url);
+        }
+      });
     });
 
     const sentimentCounts = computed(() => {

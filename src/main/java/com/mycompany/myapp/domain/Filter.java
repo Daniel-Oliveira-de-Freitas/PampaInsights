@@ -2,6 +2,7 @@ package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mycompany.myapp.domain.enumeration.Emotions;
+import com.mycompany.myapp.domain.enumeration.SentimentAnalysisType;
 import com.mycompany.myapp.domain.enumeration.TypeOfChart;
 import com.mycompany.myapp.domain.enumeration.Visualization;
 import jakarta.persistence.*;
@@ -27,7 +28,7 @@ public class Filter implements Serializable {
     private Long id;
 
     @Column(name = "name")
-    private String name;
+    private SentimentAnalysisType sentimentAnalysisType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "visualization")
@@ -61,17 +62,17 @@ public class Filter implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public SentimentAnalysisType getSentimentAnalysisType() {
+        return sentimentAnalysisType;
     }
 
-    public Filter name(String name) {
-        this.setName(name);
+    public Filter name(SentimentAnalysisType name) {
+        this.setSentimentAnalysisType(name);
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSentimentAnalysisType(SentimentAnalysisType sentimentAnalysisType) {
+        this.sentimentAnalysisType = sentimentAnalysisType;
     }
 
     public Visualization getVisualization() {
@@ -150,7 +151,7 @@ public class Filter implements Serializable {
     public String toString() {
         return "Filter{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
+            ", name='" + getSentimentAnalysisType() + "'" +
             ", visualization='" + getVisualization() + "'" +
             ", typeOfChart='" + getTypeOfChart() + "'" +
             ", emotions='" + getEmotions() + "'" +

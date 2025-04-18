@@ -1,0 +1,5 @@
+export enum SentimentAnalysisType {
+  EMOTION_POLARITY = 'EMOTION_POLARITY',
+
+  DEFAMATION_DETECTION = 'DEFAMATION_DETECTION',
+}

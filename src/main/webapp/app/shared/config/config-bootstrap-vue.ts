@@ -27,6 +27,7 @@ import {
   BProgressBar,
   ToastPlugin,
   VBModal,
+  BCard,
 } from 'bootstrap-vue';
 
 export function initBootstrapVue(vue) {
@@ -59,4 +60,5 @@ export function initBootstrapVue(vue) {
   vue.component('BInputGroupPrepend', BInputGroupPrepend);
   vue.component('BCarousel', BCarousel);
   vue.component('BCarouselSlide', BCarouselSlide);
+  vue.component('BCard', BCard);
 }

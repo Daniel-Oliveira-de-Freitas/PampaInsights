@@ -1,0 +1,8 @@
+{
+  "pampaInsightsApp": {
+    "sentimentAnalysisType": {
+      "EMOTION_POLARITY": "Polaridade Emocional",
+      "DEFAMATION_DETECTION": "Detecção de Difamação"
+    }
+  }
+}

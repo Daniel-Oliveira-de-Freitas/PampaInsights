@@ -1,6 +1,7 @@
 <template>
+  <div></div>
   <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-10">
       <form name="editForm" novalidate @submit.prevent="save()">
         <h2
           id="pampaInsightsApp.parameter.home.createOrEditLabel"
@@ -121,38 +122,7 @@
 </template>
 <script lang="ts" src="./parameter-update.component.ts"></script>
 <style scoped>
-.sidebar-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 998;
-}
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 400px;
-  height: 100%;
-  background: rgba(45, 42, 42, 0.3);
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-  padding: 20px;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-}
-
-.sidebar-footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
 .invalid {
-  border-color: red;
+  border-color: black;
 }
 </style>

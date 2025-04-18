@@ -16,6 +16,7 @@ import { Emotions } from '@/shared/model/enumerations/emotions.model';
 import eventBus from '../../../../../event-bus.ts';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import { Pie, Bar } from 'vue-chartjs';
+import { SentimentAnalysisType } from '@/shared/model/enumerations/sentiment-analysis-type.model.ts';
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
@@ -48,22 +49,24 @@ export default defineComponent({
     const searches: Ref<ISearch[]> = ref([]);
     const visualizationValues: Ref<string[]> = ref(Object.keys(Visualization));
     const typeOfChartValues: Ref<string[]> = ref(Object.keys(TypeOfChart));
+    const sentimentAnalysisTypeValues: Ref<string[]> = ref(Object.keys(SentimentAnalysisType));
     const emotionsValues: Ref<string[]> = ref(Object.keys(Emotions));
     const isSaving = ref(false);
     const currentLanguage = inject('currentLanguage', () => computed(() => navigator.language ?? 'pt-br'), true);
     const showSidebar = ref(true);
     const route = useRoute();
     const router = useRouter();
-    const isEditing = ref(false);
+    const isEditing = ref(true);
     const showChart = ref(false);
 
     const previousState = () => router.go(-1);
 
-    const refreshState = () => router.go(0);
-
     const retrieveFilter = async (filterId: any) => {
       try {
         filter.value = await filterService().findBySearchId(filterId);
+        if (filter.value.id) {
+          isEditing.value = false;
+        }
       } catch (error) {
         console.log('Pesquisa sem Filtros');
       }
@@ -89,7 +92,7 @@ export default defineComponent({
     const { t: t$ } = useI18n();
     const validations = useValidation();
     const validationRules = {
-      name: {},
+      sentimentAnalysisType: {},
       visualization: {},
       typeOfChart: {},
       emotions: {},
@@ -115,7 +118,6 @@ export default defineComponent({
       alertService,
       filter,
       previousState,
-      refreshState,
       visualizationValues,
       typeOfChartValues,
       emotionsValues,
@@ -128,6 +130,7 @@ export default defineComponent({
       showSidebar,
       isEditing,
       selectedChartData,
+      sentimentAnalysisTypeValues,
       showChart,
       v$,
       t$,
@@ -142,8 +145,8 @@ export default defineComponent({
           .update(this.filter)
           .then(param => {
             this.isSaving = false;
-            this.refreshState();
             this.alertService.showInfo(this.t$('pampaInsightsApp.filter.updated', { param: param.id }));
+            this.isEditing = false;
           })
           .catch(error => {
             this.isSaving = false;
@@ -154,8 +157,8 @@ export default defineComponent({
           .create(this.filter, this.searchId)
           .then(param => {
             this.isSaving = false;
-            this.refreshState();
             this.alertService.showSuccess(this.t$('pampaInsightsApp.filter.created', { param: param.id }).toString());
+            this.isEditing = false;
           })
           .catch(error => {
             this.isSaving = false;

@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div class="mt-5">
     <h2 id="page-heading" data-cy="CommentHeading">
       <span v-text="t$('pampaInsightsApp.comment.home.title')" id="comment-heading"></span>
     </h2>
-
     <div class="alert alert-warning" v-if="!isFetching && comments && comments.length === 0">
       <span v-text="t$('pampaInsightsApp.comment.home.notFound')"></span>
     </div>

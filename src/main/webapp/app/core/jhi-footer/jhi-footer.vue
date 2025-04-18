@@ -1,5 +1,5 @@
 <template>
-  <div id="footer" class="footer">
+  <div id="footer" class="footer text-center">
     <p v-text="t$('footer')"></p>
   </div>
 </template>

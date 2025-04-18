@@ -1,90 +1,102 @@
 <template>
-  <div class="row justify-content-center">
-    <div class="col-8">
+  <div class="row justify-content-center mt-05">
+    <div class="col-10">
       <form name="editForm" novalidate @submit.prevent="save()">
         <h2
           id="pampaInsightsApp.filter.home.createOrEditLabel"
           data-cy="FilterCreateUpdateHeading"
           v-text="t$('pampaInsightsApp.filter.home.createOrEditLabel')"
+          class="mb-4"
         ></h2>
-        <div>
-          <div class="form-group">
-            <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.name')" for="filter-name"></label>
-            <input
-              :readonly="!isEditing"
-              type="text"
-              class="form-control"
-              name="name"
-              id="filter-name"
-              data-cy="name"
-              :class="{ valid: !v$.name.$invalid, invalid: v$.name.$invalid }"
-              v-model="v$.name.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.visualization')" for="filter-visualization"></label>
-            <select
-              :disabled="!isEditing"
-              class="form-control"
-              name="visualization"
-              :class="{ valid: !v$.visualization.$invalid, invalid: v$.visualization.$invalid }"
-              v-model="v$.visualization.$model"
-              id="filter-visualization"
-              data-cy="visualization"
+        <div class="form-group">
+          <label
+            class="form-control-label"
+            v-text="t$('pampaInsightsApp.filter.sentimentAnalysisType')"
+            for="filter-sentimentAnalysisType"
+          ></label>
+          <select
+            :disabled="!isEditing"
+            class="form-control"
+            name="sentimentAnalysisType"
+            id="filter-sentimentAnalysisType"
+            data-cy="sentimentAnalysisType"
+            :class="{ valid: !v$.sentimentAnalysisType.$invalid, invalid: v$.sentimentAnalysisType.$invalid }"
+            v-model="v$.sentimentAnalysisType.$model"
+          >
+            <option
+              v-for="sentimentAnalysisType in sentimentAnalysisTypeValues"
+              :key="sentimentAnalysisType"
+              :value="sentimentAnalysisType"
+              :label="t$('pampaInsightsApp.sentimentAnalysisType.' + sentimentAnalysisType)"
             >
-              <option
-                v-for="visualization in visualizationValues"
-                :key="visualization"
-                :value="visualization"
-                :label="t$('pampaInsightsApp.Visualization.' + visualization)"
-              >
-                {{ visualization }}
-              </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.typeOfChart')" for="filter-typeOfChart"></label>
-            <select
-              :disabled="!isEditing"
-              class="form-control"
-              name="typeOfChart"
-              :class="{ valid: !v$.typeOfChart.$invalid, invalid: v$.typeOfChart.$invalid }"
-              v-model="v$.typeOfChart.$model"
-              id="filter-typeOfChart"
-              data-cy="typeOfChart"
+              {{ sentimentAnalysisType }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.emotions')" for="filter-emotions"></label>
+          <select
+            :disabled="!isEditing"
+            class="form-control"
+            name="emotions"
+            :class="{ valid: !v$.emotions.$invalid, invalid: v$.emotions.$invalid }"
+            v-model="v$.emotions.$model"
+            id="filter-emotions"
+            data-cy="emotions"
+          >
+            <option
+              v-for="emotions in emotionsValues"
+              :key="emotions"
+              :value="emotions"
+              :label="t$('pampaInsightsApp.Emotions.' + emotions)"
             >
-              <option :value="null"></option>
-              <option
-                v-for="typeOfChart in typeOfChartValues"
-                :key="typeOfChart"
-                :value="typeOfChart"
-                :label="t$('pampaInsightsApp.TypeOfChart.' + typeOfChart)"
-              >
-                {{ typeOfChart }}
-              </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.emotions')" for="filter-emotions"></label>
-            <select
-              :disabled="!isEditing"
-              class="form-control"
-              name="emotions"
-              :class="{ valid: !v$.emotions.$invalid, invalid: v$.emotions.$invalid }"
-              v-model="v$.emotions.$model"
-              id="filter-emotions"
-              data-cy="emotions"
+              {{ emotions }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.visualization')" for="filter-visualization"></label>
+          <select
+            :disabled="!isEditing"
+            class="form-control"
+            name="visualization"
+            :class="{ valid: !v$.visualization.$invalid, invalid: v$.visualization.$invalid }"
+            v-model="v$.visualization.$model"
+            id="filter-visualization"
+            data-cy="visualization"
+          >
+            <option
+              v-for="visualization in visualizationValues"
+              :key="visualization"
+              :value="visualization"
+              :label="t$('pampaInsightsApp.Visualization.' + visualization)"
             >
-              <option
-                v-for="emotions in emotionsValues"
-                :key="emotions"
-                :value="emotions"
-                :label="t$('pampaInsightsApp.Emotions.' + emotions)"
-              >
-                {{ emotions }}
-              </option>
-            </select>
-          </div>
+              {{ visualization }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.typeOfChart')" for="filter-typeOfChart"></label>
+          <select
+            :disabled="!isEditing"
+            class="form-control"
+            name="typeOfChart"
+            :class="{ valid: !v$.typeOfChart.$invalid, invalid: v$.typeOfChart.$invalid }"
+            v-model="v$.typeOfChart.$model"
+            id="filter-typeOfChart"
+            data-cy="typeOfChart"
+          >
+            <option :value="null"></option>
+            <option
+              v-for="typeOfChart in typeOfChartValues"
+              :key="typeOfChart"
+              :value="typeOfChart"
+              :label="t$('pampaInsightsApp.TypeOfChart.' + typeOfChart)"
+            >
+              {{ typeOfChart }}
+            </option>
+          </select>
         </div>
         <div class="d-flex flex-column">
           <div class="d-flex justify-content-between mb-2">
@@ -114,6 +126,7 @@
             &nbsp;<span>Aplicar Filtros</span>
           </button>
         </div>
+
         <div class="mt-4" v-if="showChart && !isEditing">
           <div v-if="v$.typeOfChart.$model === TypeOfChart.PIZZA && selectedChartData">
             <PieChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
@@ -149,6 +162,10 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 998;
+}
+
+.hr {
+  border-color: white;
 }
 
 .sidebar {

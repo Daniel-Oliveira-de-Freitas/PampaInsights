@@ -24,7 +24,6 @@ export default defineComponent({
   },
   setup(props) {
     const parameterService = inject('parameterService', () => new ParameterService());
-    const commentService = inject('commentService', () => new CommentService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
     const parameter: Ref<IParameter> = ref(new Parameter());
@@ -38,19 +37,26 @@ export default defineComponent({
     const showSidebar = ref(false);
     const route = useRoute();
     const router = useRouter();
-    const isEditing = ref(false);
+    const isEditing = ref(true);
     const isFetching = ref(false);
 
     const previousState = () => router.go(-1);
 
-    const refreshState = () => router.go(0);
-
     const retrieveParameter = async (searchId: any) => {
       try {
         parameter.value = await parameterService().findBySearchId(searchId);
-        console.log('Pesquisa sem Parametros');
+        if (parameter.value.id) {
+          isEditing.value = false;
+        }
       } catch (error) {
         console.log('Pesquisa sem Parametros');
+      }
+    };
+
+    const searchComments = () => {
+      if (parameter.value.webSite) {
+        console.log('Emitting URL:', parameter.value.webSite);
+        eventBus.emit('url', parameter.value.webSite);
       }
     };
 
@@ -93,11 +99,9 @@ export default defineComponent({
 
     return {
       parameterService,
-      commentService,
       alertService,
       parameter,
       previousState,
-      refreshState,
       isSaving,
       isFetching,
       currentLanguage,
@@ -108,6 +112,7 @@ export default defineComponent({
       showSidebar,
       validations,
       isEditing,
+      searchComments,
       v$,
       ...useDateFormat({ entityRef: parameter }),
       t$,
@@ -122,7 +127,6 @@ export default defineComponent({
           const param = await this.parameterService().update(this.parameter);
           this.alertService.showInfo(this.t$('pampaInsightsApp.parameter.updated', { param: param.id }));
           this.isEditing = false;
-          this.refreshState();
         } catch (error) {
           this.alertService.showHttpError(error.response);
         } finally {
@@ -132,7 +136,6 @@ export default defineComponent({
         try {
           const param = await this.parameterService().create(this.parameter, this.searchId);
           this.alertService.showSuccess(this.t$('pampaInsightsApp.parameter.created', { param: param.id }).toString());
-          this.refreshState();
           this.isEditing = false;
         } catch (error) {
           this.alertService.showHttpError(error.response);
@@ -140,9 +143,6 @@ export default defineComponent({
           this.isSaving = false;
         }
       }
-    },
-    searchComments() {
-      eventBus.emit('search-comments');
     },
 
     toggleEdit() {
