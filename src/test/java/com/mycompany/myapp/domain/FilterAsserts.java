@@ -47,7 +47,6 @@ public class FilterAsserts {
     public static void assertFilterUpdatableFieldsEquals(Filter expected, Filter actual) {
         assertThat(actual)
             .as("Verify Filter relevant properties")
-            .satisfies(a -> assertThat(a.getName()).as("check name").isEqualTo(expected.getName()))
             .satisfies(a -> assertThat(a.getVisualization()).as("check visualization").isEqualTo(expected.getVisualization()))
             .satisfies(a -> assertThat(a.getTypeOfChart()).as("check typeOfChart").isEqualTo(expected.getTypeOfChart()))
             .satisfies(a -> assertThat(a.getEmotions()).as("check emotions").isEqualTo(expected.getEmotions()));

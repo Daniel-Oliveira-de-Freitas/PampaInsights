@@ -82,19 +82,4 @@ export default class CommentService {
         });
     });
   }
-
-  public async retrieveCommentApi(url: string): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      axios
-        .post('api/collect-comments/crawling', { url })
-        .then(res => {
-          resolve(res.data);
-          console.log('res', res.data);
-        })
-        .catch(err => {
-          console.log('err', err);
-          reject(err);
-        });
-    });
-  }
 }

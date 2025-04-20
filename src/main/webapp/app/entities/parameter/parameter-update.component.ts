@@ -54,10 +54,20 @@ export default defineComponent({
     };
 
     const searchComments = () => {
-      if (parameter.value.webSite) {
-        console.log('Emitting URL:', parameter.value.webSite);
-        eventBus.emit('url', parameter.value.webSite);
-      }
+      const urls: string[] = [];
+      if (parameter.value.webSite) urls.push(parameter.value.webSite);
+      if (parameter.value.instagram) urls.push(parameter.value.instagram);
+      if (parameter.value.facebook) urls.push(parameter.value.facebook);
+      if (parameter.value.linkedin) urls.push(parameter.value.linkedin);
+      if (parameter.value.x) urls.push(parameter.value.x);
+
+      const payload = {
+        urls,
+        keyword: parameter.value.terms,
+      };
+
+      console.log('Emitting payload:', payload);
+      eventBus.emit('analyze-request', payload);
     };
 
     onMounted(async () => {
@@ -127,7 +137,7 @@ export default defineComponent({
           const param = await this.parameterService().update(this.parameter);
           this.alertService.showInfo(this.t$('pampaInsightsApp.parameter.updated', { param: param.id }));
           this.isEditing = false;
-        } catch (error) {
+        } catch (error: any) {
           this.alertService.showHttpError(error.response);
         } finally {
           this.isSaving = false;
@@ -137,7 +147,7 @@ export default defineComponent({
           const param = await this.parameterService().create(this.parameter, this.searchId);
           this.alertService.showSuccess(this.t$('pampaInsightsApp.parameter.created', { param: param.id }).toString());
           this.isEditing = false;
-        } catch (error) {
+        } catch (error: any) {
           this.alertService.showHttpError(error.response);
         } finally {
           this.isSaving = false;

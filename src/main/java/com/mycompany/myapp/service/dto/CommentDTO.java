@@ -12,6 +12,8 @@ public class CommentDTO implements Serializable {
 
     private Long id;
 
+    private String keyword;
+
     private String body;
 
     private Long sentiment;
@@ -28,6 +30,14 @@ public class CommentDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public String getBody() {

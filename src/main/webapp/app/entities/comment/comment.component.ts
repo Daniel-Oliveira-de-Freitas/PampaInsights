@@ -8,6 +8,7 @@ import { useAlertService } from '@/shared/alert/alert.service';
 import { Pie } from 'vue-chartjs';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import eventBus from '../../../../../event-bus.ts';
+import CommentsCollectorService from '@/entities/comments-collector/comments-collector.service.ts';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -21,6 +22,7 @@ export default defineComponent({
     const { t: t$ } = useI18n();
     const dateFormat = useDateFormat();
     const commentService = inject('commentService', () => new CommentService());
+    const commentsCollectorService = inject('commentsCollectorService', () => new CommentsCollectorService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
     const comments: Ref<IComment[]> = ref([]);
@@ -35,21 +37,21 @@ export default defineComponent({
         const res = await commentService().retrieve();
         comments.value = res.data;
         eventBus.emit('sentiment-data', sentimentData.value);
-      } catch (err) {
+      } catch (err: any) {
         alertService.showHttpError(err.response);
       } finally {
         isFetching.value = false;
       }
     };
 
-    const retrieveCommentsApi = async (url: string) => {
+    const retrieveCommentsApi = async (payload: { urls: string[]; keyword: string | null }) => {
       isFetching.value = true;
       try {
-        const res = await commentService().retrieveCommentApi(url);
-        comments.value = res.comments;
-        console.log('res', res.comments);
+        const res = await commentsCollectorService().retrieveCommentApi(payload);
+        comments.value = res;
+        console.log('comments', res);
         eventBus.emit('sentiment-data', sentimentData.value);
-      } catch (err) {
+      } catch (err: any) {
         alertService.showHttpError(err?.response ?? { data: { message: err.message }, status: 500 });
       } finally {
         isFetching.value = false;
@@ -57,10 +59,10 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      eventBus.on('url', async (url: string) => {
-        console.log('comment', url);
-        if (url) {
-          await retrieveCommentsApi(url);
+      eventBus.on('analyze-request', async (payload: { urls: string[]; keyword: string | null }) => {
+        console.log('Received analyze request:', payload);
+        if (payload.urls.length > 0) {
+          await retrieveCommentsApi(payload);
         }
       });
     });

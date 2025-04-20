@@ -24,6 +24,9 @@ public class Comment implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "keyword")
+    private String keyword;
+
     @Column(name = "body")
     private String body;
 
@@ -53,6 +56,14 @@ public class Comment implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public String getBody() {

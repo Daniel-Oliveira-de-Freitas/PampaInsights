@@ -2,6 +2,7 @@ import { type ISearch } from '@/shared/model/search.model';
 
 export interface IComment {
   id?: number;
+  keyword?: string | null;
   body?: string | null;
   sentiment?: number | null;
   author?: string | null;
@@ -12,6 +13,7 @@ export interface IComment {
 export class Comment implements IComment {
   constructor(
     public id?: number,
+    public keyword?: string | null,
     public body?: string | null,
     public sentiment?: number | null,
     public author?: string | null,

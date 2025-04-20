@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Filter;
 import com.mycompany.myapp.domain.enumeration.Emotions;
+import com.mycompany.myapp.domain.enumeration.SentimentAnalysisType;
 import com.mycompany.myapp.domain.enumeration.TypeOfChart;
 import com.mycompany.myapp.domain.enumeration.Visualization;
 import com.mycompany.myapp.repository.FilterRepository;
@@ -82,7 +83,7 @@ class FilterResourceIT {
      */
     public static Filter createEntity() {
         return new Filter()
-            .name(DEFAULT_NAME)
+            .name(SentimentAnalysisType.valueOf(DEFAULT_NAME))
             .visualization(DEFAULT_VISUALIZATION)
             .typeOfChart(DEFAULT_TYPE_OF_CHART)
             .emotions(DEFAULT_EMOTIONS);
@@ -96,7 +97,7 @@ class FilterResourceIT {
      */
     public static Filter createUpdatedEntity() {
         return new Filter()
-            .name(UPDATED_NAME)
+            .name(SentimentAnalysisType.valueOf(UPDATED_NAME))
             .visualization(UPDATED_VISUALIZATION)
             .typeOfChart(UPDATED_TYPE_OF_CHART)
             .emotions(UPDATED_EMOTIONS);
@@ -212,7 +213,11 @@ class FilterResourceIT {
         Filter updatedFilter = filterRepository.findById(filter.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedFilter are not directly saved in db
         em.detach(updatedFilter);
-        updatedFilter.name(UPDATED_NAME).visualization(UPDATED_VISUALIZATION).typeOfChart(UPDATED_TYPE_OF_CHART).emotions(UPDATED_EMOTIONS);
+        updatedFilter
+            .name(SentimentAnalysisType.valueOf(UPDATED_NAME))
+            .visualization(UPDATED_VISUALIZATION)
+            .typeOfChart(UPDATED_TYPE_OF_CHART)
+            .emotions(UPDATED_EMOTIONS);
         FilterDTO filterDTO = filterMapper.toDto(updatedFilter);
 
         restFilterMockMvc
@@ -299,7 +304,7 @@ class FilterResourceIT {
         partialUpdatedFilter.setId(filter.getId());
 
         partialUpdatedFilter
-            .name(UPDATED_NAME)
+            .name(SentimentAnalysisType.valueOf(UPDATED_NAME))
             .visualization(UPDATED_VISUALIZATION)
             .typeOfChart(UPDATED_TYPE_OF_CHART)
             .emotions(UPDATED_EMOTIONS);
@@ -331,7 +336,7 @@ class FilterResourceIT {
         partialUpdatedFilter.setId(filter.getId());
 
         partialUpdatedFilter
-            .name(UPDATED_NAME)
+            .name(SentimentAnalysisType.valueOf(UPDATED_NAME))
             .visualization(UPDATED_VISUALIZATION)
             .typeOfChart(UPDATED_TYPE_OF_CHART)
             .emotions(UPDATED_EMOTIONS);
