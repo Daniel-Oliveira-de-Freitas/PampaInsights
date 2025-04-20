@@ -44,7 +44,7 @@ export default defineComponent({
       }
     };
 
-    const retrieveCommentsApi = async (payload: { urls: string[]; keyword: string | null }) => {
+    const retrieveCommentsApi = async (payload: { urls: string[]; keyword: string | null; search: string | null }) => {
       isFetching.value = true;
       try {
         const res = await commentsCollectorService().retrieveCommentApi(payload);
@@ -59,7 +59,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      eventBus.on('analyze-request', async (payload: { urls: string[]; keyword: string | null }) => {
+      eventBus.on('analyze-request', async (payload: { urls: string[]; keyword: string | null; search: string | null }) => {
         console.log('Received analyze request:', payload);
         if (payload.urls.length > 0) {
           await retrieveCommentsApi(payload);

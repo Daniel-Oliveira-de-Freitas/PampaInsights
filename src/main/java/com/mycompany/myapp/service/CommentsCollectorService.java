@@ -2,6 +2,8 @@ package com.mycompany.myapp.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class CommentsCollectorService {
 
+    private static final Logger log = LoggerFactory.getLogger(CommentsCollectorService.class);
     private final RestTemplate restTemplate;
 
     private static final String SCRAPING_URL = "https://mining-comments-api.vercel.app/comments/scraping";
@@ -19,9 +22,8 @@ public class CommentsCollectorService {
         this.restTemplate = new RestTemplate();
     }
 
-    public List<Map<String, Object>> retrieveComments(List<String> urls, String keyword) {
+    public List<Map<String, Object>> retrieveComments(List<String> urls, String keyword, String search) {
         List<Map<String, Object>> result = new ArrayList<>();
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set(
@@ -32,6 +34,7 @@ public class CommentsCollectorService {
         Map<String, Object> requestPayload = new HashMap<>();
         requestPayload.put("urls", urls);
         requestPayload.put("keyword", keyword);
+        requestPayload.put("search", search);
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
