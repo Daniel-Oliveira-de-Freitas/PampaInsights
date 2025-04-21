@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.Comment;
 import com.mycompany.myapp.repository.CommentRepository;
 import com.mycompany.myapp.service.CommentService;
 import com.mycompany.myapp.service.dto.CommentDTO;
@@ -137,6 +138,12 @@ public class CommentResource {
     public List<CommentDTO> getAllComments() {
         LOG.debug("REST request to get all Comments");
         return commentService.findAll();
+    }
+
+    @GetMapping("/search/{searchId}")
+    public List<Comment> retrieveCommentsBySearchId(@PathVariable("searchId") Long searchId) {
+        LOG.debug("REST request to get all Comments by search id: {}", searchId);
+        return commentService.findAllCommentsBySearchId(searchId);
     }
 
     /**

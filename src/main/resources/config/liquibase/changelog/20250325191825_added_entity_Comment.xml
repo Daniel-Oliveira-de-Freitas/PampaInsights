@@ -17,7 +17,7 @@
           <column name="keyword" type="varchar(255)">
             <constraints nullable="true" />
           </column>
-            <column name="body" type="varchar(255)">
+            <column name="body" type="${clobType}">
                 <constraints nullable="true" />
             </column>
             <column name="sentiment" type="bigint">

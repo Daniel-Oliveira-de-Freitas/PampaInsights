@@ -4,6 +4,7 @@ import com.mycompany.myapp.domain.Comment;
 import com.mycompany.myapp.domain.Search;
 import com.mycompany.myapp.service.dto.CommentDTO;
 import com.mycompany.myapp.service.dto.SearchDTO;
+import java.util.List;
 import org.mapstruct.*;
 
 /**
@@ -13,6 +14,8 @@ import org.mapstruct.*;
 public interface CommentMapper extends EntityMapper<CommentDTO, Comment> {
     @Mapping(target = "search", source = "search", qualifiedByName = "searchId")
     CommentDTO toDto(Comment s);
+
+    List<CommentDTO> toDtoList(List<CommentDTO> comments);
 
     @Named("searchId")
     @BeanMapping(ignoreByDefault = true)

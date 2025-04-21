@@ -88,6 +88,11 @@ public class CommentService {
         return commentRepository.findAll().stream().map(commentMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Transactional(readOnly = true)
+    public List<Comment> findAllCommentsBySearchId(Long searchId) {
+        return commentRepository.findBySearchId(searchId);
+    }
+
     /**
      * Get one comment by id.
      *

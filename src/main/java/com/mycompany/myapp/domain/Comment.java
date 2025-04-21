@@ -27,6 +27,7 @@ public class Comment implements Serializable {
     @Column(name = "keyword")
     private String keyword;
 
+    @Lob
     @Column(name = "body")
     private String body;
 

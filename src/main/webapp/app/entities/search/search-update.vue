@@ -5,7 +5,7 @@
         <parameter-update v-if="search.id" :searchId="search.id" />
       </div>
       <div class="col-md-6">
-        <comment @searchComments="$event" />
+        <comment v-if="search.id" :searchId="search.id" />
       </div>
       <div class="col-md-3">
         <filter-update v-if="search.id" :searchId="search.id" />

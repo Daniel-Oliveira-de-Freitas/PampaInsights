@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service.dto;
 
+import jakarta.persistence.Lob;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -14,6 +15,7 @@ public class CommentDTO implements Serializable {
 
     private String keyword;
 
+    @Lob
     private String body;
 
     private Long sentiment;

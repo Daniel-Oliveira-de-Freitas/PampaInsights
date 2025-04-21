@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject, onMounted, ref, type Ref } from 'vue';
+import { computed, defineComponent, inject, onMounted, type PropType, ref, type Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import CommentService from './comment.service';
@@ -18,7 +18,12 @@ export default defineComponent({
   components: {
     PieChart: Pie as any,
   },
-  setup() {
+  props: {
+    searchId: {
+      type: [Number] as PropType<number | undefined>,
+    },
+  },
+  setup(props) {
     const { t: t$ } = useI18n();
     const dateFormat = useDateFormat();
     const commentService = inject('commentService', () => new CommentService());
@@ -26,17 +31,15 @@ export default defineComponent({
     const alertService = inject('alertService', () => useAlertService(), true);
 
     const comments: Ref<IComment[]> = ref([]);
-
     const isFetching = ref(false);
 
     const clear = () => {};
 
-    const retrieveComments = async () => {
+    const retrieveCommentsBySearchId = async (searchId: any) => {
       isFetching.value = true;
       try {
-        const res = await commentService().retrieve();
+        const res = await commentService().retrieveCommentsBySearchId(searchId);
         comments.value = res.data;
-        eventBus.emit('sentiment-data', sentimentData.value);
       } catch (err: any) {
         alertService.showHttpError(err.response);
       } finally {
@@ -58,7 +61,8 @@ export default defineComponent({
       }
     };
 
-    onMounted(() => {
+    onMounted(async () => {
+      await retrieveCommentsBySearchId(props.searchId);
       eventBus.on('analyze-request', async (payload: { urls: string[]; keyword: string | null; search: string | null }) => {
         console.log('Received analyze request:', payload);
         if (payload.urls.length > 0) {
@@ -97,7 +101,8 @@ export default defineComponent({
     return {
       comments,
       isFetching,
-      retrieveComments,
+      retrieveCommentsBySearchId,
+      retrieveCommentsApi,
       clear,
       sentimentData,
       chartOptions,
