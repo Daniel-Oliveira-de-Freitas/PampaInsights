@@ -155,7 +155,6 @@ export default defineComponent({
         }
       }
     },
-
     toggleEdit() {
       this.isEditing = !this.isEditing;
     },

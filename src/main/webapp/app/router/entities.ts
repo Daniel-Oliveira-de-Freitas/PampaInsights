@@ -16,7 +16,7 @@ const FilterDetails = () => import('@/entities/filter/filter-details.vue');
 const Parameter = () => import('@/entities/parameter/parameter.vue');
 const ParameterUpdate = () => import('@/entities/parameter/parameter-update.vue');
 const ParameterDetails = () => import('@/entities/parameter/parameter-details.vue');
-
+const AkipChatPageComponent = () => import('@/entities/akip-ai/akip-chat-page.vue');
 // jhipster-needle-add-entity-to-router-import - JHipster will import entities to the router here
 
 export default {
@@ -117,6 +117,12 @@ export default {
       path: 'parameter/:parameterId/view',
       name: 'ParameterView',
       component: ParameterDetails,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: '/akip-chat-page',
+      name: 'AkipChatPage',
+      component: AkipChatPageComponent,
       meta: { authorities: [Authority.USER] },
     },
     // jhipster-needle-add-entity-to-router - JHipster will add entities to the router here
