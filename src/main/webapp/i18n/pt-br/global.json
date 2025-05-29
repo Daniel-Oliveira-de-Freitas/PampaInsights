@@ -9,9 +9,9 @@
         "main": "Entidades",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
         "search": "Minhas Pesquisas",
-        "comment": "Comment",
-        "filter": "Filter",
-        "parameter": "Parameter"
+        "comment": "Comentários",
+        "filter": "Filtros",
+        "parameter": "Parametros"
       },
       "account": {
         "main": "Conta",
