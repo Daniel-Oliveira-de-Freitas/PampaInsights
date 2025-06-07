@@ -7,6 +7,10 @@ export default class AkipAiService {
     return axios.post(`${baseApiUrl}/chat/${conversationId}`, userMessage, { headers: { 'Content-Type': 'application/json' } });
   }
 
+  public createConversation(): Promise<any> {
+    return axios.post(`${baseApiUrl}/chat/create-conversation`);
+  }
+
   public getConversations(): Promise<any> {
     return axios.post(`${baseApiUrl}/chat/conversations`);
   }

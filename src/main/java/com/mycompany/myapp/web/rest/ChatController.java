@@ -22,6 +22,11 @@ public class ChatController {
         return chatService.chat(message, conversationId);
     }
 
+    @PostMapping("ai/chat/create-conversation")
+    public Conversation createConversation() {
+        return chatService.createNewConversation();
+    }
+
     @PostMapping("ai/chat/conversations")
     public List<Conversation> getConversations() {
         return chatService.findChatUserByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()).getConversations();

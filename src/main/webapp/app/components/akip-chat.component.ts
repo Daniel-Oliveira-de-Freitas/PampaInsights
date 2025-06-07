@@ -39,12 +39,11 @@ export default defineComponent({
     };
 
     const createNewConversation = async () => {
-      const newConversation = {
-        conversationId: '',
-        messages: [],
-      };
-      selectedConversationId.value = newConversation.conversationId;
-      messages.value = [new Message('agent', 'Hello, I am Akip AI GPT. How can I help you?')];
+      akipAiService.createConversation().then(res => {
+        const newConversation = res.data;
+        selectedConversationId.value = newConversation.conversationId;
+        messages.value = [new Message('agent', 'Hello, I am Akip AI GPT. How can I help you?')];
+      });
     };
 
     const submitChat = async () => {
@@ -60,7 +59,8 @@ export default defineComponent({
         try {
           akipAiService.sendMessage(inputMessage, selectedConversationId.value!).then(res => {
             selectedConversationId.value = res.data.conversationId;
-            messages.value.push(res.data);
+            console.log(res.data);
+            messages.value = res.data.messages;
             retrieveConverations();
           });
         } catch (error) {

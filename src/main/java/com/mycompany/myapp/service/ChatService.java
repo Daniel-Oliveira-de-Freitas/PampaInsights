@@ -52,7 +52,8 @@ public class ChatService {
         return conversation;
     }
 
-    private Conversation createNewConversation(ChatUser chatUser) {
+    public Conversation createNewConversation() {
+        ChatUser chatUser = findChatUserByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow());
         Conversation conversation = new Conversation();
         conversation.setConversationId(UUID.randomUUID().toString());
         conversation.setName("Conversation " + LocalDateTime.now());
@@ -68,7 +69,6 @@ public class ChatService {
             chatUserList.add(chatUser);
             return chatUser;
         }
-
         return chatMessageOptional.get();
     }
 
@@ -79,11 +79,6 @@ public class ChatService {
             .stream()
             .filter(conv -> conv.getConversationId().equals(conversationId))
             .findFirst();
-
-        if (conversation.isEmpty()) {
-            return createNewConversation(chatUser);
-        }
-
         return conversation.orElseThrow();
     }
 }
