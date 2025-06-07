@@ -30,6 +30,10 @@
             <span v-text="t$('global.menu.entities.search')"></span>
           </span>
         </b-nav-item>
+        <b-nav-item to="/akip-chat-page" exact v-if="authenticated">
+          <font-awesome-icon icon="desktop" />
+          <span>IA Chat</span>
+        </b-nav-item>
         <b-nav-item-dropdown right id="entity-menu" v-if="authenticated" active-class="active" class="pointer" data-cy="entity">
           <template #button-content>
             <span class="navbar-dropdown-menu">

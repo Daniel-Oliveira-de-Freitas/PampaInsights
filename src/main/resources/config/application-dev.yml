@@ -60,6 +60,15 @@ spring:
   thymeleaf:
     cache: false
 
+  ai:
+    openai:
+      api-key: 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
+      base-url: https://api.groq.com/openai
+      chat:
+        options:
+          model: llama3-70b-8192
+          temperature: 0.5
+
 server:
   port: 8080
   # make sure requests the proxy uri instead of the server one

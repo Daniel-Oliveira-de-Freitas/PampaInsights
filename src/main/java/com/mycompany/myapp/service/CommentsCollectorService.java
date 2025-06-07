@@ -7,9 +7,7 @@ import com.mycompany.myapp.repository.CommentRepository;
 import com.mycompany.myapp.repository.SearchRepository;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +22,8 @@ public class CommentsCollectorService {
     private static final Logger log = LoggerFactory.getLogger(CommentsCollectorService.class);
     private final RestTemplate restTemplate;
 
-    private static final String SCRAPING_URL = "https://mining-comments-api.vercel.app/comments/scraping";
-    private static final String CRAWLING_URL = "https://mining-comments-api.vercel.app/comments/crawling";
+    private static final String SCRAPING_URL = "http://127.0.0.1:5000/comments/scraping";
+    private static final String CRAWLING_URL = "http://127.0.0.1:5000/comments/crawling";
     private final SearchRepository searchRepository;
     private final CommentRepository commentRepository;
 
@@ -54,29 +52,24 @@ public class CommentsCollectorService {
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonBody = objectMapper.writeValueAsString(requestPayload);
             HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
-
             ResponseEntity<Map<String, Object>> scrapingResponse = restTemplate.exchange(
                 SCRAPING_URL,
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<Map<String, Object>>() {}
             );
-
             ResponseEntity<Map<String, Object>> crawlingResponse = restTemplate.exchange(
                 CRAWLING_URL,
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<Map<String, Object>>() {}
             );
-
             if (scrapingResponse.getBody() != null) {
                 extractComments(scrapingResponse.getBody(), result);
             }
             if (crawlingResponse.getBody() != null) {
                 extractComments(crawlingResponse.getBody(), result);
             }
-
-            // Salva os comentários após coletar todos
             saveComments(result, Long.parseLong(searchIdStr));
         } catch (Exception e) {
             log.error("Erro ao recuperar comentários: {}", e.getMessage());
