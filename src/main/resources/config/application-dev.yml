@@ -60,6 +60,15 @@ spring:
   thymeleaf:
     cache: false
 
+  ai:
+    openai:
+      api-key: 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
+      base-url: https://api.openai.com
+      chat:
+        options:
+          model: gpt-4o
+          temperature: 0.7
+
 server:
   port: 8080
   # make sure requests the proxy uri instead of the server one

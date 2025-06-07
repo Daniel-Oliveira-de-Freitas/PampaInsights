@@ -1,6 +1,6 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import AkipAiService from '@/entities/akip-ai/akip-ai.service.ts';
+import AkipAiService from '@/entities/akip-ai/akip-ai.service';
 import { Message } from '@/shared/model/message.model';
 
 export default defineComponent({
@@ -11,7 +11,7 @@ export default defineComponent({
     const messages = ref<Message[]>([]);
     const currentOutputMessageContent = ref('');
     const conversations = ref<any[]>([]);
-    const selectedConversationId = ref<any>('');
+    const selectedConversationId = ref('');
 
     onMounted(async () => {
       try {
@@ -30,6 +30,7 @@ export default defineComponent({
     const loadMessages = async (conversationId: string) => {
       selectedConversationId.value = conversationId;
       try {
+        console.log(conversationId);
         const response = await akipAiService.getMessages(conversationId);
         messages.value = response.data;
       } catch (error) {
@@ -42,7 +43,7 @@ export default defineComponent({
         conversationId: '',
         messages: [],
       };
-      selectedConversationId.value = newConversation;
+      selectedConversationId.value = newConversation.conversationId;
       messages.value = [new Message('agent', 'Hello, I am Akip AI GPT. How can I help you?')];
     };
 
@@ -59,7 +60,7 @@ export default defineComponent({
         try {
           akipAiService.sendMessage(inputMessage, selectedConversationId.value!).then(res => {
             selectedConversationId.value = res.data.conversationId;
-            messages.value = res.data.messages;
+            messages.value.push(res.data);
             retrieveConverations();
           });
         } catch (error) {

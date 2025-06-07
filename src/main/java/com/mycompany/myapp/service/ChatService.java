@@ -27,26 +27,28 @@ public class ChatService {
         this.chatClient = builder
             .defaultAdvisors(new MessageChatMemoryAdvisor(new InMemoryChatMemory()))
             .defaultSystem("You are a helpful AI Assistant answering questions about cities around the world.")
-            .defaultFunctions("currentWeatherFunction")
             .build();
     }
 
     public Conversation chat(Message message, String conversationId) {
         Conversation conversation = findConversationById(conversationId);
+        try {
+            String content = chatClient
+                .prompt()
+                .user(message.getContent())
+                .advisors(a ->
+                    a.param(CHAT_MEMORY_CONVERSATION_ID_KEY, conversation.getConversationId()).param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 5000)
+                )
+                .call()
+                .content();
 
-        String content = chatClient
-            .prompt()
-            .user(message.getContent())
-            .advisors(a ->
-                a.param(CHAT_MEMORY_CONVERSATION_ID_KEY, conversation.getConversationId()).param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 5000)
-            )
-            .call()
-            .content();
-
-        Message chatMessage = new Message("agent", content);
-        conversation.getMessages().add(message);
-        conversation.getMessages().add(chatMessage);
-
+            Message chatMessage = new Message("agent", content);
+            conversation.getMessages().add(message);
+            conversation.getMessages().add(chatMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to generate AI response: " + e.getMessage());
+        }
         return conversation;
     }
 

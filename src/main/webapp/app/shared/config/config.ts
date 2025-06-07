@@ -44,6 +44,8 @@ import { faSmile } from '@fortawesome/free-solid-svg-icons/faSmile';
 import { faFrown } from '@fortawesome/free-solid-svg-icons/faFrown';
 import { faMeh } from '@fortawesome/free-solid-svg-icons/faMeh';
 import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons/faUserCircle';
+import { faDesktop } from '@fortawesome/free-solid-svg-icons/faDesktop';
 
 const datetimeFormats: IntlDateTimeFormats = {
   'pt-br': {
@@ -74,7 +76,7 @@ const datetimeFormats: IntlDateTimeFormats = {
   // jhipster-needle-i18n-language-date-time-format - JHipster will add/remove format options in this object
 };
 
-export function initFortAwesome(vue) {
+export function initFortAwesome(vue: any) {
   vue.component('font-awesome-icon', FontAwesomeIcon);
 
   library.add(
@@ -120,6 +122,8 @@ export function initFortAwesome(vue) {
     faFrown,
     faMeh,
     faEdit,
+    faUserCircle,
+    faDesktop,
   );
 }
 export function initI18N(opts: any = {}) {

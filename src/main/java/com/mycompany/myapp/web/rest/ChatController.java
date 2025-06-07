@@ -5,7 +5,6 @@ import com.mycompany.myapp.domain.Message;
 import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.ChatService;
 import java.util.List;
-import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,7 +13,7 @@ public class ChatController {
 
     private final ChatService chatService;
 
-    public ChatController(ChatService chatService, ChatClient.Builder builder) {
+    public ChatController(ChatService chatService) {
         this.chatService = chatService;
     }
 

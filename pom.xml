@@ -85,7 +85,31 @@
       <id>spring-releases</id>
       <url>https://repo.spring.io/release</url>
     </repository>
+    <repository>
+      <id>spring-milestones</id>
+      <name>Spring Milestone Repository</name>
+      <url>https://repo.spring.io/milestone</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>spring-milestones</id>
+      <name>Spring Milestone Repository</name>
+      <url>https://repo.spring.io/milestone</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
   <dependencies>
     <dependency>
       <groupId>tech.jhipster</groupId>
@@ -305,12 +329,16 @@
     <dependency>
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-core</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0.0-M6</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-openai</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0.0-M6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
     </dependency>
   </dependencies>
   <build>
