@@ -8,6 +8,8 @@ import com.mycompany.myapp.domain.Conversation;
 import com.mycompany.myapp.domain.Message;
 import com.mycompany.myapp.security.SecurityUtils;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +58,9 @@ public class ChatService {
         ChatUser chatUser = findChatUserByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow());
         Conversation conversation = new Conversation();
         conversation.setConversationId(UUID.randomUUID().toString());
-        conversation.setName("Conversation " + LocalDateTime.now());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd | HH:mm:ss");
+        String formattedDate = LocalDateTime.now(ZoneId.of("America/Sao_Paulo")).format(formatter);
+        conversation.setName("Chat: " + formattedDate);
         chatUser.addConversation(conversation);
         return conversation;
     }

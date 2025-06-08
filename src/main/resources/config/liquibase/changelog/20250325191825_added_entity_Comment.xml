@@ -57,7 +57,8 @@
             <column name="body" type="string"/>
             <column name="sentiment" type="numeric"/>
             <column name="author" type="string"/>
-            <column name="create_date" type="date"/>
+          <column name="create_date" type="date"/>
+          <column name="search_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

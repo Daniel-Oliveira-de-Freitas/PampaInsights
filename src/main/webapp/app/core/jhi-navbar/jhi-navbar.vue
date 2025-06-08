@@ -12,6 +12,7 @@
       target="header-tabs"
       aria-expanded="false"
       aria-label="Toggle navigation"
+      shadow
     >
       <font-awesome-icon icon="bars" />
     </b-navbar-toggle>
@@ -31,8 +32,10 @@
           </span>
         </b-nav-item>
         <b-nav-item to="/akip-chat-page" exact v-if="authenticated">
-          <font-awesome-icon icon="desktop" />
-          <span>IA Chat</span>
+          <span>
+            <font-awesome-icon icon="desktop" />
+            <span class="no-bold" v-text="t$('global.menu.entities.chat')"></span>
+          </span>
         </b-nav-item>
         <b-nav-item-dropdown right id="entity-menu" v-if="authenticated" active-class="active" class="pointer" data-cy="entity">
           <template #button-content>

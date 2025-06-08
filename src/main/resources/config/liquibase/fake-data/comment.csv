@@ -1,21 +1,351 @@
-id;body;sentiment;author;create_date
-1;Muito bom o produto recomendo;8;Joãozinho;2025-03-25T17:43:36
-2;Gostei do produto bem bom;4;Pedrinho;2025-03-25T07:52:44
-3;Não gostei da entrega veio amassado;-1;Snoop;2025-03-25T04:05:14
-4;ainda nao abri a caixa depois comento;0;Jhon Tompson;2025-03-24T23:05:37
-5;Muito bom o produto recomendo muito;9;npm install;2025-03-25T06:11:30
-6;Não gostei o produto veio com defeito;-6;Baitaca;2025-03-25T10:30:32
-7;Não gostei o produto veio quebrado;-6;Claudineison;2025-03-25T10:15:55
-8;Quando testar venho comentar;0;Menino Ney;2025-03-25T18:11:53
-9;Bem parecido com o anincio;4;Fifth;2025-03-25T07:54:39
-10;Meia boca esperava mais;3;Moderno;2025-03-25T09:14:11
-11;Muito bom o produto recomendo;8;Joãozinho;2025-03-25T17:43:36
-12;Gostei do produto bem bom;4;Pedrinho;2025-03-25T07:52:44
-13;Não gostei da entrega veio amassado;-1;Snoop;2025-03-25T04:05:14
-14;ainda nao abri a caixa depois comento;0;Jhon Tompson;2025-03-24T23:05:37
-15;Muito bom o produto recomendo muito;9;npm install;2025-03-25T06:11:30
-16;Não gostei o produto veio com defeito;-6;Baitaca;2025-03-25T10:30:32
-17;Não gostei o produto veio quebrado;-6;Claudineison;2025-03-25T10:15:55
-18;Quando testar venho comentar;0;Menino Ney;2025-03-25T18:11:53
-19;Bem parecido com o anincio;4;Fifth;2025-03-25T07:54:39
-20;Meia boca esperava mais;3;Moderno;2025-03-25T09:14:11
+id;body;sentiment;author;create_date;search_id
+1;A embalagem estava danificada.;-2;Felipe Castro;2025-03-25T16:18:00;1
+2;Design bonito, mas desempenho fraco.;2;Rafael Lima;2025-03-25T11:16:00;3
+3;Excelente produto, superou minhas expectativas!;9;Bruno Carvalho;2025-03-25T13:32:00;2
+4;Produto honesto pelo preço.;4;Rafael Lima;2025-03-25T22:00:00;4
+5;Produto maravilhoso, recomendo muito!;10;Patrícia Teixeira;2025-03-25T10:31:00;5
+6;Comprei para presente, a pessoa adorou!;9;Camila Barbosa;2025-03-25T08:44:00;3
+7;Atendeu ao que eu precisava.;6;Lucas Almeida;2025-03-25T14:43:00;7
+8;Entrega foi rápida, produto em boas condições.;7;Carlos Souza;2025-03-25T16:08:00;7
+9;Funciona bem, mas faz muito barulho.;1;Ana Paula;2025-03-25T22:12:00;6
+10;Excelente produto, superou minhas expectativas!;9;Camila Barbosa;2025-03-25T08:31:00;7
+11;Atendeu ao que eu precisava.;6;Camila Barbosa;2025-03-25T20:38:00;5
+12;Design bonito, mas desempenho fraco.;2;Carlos Souza;2025-03-25T20:59:00;6
+13;Muito bom, funciona direitinho!;8;Rafael Lima;2025-03-25T19:58:00;3
+14;Excelente produto, superou minhas expectativas!;9;Juliana Costa;2025-03-25T17:47:00;2
+15;A embalagem estava danificada.;-2;Camila Barbosa;2025-03-25T15:59:00;1
+16;Design bonito, mas desempenho fraco.;2;Vinícius Ramos;2025-03-25T14:11:00;1
+17;Excelente produto, superou minhas expectativas!;9;Bruno Carvalho;2025-03-25T16:44:00;1
+18;Design bonito, mas desempenho fraco.;2;Rodrigo Pinto;2025-03-25T13:00:00;1
+19;Comprei para presente, a pessoa adorou!;9;Bruno Carvalho;2025-03-25T17:26:00;1
+20;A embalagem estava danificada.;-2;Rafael Lima;2025-03-25T16:24:00;1
+21;Produto honesto pelo preço.;4;Juliana Costa;2025-03-25T08:55:00;1
+22;Muito bom, funciona direitinho!;8;Rodrigo Pinto;2025-03-25T22:25:00;1
+23;Produto bom, mas poderia ser mais barato.;5;Carlos Souza;2025-03-25T22:13:00;1
+24;A embalagem estava danificada.;-2;Aline Ribeiro;2025-03-25T22:45:00;1
+25;A embalagem estava danificada.;-2;Carlos Souza;2025-03-25T11:04:00;1
+26;Produto bom, mas poderia ser mais barato.;5;Thiago Nunes;2025-03-25T08:14:00;1
+27;Não gostei tanto, esperava mais.;3;Aline Ribeiro;2025-03-25T16:02:00;1
+28;Produto bom, mas poderia ser mais barato.;5;Larissa Duarte;2025-03-25T20:05:00;1
+29;Não gostei tanto, esperava mais.;3;Felipe Castro;2025-03-25T08:55:00;1
+30;Excelente produto, superou minhas expectativas!;9;João Silva;2025-03-25T12:06:00;1
+31;Veio com defeito, não recomendo.;-6;Gabriel Martins;2025-03-25T13:14:00;1
+32;A embalagem estava danificada.;-2;Lucas Almeida;2025-03-25T20:33:00;1
+33;Não gostei tanto, esperava mais.;3;Bruno Carvalho;2025-03-25T16:51:00;1
+34;Não gostei tanto, esperava mais.;3;Rafael Lima;2025-03-25T17:47:00;1
+35;Design bonito, mas desempenho fraco.;2;Thiago Nunes;2025-03-25T23:17:00;1
+36;Estou testando ainda, depois volto pra avaliar.;0;Débora Freitas;2025-03-25T13:30:00;1
+37;Entrega foi rápida, produto em boas condições.;7;João Silva;2025-03-25T19:02:00;1
+38;Muito bom, funciona direitinho!;8;Bruno Carvalho;2025-03-25T08:05:00;1
+39;Não gostei tanto, esperava mais.;3;Lucas Almeida;2025-03-25T15:47:00;1
+40;Estou testando ainda, depois volto pra avaliar.;0;Rodrigo Pinto;2025-03-25T12:01:00;1
+41;Excelente produto, superou minhas expectativas!;9;Maria Oliveira;2025-03-25T22:15:00;1
+42;Veio com defeito, não recomendo.;-6;Fernanda Melo;2025-03-25T20:51:00;1
+43;Produto honesto pelo preço.;4;Fernanda Melo;2025-03-25T19:32:00;1
+44;Produto honesto pelo preço.;4;Juliana Costa;2025-03-25T23:24:00;1
+45;Muito bom, funciona direitinho!;8;João Silva;2025-03-25T10:32:00;1
+46;Estou testando ainda, depois volto pra avaliar.;0;Rafael Lima;2025-03-25T15:23:00;1
+47;Comprei para presente, a pessoa adorou!;9;Aline Ribeiro;2025-03-25T09:32:00;1
+48;Funciona bem, mas faz muito barulho.;1;Débora Freitas;2025-03-25T23:13:00;1
+49;Não gostei tanto, esperava mais.;3;Larissa Duarte;2025-03-25T22:20:00;1
+50;Produto honesto pelo preço.;4;Larissa Duarte;2025-03-25T09:33:00;1
+51;Muito bom, funciona direitinho!;8;Débora Freitas;2025-03-25T08:25:00;1
+52;Funciona bem, mas faz muito barulho.;1;Juliana Costa;2025-03-25T18:58:00;1
+53;Estou testando ainda, depois volto pra avaliar.;0;Beatriz Rocha;2025-03-25T20:42:00;1
+54;Design bonito, mas desempenho fraco.;2;Rodrigo Pinto;2025-03-25T14:41:00;1
+55;Comprei para presente, a pessoa adorou!;9;Patrícia Teixeira;2025-03-25T16:01:00;1
+56;Design bonito, mas desempenho fraco.;2;Maria Oliveira;2025-03-25T23:20:00;1
+57;Produto bom, mas poderia ser mais barato.;5;Thiago Nunes;2025-03-25T19:10:00;1
+58;Veio com defeito, não recomendo.;-6;Rafael Lima;2025-03-25T22:58:00;2
+59;Não gostei tanto, esperava mais.;3;Beatriz Rocha;2025-03-25T12:15:00;2
+60;A embalagem estava danificada.;-2;Vinícius Ramos;2025-03-25T08:35:00;2
+61;Atendeu ao que eu precisava.;6;Ana Paula;2025-03-25T13:48:00;2
+62;Entrega foi rápida, produto em boas condições.;7;Aline Ribeiro;2025-03-25T20:25:00;2
+63;Excelente produto, superou minhas expectativas!;9;Carlos Souza;2025-03-25T15:21:00;2
+64;Não gostei tanto, esperava mais.;3;Fernanda Melo;2025-03-25T23:28:00;2
+65;Excelente produto, superou minhas expectativas!;9;Débora Freitas;2025-03-25T20:21:00;2
+66;Comprei para presente, a pessoa adorou!;9;Patrícia Teixeira;2025-03-25T14:50:00;2
+67;Produto honesto pelo preço.;4;Débora Freitas;2025-03-25T15:41:00;2
+68;A embalagem estava danificada.;-2;Rodrigo Pinto;2025-03-25T08:19:00;2
+69;Não recomendo, achei de baixa qualidade.;-4;Maria Oliveira;2025-03-25T14:37:00;2
+70;Produto maravilhoso, recomendo muito!;10;Aline Ribeiro;2025-03-25T17:23:00;2
+71;Produto maravilhoso, recomendo muito!;10;Vinícius Ramos;2025-03-25T18:59:00;2
+72;Atendeu ao que eu precisava.;6;Aline Ribeiro;2025-03-25T17:53:00;2
+73;Design bonito, mas desempenho fraco.;2;Juliana Costa;2025-03-25T19:44:00;2
+74;Funciona bem, mas faz muito barulho.;1;Bruno Carvalho;2025-03-25T08:52:00;2
+75;Muito bom, funciona direitinho!;8;Rafael Lima;2025-03-25T17:12:00;2
+76;Entrega foi rápida, produto em boas condições.;7;Gabriel Martins;2025-03-25T10:57:00;2
+77;Produto bom, mas poderia ser mais barato.;5;Felipe Castro;2025-03-25T15:05:00;2
+78;Não gostei tanto, esperava mais.;3;Thiago Nunes;2025-03-26T00:18:00;2
+79;A embalagem estava danificada.;-2;Fernanda Melo;2025-03-25T16:02:00;2
+80;Atendeu ao que eu precisava.;6;Thiago Nunes;2025-03-25T10:51:00;2
+81;Atendeu ao que eu precisava.;6;Patrícia Teixeira;2025-03-25T18:08:00;2
+82;Excelente produto, superou minhas expectativas!;9;Beatriz Rocha;2025-03-25T11:30:00;2
+83;Produto bom, mas poderia ser mais barato.;5;João Silva;2025-03-25T20:41:00;2
+84;Entrega foi rápida, produto em boas condições.;7;Thiago Nunes;2025-03-25T23:39:00;2
+85;Produto honesto pelo preço.;4;Juliana Costa;2025-03-25T12:33:00;2
+86;Funciona bem, mas faz muito barulho.;1;Larissa Duarte;2025-03-25T08:39:00;2
+87;Não recomendo, achei de baixa qualidade.;-4;Larissa Duarte;2025-03-25T19:03:00;2
+88;Atendeu ao que eu precisava.;6;Bruno Carvalho;2025-03-25T22:05:00;2
+89;Excelente produto, superou minhas expectativas!;9;Lucas Almeida;2025-03-25T12:50:00;2
+90;Funciona bem, mas faz muito barulho.;1;Beatriz Rocha;2025-03-25T23:39:00;2
+91;Não recomendo, achei de baixa qualidade.;-4;Camila Barbosa;2025-03-25T08:52:00;2
+92;Produto bom, mas poderia ser mais barato.;5;Gabriel Martins;2025-03-25T17:23:00;2
+93;Muito bom, funciona direitinho!;8;Camila Barbosa;2025-03-25T09:02:00;2
+94;Muito bom, funciona direitinho!;8;Patrícia Teixeira;2025-03-25T22:07:00;2
+95;Comprei para presente, a pessoa adorou!;9;Ana Paula;2025-03-25T15:54:00;2
+96;Não recomendo, achei de baixa qualidade.;-4;Ana Paula;2025-03-26T00:39:00;2
+97;Estou testando ainda, depois volto pra avaliar.;0;Fernanda Melo;2025-03-25T15:31:00;2
+98;Design bonito, mas desempenho fraco.;2;Vinícius Ramos;2025-03-25T09:02:00;2
+99;Excelente produto, superou minhas expectativas!;9;Gabriel Martins;2025-03-25T15:47:00;2
+100;Excelente produto, superou minhas expectativas!;9;Gabriel Martins;2025-03-25T15:38:00;2
+101;Veio com defeito, não recomendo.;-6;Fernanda Melo;2025-03-25T15:41:00;2
+102;Produto honesto pelo preço.;4;Carlos Souza;2025-03-25T14:21:00;2
+103;Design bonito, mas desempenho fraco.;2;Larissa Duarte;2025-03-25T12:36:00;3
+104;A embalagem estava danificada.;-2;Camila Barbosa;2025-03-25T14:51:00;3
+105;Não recomendo, achei de baixa qualidade.;-4;Rafael Lima;2025-03-25T15:11:00;3
+106;Produto bom, mas poderia ser mais barato.;5;Patrícia Teixeira;2025-03-25T23:55:00;3
+107;Não gostei tanto, esperava mais.;3;Fernanda Melo;2025-03-25T12:10:00;3
+108;Produto honesto pelo preço.;4;Camila Barbosa;2025-03-25T22:14:00;3
+109;Estou testando ainda, depois volto pra avaliar.;0;João Silva;2025-03-25T10:03:00;3
+110;Produto bom, mas poderia ser mais barato.;5;Bruno Carvalho;2025-03-25T23:07:00;3
+111;Muito bom, funciona direitinho!;8;Rodrigo Pinto;2025-03-25T12:39:00;3
+112;Comprei para presente, a pessoa adorou!;9;Fernanda Melo;2025-03-25T20:12:00;3
+113;Produto honesto pelo preço.;4;Felipe Castro;2025-03-25T17:10:00;3
+114;Não recomendo, achei de baixa qualidade.;-4;Lucas Almeida;2025-03-25T17:12:00;3
+115;A embalagem estava danificada.;-2;Bruno Carvalho;2025-03-25T23:24:00;3
+116;Produto honesto pelo preço.;4;Fernanda Melo;2025-03-25T18:52:00;3
+117;Não recomendo, achei de baixa qualidade.;-4;Beatriz Rocha;2025-03-25T10:32:00;3
+118;Comprei para presente, a pessoa adorou!;9;Thiago Nunes;2025-03-25T15:41:00;3
+119;Veio com defeito, não recomendo.;-6;Thiago Nunes;2025-03-25T16:37:00;3
+120;Não gostei tanto, esperava mais.;3;Camila Barbosa;2025-03-26T00:37:00;3
+121;Entrega foi rápida, produto em boas condições.;7;Ana Paula;2025-03-25T23:27:00;3
+122;Produto maravilhoso, recomendo muito!;10;Vinícius Ramos;2025-03-25T12:39:00;3
+123;Produto maravilhoso, recomendo muito!;10;Ana Paula;2025-03-25T17:01:00;3
+124;Comprei para presente, a pessoa adorou!;9;Patrícia Teixeira;2025-03-25T13:12:00;3
+125;Excelente produto, superou minhas expectativas!;9;Ana Paula;2025-03-25T18:29:00;3
+126;Funciona bem, mas faz muito barulho.;1;Larissa Duarte;2025-03-25T08:27:00;3
+127;Não recomendo, achei de baixa qualidade.;-4;Felipe Castro;2025-03-25T09:35:00;3
+128;Produto maravilhoso, recomendo muito!;10;Ana Paula;2025-03-25T14:02:00;3
+129;Excelente produto, superou minhas expectativas!;9;Lucas Almeida;2025-03-25T12:41:00;3
+130;Muito bom, funciona direitinho!;8;Maria Oliveira;2025-03-25T19:10:00;3
+131;Estou testando ainda, depois volto pra avaliar.;0;Juliana Costa;2025-03-25T10:26:00;3
+132;Funciona bem, mas faz muito barulho.;1;Larissa Duarte;2025-03-25T12:52:00;3
+133;Produto honesto pelo preço.;4;Ana Paula;2025-03-25T18:04:00;3
+134;Comprei para presente, a pessoa adorou!;9;Thiago Nunes;2025-03-25T12:20:00;3
+135;Excelente produto, superou minhas expectativas!;9;Camila Barbosa;2025-03-25T09:39:00;3
+136;Excelente produto, superou minhas expectativas!;9;Lucas Almeida;2025-03-26T00:03:00;3
+137;Muito bom, funciona direitinho!;8;Ana Paula;2025-03-25T15:15:00;3
+138;A embalagem estava danificada.;-2;Bruno Carvalho;2025-03-25T10:39:00;3
+139;Não gostei tanto, esperava mais.;3;Ana Paula;2025-03-25T09:04:00;3
+140;Produto honesto pelo preço.;4;Ana Paula;2025-03-25T11:14:00;3
+141;A embalagem estava danificada.;-2;Juliana Costa;2025-03-25T17:02:00;3
+142;Veio com defeito, não recomendo.;-6;Patrícia Teixeira;2025-03-25T09:05:00;3
+143;Atendeu ao que eu precisava.;6;Thiago Nunes;2025-03-25T10:04:00;3
+144;Produto maravilhoso, recomendo muito!;10;Fernanda Melo;2025-03-25T10:00:00;3
+145;Design bonito, mas desempenho fraco.;2;Camila Barbosa;2025-03-25T10:01:00;3
+146;Não gostei tanto, esperava mais.;3;Camila Barbosa;2025-03-25T15:57:00;3
+147;Muito bom, funciona direitinho!;8;Carlos Souza;2025-03-25T10:29:00;3
+148;Veio com defeito, não recomendo.;-6;Rafael Lima;2025-03-25T22:58:00;3
+149;Excelente produto, superou minhas expectativas!;9;Camila Barbosa;2025-03-25T19:07:00;3
+150;Não recomendo, achei de baixa qualidade.;-4;Vinícius Ramos;2025-03-25T19:30:00;4
+151;Produto honesto pelo preço.;4;Rodrigo Pinto;2025-03-25T19:00:00;4
+152;Atendeu ao que eu precisava.;6;Rodrigo Pinto;2025-03-25T11:37:00;4
+153;Produto maravilhoso, recomendo muito!;10;Beatriz Rocha;2025-03-25T16:48:00;4
+154;Muito bom, funciona direitinho!;8;Lucas Almeida;2025-03-25T17:05:00;4
+155;Design bonito, mas desempenho fraco.;2;Ana Paula;2025-03-25T23:51:00;4
+156;Atendeu ao que eu precisava.;6;Rafael Lima;2025-03-25T19:39:00;4
+157;Comprei para presente, a pessoa adorou!;9;Maria Oliveira;2025-03-25T23:06:00;4
+158;Produto honesto pelo preço.;4;Juliana Costa;2025-03-25T12:58:00;4
+159;Atendeu ao que eu precisava.;6;Lucas Almeida;2025-03-25T21:22:00;4
+160;Não recomendo, achei de baixa qualidade.;-4;João Silva;2025-03-25T16:48:00;4
+161;Veio com defeito, não recomendo.;-6;Rafael Lima;2025-03-25T08:13:00;4
+162;Atendeu ao que eu precisava.;6;Carlos Souza;2025-03-25T08:24:00;4
+163;A embalagem estava danificada.;-2;Ana Paula;2025-03-25T19:12:00;4
+164;Funciona bem, mas faz muito barulho.;1;Juliana Costa;2025-03-25T15:37:00;4
+165;Produto maravilhoso, recomendo muito!;10;Rodrigo Pinto;2025-03-25T18:01:00;4
+166;Produto maravilhoso, recomendo muito!;10;Débora Freitas;2025-03-25T23:44:00;4
+167;Não recomendo, achei de baixa qualidade.;-4;Lucas Almeida;2025-03-25T17:45:00;4
+168;Design bonito, mas desempenho fraco.;2;Vinícius Ramos;2025-03-25T21:29:00;4
+169;Produto bom, mas poderia ser mais barato.;5;Juliana Costa;2025-03-25T21:46:00;4
+170;Produto bom, mas poderia ser mais barato.;5;Maria Oliveira;2025-03-25T09:56:00;4
+171;Estou testando ainda, depois volto pra avaliar.;0;Aline Ribeiro;2025-03-25T14:53:00;4
+172;A embalagem estava danificada.;-2;Rafael Lima;2025-03-25T14:08:00;4
+173;A embalagem estava danificada.;-2;Bruno Carvalho;2025-03-25T08:50:00;4
+174;Produto bom, mas poderia ser mais barato.;5;Thiago Nunes;2025-03-25T18:32:00;4
+175;Não gostei tanto, esperava mais.;3;Larissa Duarte;2025-03-25T20:51:00;4
+176;Design bonito, mas desempenho fraco.;2;Carlos Souza;2025-03-25T21:32:00;4
+177;Estou testando ainda, depois volto pra avaliar.;0;Fernanda Melo;2025-03-25T23:45:00;4
+178;Estou testando ainda, depois volto pra avaliar.;0;Ana Paula;2025-03-25T09:26:00;4
+179;Não recomendo, achei de baixa qualidade.;-4;Camila Barbosa;2025-03-25T09:26:00;4
+180;Não gostei tanto, esperava mais.;3;João Silva;2025-03-25T09:41:00;4
+181;Excelente produto, superou minhas expectativas!;9;Bruno Carvalho;2025-03-25T20:21:00;4
+182;Entrega foi rápida, produto em boas condições.;7;Juliana Costa;2025-03-25T19:21:00;4
+183;Produto honesto pelo preço.;4;Thiago Nunes;2025-03-25T17:44:00;4
+184;Produto honesto pelo preço.;4;Vinícius Ramos;2025-03-25T16:58:00;4
+185;Atendeu ao que eu precisava.;6;Juliana Costa;2025-03-25T20:26:00;4
+186;Não recomendo, achei de baixa qualidade.;-4;Camila Barbosa;2025-03-25T10:57:00;4
+187;Produto maravilhoso, recomendo muito!;10;Felipe Castro;2025-03-25T23:59:00;4
+188;Não gostei tanto, esperava mais.;3;Ana Paula;2025-03-25T19:38:00;4
+189;Funciona bem, mas faz muito barulho.;1;Lucas Almeida;2025-03-25T11:01:00;4
+190;Excelente produto, superou minhas expectativas!;9;Fernanda Melo;2025-03-26T00:30:00;4
+191;Veio com defeito, não recomendo.;-6;Bruno Carvalho;2025-03-25T10:13:00;4
+192;Não gostei tanto, esperava mais.;3;Juliana Costa;2025-03-25T13:52:00;4
+193;Design bonito, mas desempenho fraco.;2;Maria Oliveira;2025-03-25T13:51:00;4
+194;Veio com defeito, não recomendo.;-6;Carlos Souza;2025-03-25T19:15:00;4
+195;Produto bom, mas poderia ser mais barato.;5;Lucas Almeida;2025-03-25T10:02:00;4
+196;Entrega foi rápida, produto em boas condições.;7;Carlos Souza;2025-03-25T17:37:00;4
+197;Funciona bem, mas faz muito barulho.;1;Lucas Almeida;2025-03-25T13:16:00;4
+198;Muito bom, funciona direitinho!;8;Camila Barbosa;2025-03-25T16:38:00;4
+199;Produto bom, mas poderia ser mais barato.;5;João Silva;2025-03-25T23:38:00;4
+200;Estou testando ainda, depois volto pra avaliar.;0;João Silva;2025-03-25T12:24:00;5
+201;Atendeu ao que eu precisava.;6;Aline Ribeiro;2025-03-25T09:46:00;5
+202;Produto bom, mas poderia ser mais barato.;5;Vinícius Ramos;2025-03-25T22:05:00;5
+203;Entrega foi rápida, produto em boas condições.;7;Carlos Souza;2025-03-25T19:37:00;5
+204;Produto maravilhoso, recomendo muito!;10;Felipe Castro;2025-03-25T11:22:00;5
+205;Design bonito, mas desempenho fraco.;2;Débora Freitas;2025-03-26T00:13:00;5
+206;A embalagem estava danificada.;-2;Aline Ribeiro;2025-03-25T20:05:00;5
+207;Excelente produto, superou minhas expectativas!;9;Felipe Castro;2025-03-25T10:04:00;5
+208;Excelente produto, superou minhas expectativas!;9;Bruno Carvalho;2025-03-25T17:56:00;5
+209;Produto bom, mas poderia ser mais barato.;5;Maria Oliveira;2025-03-25T16:49:00;5
+210;Excelente produto, superou minhas expectativas!;9;Camila Barbosa;2025-03-25T16:40:00;5
+211;Produto honesto pelo preço.;4;Carlos Souza;2025-03-25T08:12:00;5
+212;Entrega foi rápida, produto em boas condições.;7;Rafael Lima;2025-03-25T23:58:00;5
+213;Muito bom, funciona direitinho!;8;Thiago Nunes;2025-03-25T12:33:00;5
+214;Entrega foi rápida, produto em boas condições.;7;Gabriel Martins;2025-03-25T13:34:00;5
+215;Produto honesto pelo preço.;4;Maria Oliveira;2025-03-25T16:37:00;5
+216;Comprei para presente, a pessoa adorou!;9;Carlos Souza;2025-03-25T17:26:00;5
+217;Design bonito, mas desempenho fraco.;2;Bruno Carvalho;2025-03-25T13:19:00;5
+218;Produto maravilhoso, recomendo muito!;10;João Silva;2025-03-25T14:26:00;5
+219;Muito bom, funciona direitinho!;8;Débora Freitas;2025-03-25T08:46:00;5
+220;Atendeu ao que eu precisava.;6;Aline Ribeiro;2025-03-25T12:58:00;5
+221;Excelente produto, superou minhas expectativas!;9;Débora Freitas;2025-03-25T13:32:00;5
+222;Veio com defeito, não recomendo.;-6;Beatriz Rocha;2025-03-26T00:30:00;5
+223;Muito bom, funciona direitinho!;8;Rafael Lima;2025-03-25T17:22:00;5
+224;Não gostei tanto, esperava mais.;3;Lucas Almeida;2025-03-25T16:24:00;5
+225;Produto bom, mas poderia ser mais barato.;5;Beatriz Rocha;2025-03-25T09:43:00;5
+226;Não gostei tanto, esperava mais.;3;Aline Ribeiro;2025-03-26T00:07:00;5
+227;Produto bom, mas poderia ser mais barato.;5;Rafael Lima;2025-03-25T21:10:00;5
+228;Estou testando ainda, depois volto pra avaliar.;0;Beatriz Rocha;2025-03-25T18:55:00;5
+229;Produto honesto pelo preço.;4;Gabriel Martins;2025-03-25T15:16:00;5
+230;Não gostei tanto, esperava mais.;3;Maria Oliveira;2025-03-25T13:03:00;5
+231;Comprei para presente, a pessoa adorou!;9;Felipe Castro;2025-03-25T23:45:00;5
+232;Veio com defeito, não recomendo.;-6;Maria Oliveira;2025-03-25T19:02:00;5
+233;Não gostei tanto, esperava mais.;3;Débora Freitas;2025-03-25T23:24:00;5
+234;Excelente produto, superou minhas expectativas!;9;Patrícia Teixeira;2025-03-25T20:18:00;5
+235;Produto honesto pelo preço.;4;Felipe Castro;2025-03-25T21:32:00;5
+236;Não gostei tanto, esperava mais.;3;Bruno Carvalho;2025-03-25T09:44:00;5
+237;Estou testando ainda, depois volto pra avaliar.;0;Maria Oliveira;2025-03-25T17:26:00;5
+238;Não recomendo, achei de baixa qualidade.;-4;Camila Barbosa;2025-03-25T09:25:00;5
+239;Produto honesto pelo preço.;4;Beatriz Rocha;2025-03-25T10:22:00;5
+240;Excelente produto, superou minhas expectativas!;9;Rafael Lima;2025-03-25T18:53:00;5
+241;Produto honesto pelo preço.;4;Lucas Almeida;2025-03-25T21:36:00;5
+242;Veio com defeito, não recomendo.;-6;Thiago Nunes;2025-03-25T19:45:00;5
+243;Funciona bem, mas faz muito barulho.;1;Rafael Lima;2025-03-25T09:45:00;5
+244;Entrega foi rápida, produto em boas condições.;7;Carlos Souza;2025-03-25T17:47:00;5
+245;Veio com defeito, não recomendo.;-6;Gabriel Martins;2025-03-25T08:08:00;5
+246;Muito bom, funciona direitinho!;8;Débora Freitas;2025-03-25T19:25:00;5
+247;Produto honesto pelo preço.;4;Aline Ribeiro;2025-03-25T21:15:00;5
+248;Atendeu ao que eu precisava.;6;Débora Freitas;2025-03-25T18:50:00;5
+249;Muito bom, funciona direitinho!;8;Carlos Souza;2025-03-25T15:34:00;5
+250;Design bonito, mas desempenho fraco.;2;Patrícia Teixeira;2025-03-25T19:31:00;5
+251;Funciona bem, mas faz muito barulho.;1;Felipe Castro;2025-03-25T17:48:00;6
+252;Estou testando ainda, depois volto pra avaliar.;0;João Silva;2025-03-25T08:37:00;6
+253;Muito bom, funciona direitinho!;8;Maria Oliveira;2025-03-25T12:31:00;6
+254;Excelente produto, superou minhas expectativas!;9;Patrícia Teixeira;2025-03-25T17:18:00;6
+255;Excelente produto, superou minhas expectativas!;9;Camila Barbosa;2025-03-25T10:07:00;6
+256;Design bonito, mas desempenho fraco.;2;Thiago Nunes;2025-03-25T17:53:00;6
+257;Atendeu ao que eu precisava.;6;Carlos Souza;2025-03-25T21:54:00;6
+258;Design bonito, mas desempenho fraco.;2;Patrícia Teixeira;2025-03-25T14:29:00;6
+259;Design bonito, mas desempenho fraco.;2;Ana Paula;2025-03-25T20:45:00;6
+260;Atendeu ao que eu precisava.;6;Fernanda Melo;2025-03-25T18:06:00;6
+261;Excelente produto, superou minhas expectativas!;9;Rodrigo Pinto;2025-03-25T10:44:00;6
+262;Não recomendo, achei de baixa qualidade.;-4;Felipe Castro;2025-03-25T09:38:00;6
+263;Design bonito, mas desempenho fraco.;2;Bruno Carvalho;2025-03-26T00:37:00;6
+264;Veio com defeito, não recomendo.;-6;Rodrigo Pinto;2025-03-25T13:28:00;6
+265;Excelente produto, superou minhas expectativas!;9;João Silva;2025-03-25T15:49:00;6
+266;Produto bom, mas poderia ser mais barato.;5;Fernanda Melo;2025-03-25T19:10:00;6
+267;Design bonito, mas desempenho fraco.;2;Thiago Nunes;2025-03-25T13:21:00;6
+268;Produto honesto pelo preço.;4;João Silva;2025-03-25T18:46:00;6
+269;Atendeu ao que eu precisava.;6;João Silva;2025-03-25T19:25:00;6
+270;Entrega foi rápida, produto em boas condições.;7;Rafael Lima;2025-03-25T12:26:00;6
+271;Produto honesto pelo preço.;4;Carlos Souza;2025-03-25T19:30:00;6
+272;Produto bom, mas poderia ser mais barato.;5;Gabriel Martins;2025-03-25T09:19:00;6
+273;Estou testando ainda, depois volto pra avaliar.;0;Débora Freitas;2025-03-25T22:38:00;6
+274;Estou testando ainda, depois volto pra avaliar.;0;Camila Barbosa;2025-03-25T14:17:00;6
+275;Veio com defeito, não recomendo.;-6;Bruno Carvalho;2025-03-25T15:18:00;6
+276;Veio com defeito, não recomendo.;-6;Rodrigo Pinto;2025-03-25T10:13:00;6
+277;Não gostei tanto, esperava mais.;3;Débora Freitas;2025-03-25T19:15:00;6
+278;A embalagem estava danificada.;-2;Lucas Almeida;2025-03-25T14:48:00;6
+279;Funciona bem, mas faz muito barulho.;1;Fernanda Melo;2025-03-25T09:05:00;6
+280;Produto honesto pelo preço.;4;Aline Ribeiro;2025-03-25T13:59:00;6
+281;Excelente produto, superou minhas expectativas!;9;Camila Barbosa;2025-03-25T08:20:00;6
+282;Não gostei tanto, esperava mais.;3;Thiago Nunes;2025-03-25T17:12:00;6
+283;Entrega foi rápida, produto em boas condições.;7;Beatriz Rocha;2025-03-25T15:26:00;6
+284;Atendeu ao que eu precisava.;6;Gabriel Martins;2025-03-25T13:27:00;6
+285;A embalagem estava danificada.;-2;Beatriz Rocha;2025-03-25T21:48:00;6
+286;Produto maravilhoso, recomendo muito!;10;Bruno Carvalho;2025-03-25T14:56:00;6
+287;Veio com defeito, não recomendo.;-6;Gabriel Martins;2025-03-25T11:27:00;6
+288;Produto bom, mas poderia ser mais barato.;5;João Silva;2025-03-25T08:58:00;6
+289;Produto honesto pelo preço.;4;Rodrigo Pinto;2025-03-25T12:21:00;6
+290;Atendeu ao que eu precisava.;6;Camila Barbosa;2025-03-25T08:28:00;6
+291;Produto honesto pelo preço.;4;Thiago Nunes;2025-03-25T17:51:00;6
+292;A embalagem estava danificada.;-2;Rodrigo Pinto;2025-03-25T15:20:00;6
+293;Excelente produto, superou minhas expectativas!;9;João Silva;2025-03-25T18:27:00;6
+294;Comprei para presente, a pessoa adorou!;9;Lucas Almeida;2025-03-25T19:31:00;6
+295;Excelente produto, superou minhas expectativas!;9;Vinícius Ramos;2025-03-25T10:56:00;6
+296;Comprei para presente, a pessoa adorou!;9;Patrícia Teixeira;2025-03-25T14:27:00;6
+297;Comprei para presente, a pessoa adorou!;9;Beatriz Rocha;2025-03-25T19:12:00;6
+298;Veio com defeito, não recomendo.;-6;Fernanda Melo;2025-03-25T19:49:00;6
+299;Estou testando ainda, depois volto pra avaliar.;0;Juliana Costa;2025-03-25T08:16:00;6
+300;Não recomendo, achei de baixa qualidade.;-4;Rodrigo Pinto;2025-03-25T11:05:00;6
+301;Não recomendo, achei de baixa qualidade.;-4;Larissa Duarte;2025-03-25T11:18:00;7
+302;Atendeu ao que eu precisava.;6;Carlos Souza;2025-03-25T15:14:00;7
+303;Estou testando ainda, depois volto pra avaliar.;0;Larissa Duarte;2025-03-25T13:33:00;7
+304;A embalagem estava danificada.;-2;Aline Ribeiro;2025-03-25T11:58:00;7
+305;A embalagem estava danificada.;-2;Juliana Costa;2025-03-25T09:19:00;7
+306;Atendeu ao que eu precisava.;6;Thiago Nunes;2025-03-25T19:24:00;7
+307;Design bonito, mas desempenho fraco.;2;Fernanda Melo;2025-03-25T09:08:00;7
+308;Veio com defeito, não recomendo.;-6;Rafael Lima;2025-03-25T13:48:00;7
+309;Não gostei tanto, esperava mais.;3;Lucas Almeida;2025-03-26T00:19:00;7
+310;A embalagem estava danificada.;-2;Bruno Carvalho;2025-03-25T08:38:00;7
+311;Atendeu ao que eu precisava.;6;Lucas Almeida;2025-03-25T11:40:00;7
+312;Produto maravilhoso, recomendo muito!;10;Aline Ribeiro;2025-03-25T16:00:00;7
+313;Entrega foi rápida, produto em boas condições.;7;Patrícia Teixeira;2025-03-25T23:57:00;7
+314;A embalagem estava danificada.;-2;Fernanda Melo;2025-03-25T23:18:00;7
+315;Atendeu ao que eu precisava.;6;Bruno Carvalho;2025-03-25T21:21:00;7
+316;Entrega foi rápida, produto em boas condições.;7;Aline Ribeiro;2025-03-25T19:58:00;7
+317;Estou testando ainda, depois volto pra avaliar.;0;Gabriel Martins;2025-03-25T21:29:00;7
+318;Excelente produto, superou minhas expectativas!;9;Larissa Duarte;2025-03-25T19:28:00;7
+319;Funciona bem, mas faz muito barulho.;1;Felipe Castro;2025-03-25T10:20:00;7
+320;Funciona bem, mas faz muito barulho.;1;Camila Barbosa;2025-03-25T11:05:00;7
+321;Veio com defeito, não recomendo.;-6;Carlos Souza;2025-03-25T22:21:00;7
+322;Entrega foi rápida, produto em boas condições.;7;Fernanda Melo;2025-03-25T19:51:00;7
+323;Produto honesto pelo preço.;4;Maria Oliveira;2025-03-25T21:52:00;7
+324;Design bonito, mas desempenho fraco.;2;Camila Barbosa;2025-03-25T16:35:00;7
+325;Estou testando ainda, depois volto pra avaliar.;0;Fernanda Melo;2025-03-25T17:09:00;7
+326;Excelente produto, superou minhas expectativas!;9;Rafael Lima;2025-03-25T21:06:00;7
+327;Produto honesto pelo preço.;4;Débora Freitas;2025-03-25T17:15:00;7
+328;Veio com defeito, não recomendo.;-6;Rafael Lima;2025-03-25T09:42:00;7
+329;Não recomendo, achei de baixa qualidade.;-4;Rodrigo Pinto;2025-03-25T21:49:00;7
+330;Muito bom, funciona direitinho!;8;Lucas Almeida;2025-03-25T14:46:00;7
+331;Excelente produto, superou minhas expectativas!;9;Felipe Castro;2025-03-25T19:00:00;7
+332;Design bonito, mas desempenho fraco.;2;Juliana Costa;2025-03-25T20:51:00;7
+333;Comprei para presente, a pessoa adorou!;9;Thiago Nunes;2025-03-25T09:10:00;7
+334;Não gostei tanto, esperava mais.;3;Gabriel Martins;2025-03-25T10:58:00;7
+335;Estou testando ainda, depois volto pra avaliar.;0;Gabriel Martins;2025-03-25T09:04:00;7
+336;Não recomendo, achei de baixa qualidade.;-4;Camila Barbosa;2025-03-25T20:47:00;7
+337;Produto maravilhoso, recomendo muito!;10;Rodrigo Pinto;2025-03-25T21:44:00;7
+338;Não recomendo, achei de baixa qualidade.;-4;Beatriz Rocha;2025-03-25T10:36:00;7
+339;Produto maravilhoso, recomendo muito!;10;Felipe Castro;2025-03-25T23:17:00;7
+340;Não recomendo, achei de baixa qualidade.;-4;Thiago Nunes;2025-03-25T16:21:00;7
+341;Produto maravilhoso, recomendo muito!;10;Débora Freitas;2025-03-25T08:47:00;7
+342;Estou testando ainda, depois volto pra avaliar.;0;Débora Freitas;2025-03-25T09:16:00;7
+343;Design bonito, mas desempenho fraco.;2;Camila Barbosa;2025-03-25T15:15:00;7
+344;Produto maravilhoso, recomendo muito!;10;Juliana Costa;2025-03-25T22:32:00;7
+345;Veio com defeito, não recomendo.;-6;Rodrigo Pinto;2025-03-25T19:53:00;7
+346;A embalagem estava danificada.;-2;Thiago Nunes;2025-03-25T22:53:00;7
+347;Funciona bem, mas faz muito barulho.;1;Larissa Duarte;2025-03-25T21:49:00;7
+348;Atendeu ao que eu precisava.;6;Aline Ribeiro;2025-03-25T09:51:00;7
+349;Estou testando ainda, depois volto pra avaliar.;0;Gabriel Martins;2025-03-25T20:33:00;7
+350;Funciona bem, mas faz muito barulho.;1;Vinícius Ramos;2025-03-25T12:08:00;7

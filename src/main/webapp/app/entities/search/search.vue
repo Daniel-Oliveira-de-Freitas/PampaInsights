@@ -21,7 +21,7 @@
 
     <div class="row" v-if="searches.length > 0">
       <div class="col-md-3" v-for="search in searches" :key="search.id">
-        <div class="card search-card">
+        <div class="card search-card mb-3">
           <div class="card-header d-flex justify-content-between align-items-center">
             <button @click="toggleFavorite(search)" class="btn btn-secondary">
               <font-awesome-icon :icon="['fas', 'star']" :class="{ 'text-warning': search.favorite, 'text-white': !search.favorite }" />

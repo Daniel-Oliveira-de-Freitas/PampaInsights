@@ -1,11 +1,13 @@
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, watch, nextTick } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import AkipAiService from '@/entities/akip-ai/akip-ai.service';
 import { Message } from '@/shared/model/message.model';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   components: { FontAwesomeIcon },
   setup() {
+    const { t: t$ } = useI18n();
     const akipAiService = new AkipAiService();
     const chatInput = ref('');
     const messages = ref<Message[]>([]);
@@ -42,7 +44,7 @@ export default defineComponent({
       akipAiService.createConversation().then(res => {
         const newConversation = res.data;
         selectedConversationId.value = newConversation.conversationId;
-        messages.value = [new Message('agent', 'Hello, I am Akip AI GPT. How can I help you?')];
+        messages.value = [new Message('agent', 'Olá, sou o LLM Llama 3. Como posso ajudar você??')];
       });
     };
 
@@ -57,18 +59,39 @@ export default defineComponent({
         chatInput.value = '';
 
         try {
-          akipAiService.sendMessage(inputMessage, selectedConversationId.value!).then(res => {
-            selectedConversationId.value = res.data.conversationId;
-            console.log(res.data);
-            messages.value = res.data.messages;
-            retrieveConverations();
-          });
+          const res = await akipAiService.sendMessage(inputMessage, selectedConversationId.value!);
+          selectedConversationId.value = res.data.conversationId;
+
+          // Simulação de streaming: mostra a resposta letra por letra
+          const responseMessage = res.data.messages[res.data.messages.length - 1];
+          const message = new Message('agent', '');
+          messages.value.push(message);
+
+          await streamText(responseMessage.content, message);
+
+          retrieveConverations();
         } catch (error) {
           console.error('Error submitting chat:', error);
           messages.value.push(new Message('agent', 'Sorry, there was an error. Please try again later.'));
         }
       }
     };
+
+    const streamText = async (text: string, message: Message, delay = 30) => {
+      for (let i = 0; i < text.length; i++) {
+        await new Promise(resolve => setTimeout(resolve, delay));
+        message.content += text[i];
+        messages.value = [...messages.value];
+      }
+    };
+
+    watch(messages, async () => {
+      await nextTick();
+      const area = document.querySelector('#chatArea');
+      if (area) {
+        area.scrollTop = area.scrollHeight;
+      }
+    });
 
     return {
       chatInput,
@@ -79,6 +102,7 @@ export default defineComponent({
       selectedConversationId,
       loadMessages,
       createNewConversation,
+      t$,
     };
   },
 });

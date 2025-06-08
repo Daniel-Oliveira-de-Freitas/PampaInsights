@@ -53,22 +53,26 @@ export default defineComponent({
       }
     };
 
-    const searchComments = () => {
-      const urls: string[] = [];
-      if (parameter.value.webSite) urls.push(parameter.value.webSite);
-      if (parameter.value.instagram) urls.push(parameter.value.instagram);
-      if (parameter.value.facebook) urls.push(parameter.value.facebook);
-      if (parameter.value.linkedin) urls.push(parameter.value.linkedin);
-      if (parameter.value.x) urls.push(parameter.value.x);
+    // const searchComments = () => {
+    //   const urls: string[] = [];
+    //   if (parameter.value.webSite) urls.push(parameter.value.webSite);
+    //   if (parameter.value.instagram) urls.push(parameter.value.instagram);
+    //   if (parameter.value.facebook) urls.push(parameter.value.facebook);
+    //   if (parameter.value.linkedin) urls.push(parameter.value.linkedin);
+    //   if (parameter.value.x) urls.push(parameter.value.x);
+    //
+    //   const payload = {
+    //     urls,
+    //     keyword: parameter.value.terms,
+    //     search: parameter.value.search?.id,
+    //   };
+    //
+    //   console.log('Emitting payload:', payload);
+    //   eventBus.emit('analyze-request', payload);
+    // };
 
-      const payload = {
-        urls,
-        keyword: parameter.value.terms,
-        search: parameter.value.search?.id,
-      };
-
-      console.log('Emitting payload:', payload);
-      eventBus.emit('analyze-request', payload);
+    const searchComments = async () => {
+      eventBus.emit('searchComments');
     };
 
     onMounted(async () => {
@@ -111,6 +115,7 @@ export default defineComponent({
     return {
       parameterService,
       alertService,
+      searchComments,
       parameter,
       previousState,
       isSaving,
@@ -123,7 +128,6 @@ export default defineComponent({
       showSidebar,
       validations,
       isEditing,
-      searchComments,
       v$,
       ...useDateFormat({ entityRef: parameter }),
       t$,
@@ -155,6 +159,7 @@ export default defineComponent({
         }
       }
     },
+
     toggleEdit() {
       this.isEditing = !this.isEditing;
     },

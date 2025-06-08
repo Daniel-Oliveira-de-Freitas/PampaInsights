@@ -7,9 +7,10 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entidades",
+        "chat": "IA Chat Llma 3",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
         "search": "Minhas Pesquisas",
-        "comment": "Comment",
+        "comment": "Comentários",
         "filter": "Filter",
         "parameter": "Parameter"
       },

@@ -36,6 +36,7 @@ export default defineComponent({
     const clear = () => {};
 
     const retrieveCommentsBySearchId = async (searchId: any) => {
+      console.log('chegou aqui');
       isFetching.value = true;
       try {
         const res = await commentService().retrieveCommentsBySearchId(searchId);
@@ -47,28 +48,8 @@ export default defineComponent({
       }
     };
 
-    const retrieveCommentsApi = async (payload: { urls: string[]; keyword: string | null; search: string | null }) => {
-      isFetching.value = true;
-      try {
-        const res = await commentsCollectorService().retrieveCommentApi(payload);
-        comments.value = res;
-        console.log('comments', res);
-        eventBus.emit('sentiment-data', sentimentData.value);
-      } catch (err: any) {
-        alertService.showHttpError(err?.response ?? { data: { message: err.message }, status: 500 });
-      } finally {
-        isFetching.value = false;
-      }
-    };
-
     onMounted(async () => {
-      await retrieveCommentsBySearchId(props.searchId);
-      eventBus.on('analyze-request', async (payload: { urls: string[]; keyword: string | null; search: string | null }) => {
-        console.log('Received analyze request:', payload);
-        if (payload.urls.length > 0) {
-          await retrieveCommentsApi(payload);
-        }
-      });
+      eventBus.on('searchComments', () => retrieveCommentsBySearchId(props.searchId));
     });
 
     const sentimentCounts = computed(() => {
@@ -102,7 +83,7 @@ export default defineComponent({
       comments,
       isFetching,
       retrieveCommentsBySearchId,
-      retrieveCommentsApi,
+      // retrieveCommentsApi,
       clear,
       sentimentData,
       chartOptions,
