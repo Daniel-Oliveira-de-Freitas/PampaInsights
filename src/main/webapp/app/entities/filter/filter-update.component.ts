@@ -72,11 +72,13 @@ export default defineComponent({
       }
     };
 
-    onMounted(async () => {
-      eventBus.on('sentiment-data', data => {
+    onMounted(() => {
+      eventBus.off('sentimentData');
+      eventBus.on('sentimentData', data => {
         selectedChartData.value = data;
       });
-      await retrieveFilter(props.searchId);
+
+      retrieveFilter(props.searchId);
     });
 
     const initRelationships = () => {
@@ -111,6 +113,7 @@ export default defineComponent({
 
     const applyFilters = () => {
       showChart.value = true;
+      eventBus.emit('searchComments');
     };
 
     return {

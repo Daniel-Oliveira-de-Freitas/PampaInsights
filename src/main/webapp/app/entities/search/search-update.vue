@@ -8,7 +8,7 @@
         <comment v-if="search.id" :searchId="search.id" @searchComments="$event" />
       </div>
       <div class="col-md-3">
-        <filter-update v-if="search.id" :searchId="search.id" />
+        <filter-update v-if="search.id" :searchId="search.id" @sentimentData="$event" />
       </div>
     </div>
   </div>

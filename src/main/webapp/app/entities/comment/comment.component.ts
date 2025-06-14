@@ -36,7 +36,6 @@ export default defineComponent({
     const clear = () => {};
 
     const retrieveCommentsBySearchId = async (searchId: any) => {
-      console.log('chegou aqui');
       isFetching.value = true;
       try {
         const res = await commentService().retrieveCommentsBySearchId(searchId);
@@ -48,8 +47,12 @@ export default defineComponent({
       }
     };
 
-    onMounted(async () => {
-      eventBus.on('searchComments', () => retrieveCommentsBySearchId(props.searchId));
+    onMounted(() => {
+      eventBus.off('searchComments');
+      eventBus.on('searchComments', async () => {
+        await retrieveCommentsBySearchId(props.searchId);
+        eventBus.emit('sentimentData', sentimentData.value);
+      });
     });
 
     const sentimentCounts = computed(() => {
