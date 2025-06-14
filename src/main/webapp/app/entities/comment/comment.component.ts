@@ -51,6 +51,11 @@ export default defineComponent({
       eventBus.off('searchComments');
       eventBus.on('searchComments', async () => {
         await retrieveCommentsBySearchId(props.searchId);
+      });
+
+      eventBus.off('requestSentimentData');
+      eventBus.on('requestSentimentData', async () => {
+        await retrieveCommentsBySearchId(props.searchId);
         eventBus.emit('sentimentData', sentimentData.value);
       });
     });

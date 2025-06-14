@@ -40,7 +40,7 @@ export default defineComponent({
   setup(props) {
     const filterService = inject('filterService', () => new FilterService());
     const alertService = inject('alertService', () => useAlertService(), true);
-
+    const filtersApplied = ref(false);
     const filter: Ref<IFilter> = ref(new Filter());
 
     const searchService = inject('searchService', () => new SearchService());
@@ -72,13 +72,8 @@ export default defineComponent({
       }
     };
 
-    onMounted(() => {
-      eventBus.off('sentimentData');
-      eventBus.on('sentimentData', data => {
-        selectedChartData.value = data;
-      });
-
-      retrieveFilter(props.searchId);
+    onMounted(async () => {
+      await retrieveFilter(props.searchId);
     });
 
     const initRelationships = () => {
@@ -112,8 +107,21 @@ export default defineComponent({
     };
 
     const applyFilters = () => {
-      showChart.value = true;
-      eventBus.emit('searchComments');
+      filtersApplied.value = true;
+      showChart.value = false;
+
+      const handler = (data: any) => {
+        if (filtersApplied.value) {
+          selectedChartData.value = data;
+          showChart.value = true;
+          filtersApplied.value = false;
+        }
+        eventBus.off('sentimentData', handler);
+      };
+
+      eventBus.off('sentimentData');
+      eventBus.on('sentimentData', handler);
+      eventBus.emit('requestSentimentData');
     };
 
     return {
@@ -135,6 +143,7 @@ export default defineComponent({
       selectedChartData,
       sentimentAnalysisTypeValues,
       showChart,
+      filtersApplied,
       v$,
       t$,
     };
@@ -143,6 +152,7 @@ export default defineComponent({
   methods: {
     save(): void {
       this.isSaving = true;
+      this.showChart = false;
       if (this.filter.id) {
         this.filterService()
           .update(this.filter)
@@ -159,6 +169,7 @@ export default defineComponent({
         this.filterService()
           .create(this.filter, this.searchId)
           .then(param => {
+            this.showChart = false;
             this.isSaving = false;
             this.alertService.showSuccess(this.t$('pampaInsightsApp.filter.created', { param: param.id }).toString());
             this.isEditing = false;
