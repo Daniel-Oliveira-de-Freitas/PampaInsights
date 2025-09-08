@@ -66,7 +66,7 @@ server:
   forward-headers-strategy: native
 
 ai:
-  api-key: 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
+  api-key: 
   base-url: https://api.groq.com/openai/v1/chat/completions
   model: llama-3.3-70b-versatile
 
