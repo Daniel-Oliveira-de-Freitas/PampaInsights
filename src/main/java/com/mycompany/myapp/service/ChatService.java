@@ -69,7 +69,7 @@ public class ChatService {
             chatUserList.add(chatUser);
             return chatUser;
         }
-        return chatMessageOptional.get();
+        return chatMessageOptional.orElseThrow();
     }
 
     public Conversation findConversationById(String conversationId) {
