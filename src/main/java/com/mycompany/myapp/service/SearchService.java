@@ -50,7 +50,7 @@ public class SearchService {
         LOG.debug("Request to save Search : {}", searchDTO);
         Search search = searchMapper.toEntity(searchDTO);
         search.setCreateDate(LocalDateTime.now().atZone(ZoneId.of("America/Sao_Paulo")).toInstant());
-        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()).orElseThrow();
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow()).orElseThrow();
         search.setUser(user);
         search = searchRepository.save(search);
         return searchMapper.toDto(search);

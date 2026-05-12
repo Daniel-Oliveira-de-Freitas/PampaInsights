@@ -45,7 +45,7 @@ public class ParameterService {
     public ParameterDTO save(ParameterDTO parameterDTO, Long searchId) {
         LOG.debug("Request to save Parameter : {}", parameterDTO);
         Parameter parameter = parameterMapper.toEntity(parameterDTO);
-        Search search = searchRepository.findById(searchId).get();
+        Search search = searchRepository.findById(searchId).orElseThrow(() -> new RuntimeException("Search not found with id " + searchId));
         parameter.setSearch(search);
         parameter = parameterRepository.save(parameter);
         return parameterMapper.toDto(parameter);

@@ -93,7 +93,9 @@ public class CommentsCollectorService {
     }
 
     private void saveComments(List<Map<String, Object>> comments, Long searchId) {
-        Search search = searchRepository.findById(searchId).get();
+        Search search = searchRepository
+            .findById(searchId)
+            .orElseThrow(() -> new RuntimeException("Search não encontrada com ID: " + searchId));
 
         comments.forEach(commentMap -> {
             try {

@@ -45,7 +45,7 @@ public class FilterService {
     public FilterDTO save(FilterDTO filterDTO, Long searchId) {
         LOG.debug("Request to save Filter : {}", filterDTO);
         Filter filter = filterMapper.toEntity(filterDTO);
-        Search search = searchRepository.findById(searchId).get();
+        Search search = searchRepository.findById(searchId).orElseThrow(() -> new RuntimeException("Search not found with id " + searchId));
         filter.setSearch(search);
         filter = filterRepository.save(filter);
         return filterMapper.toDto(filter);
