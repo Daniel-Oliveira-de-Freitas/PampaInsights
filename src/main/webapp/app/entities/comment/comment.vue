@@ -3,7 +3,22 @@
     <h2 id="page-heading" data-cy="CommentHeading">
       <span v-text="t$('pampaInsightsApp.comment.home.title')" id="comment-heading"></span>
     </h2>
-    <div class="alert alert-warning" v-if="!isFetching && comments && comments.length === 0">
+    <div v-if="isFetching" class="alert alert-info mt-3 d-flex align-items-center gap-2" role="status" aria-live="polite">
+      <span class="spinner-border spinner-border-sm flex-shrink-0 mr-2" aria-hidden="true"></span>
+      <span> Buscando comentários...</span>
+    </div>
+    <div v-if="collectionWarnings.length > 0" class="mt-3">
+      <div
+        v-for="(warning, index) in collectionWarnings"
+        :key="index"
+        class="alert alert-warning d-flex align-items-start gap-2"
+        role="alert"
+      >
+        <font-awesome-icon icon="fa-solid fa-triangle-exclamation" class="mt-1 flex-shrink-0" />
+        <span>{{ warning }}</span>
+      </div>
+    </div>
+    <div class="alert alert-info mt-3" v-if="!isFetching && comments && comments.length === 0 && collectionWarnings.length === 0">
       <span v-text="t$('pampaInsightsApp.comment.home.notFound')"></span>
     </div>
     <div v-if="comments && comments.length > 0" class="comments-container mt-5 overflow-auto p-2" style="max-height: 70vh">
@@ -26,6 +41,7 @@
 </template>
 
 <script lang="ts" src="./comment.component.ts"></script>
+
 <style scoped>
 .comments-container {
   display: flex;

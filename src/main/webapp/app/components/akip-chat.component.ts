@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import AkipAiService from '@/entities/akip-ai/akip-ai.service';
 import { Message } from '@/shared/model/message.model';

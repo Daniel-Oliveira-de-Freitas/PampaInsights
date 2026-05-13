@@ -55,7 +55,7 @@
 <style scoped>
 #chatBox {
   width: 80%;
-  height: 70%;
+  height: 80%;
   border: 1px solid #ccc;
   border-radius: 5px;
   position: absolute;
@@ -83,13 +83,13 @@
 }
 
 .chat-message.user {
-  background-color: #d1e7dd;
+  background-color: #67ac8f;
   align-self: flex-end;
   border-radius: 5px 5px 0 5px;
 }
 
 .chat-message.agent {
-  background-color: #82c3fc;
+  background-color: #69baff;
   align-self: flex-start;
   border-radius: 5px 5px 5px 0;
 }

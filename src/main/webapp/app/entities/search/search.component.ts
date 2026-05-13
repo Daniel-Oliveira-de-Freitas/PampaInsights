@@ -97,6 +97,7 @@ export default defineComponent({
           isSaving.value = false;
           alertService.showSuccess(t$('pampaInsightsApp.search.created', { param: param.id }).toString());
           closeCreateModal();
+          clearInput();
           handleSyncList();
         })
         .catch(error => {
@@ -105,6 +106,10 @@ export default defineComponent({
           closeCreateModal();
           handleSyncList();
         });
+    };
+
+    const clearInput = () => {
+      search.value.name = '';
     };
 
     return {

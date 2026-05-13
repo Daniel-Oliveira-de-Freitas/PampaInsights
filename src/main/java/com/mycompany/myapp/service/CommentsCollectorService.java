@@ -21,7 +21,6 @@ public class CommentsCollectorService {
 
     private static final Logger log = LoggerFactory.getLogger(CommentsCollectorService.class);
 
-    // ── Endpoint único da nova API (v3) ──────────────────────────────────────
     private static final String EXTRACT_URL = "https://mining-comments-api.vercel.app/comments/extract";
 
     private final RestTemplate restTemplate;
@@ -35,23 +34,39 @@ public class CommentsCollectorService {
     }
 
     /**
-     * Coleta comentários das URLs fornecidas via API de mineração e persiste no banco.
-     *
-     * @param urls        lista de URLs a minerar
-     * @param keyword     palavra-chave da pesquisa
-     * @param searchIdStr ID da pesquisa (String — será convertido para Long ao salvar)
-     * @return lista de mapas com os comentários retornados pela API
+     * Resultado da coleta: comentários encontrados + avisos por URL sem resultado.
      */
-    public List<Map<String, Object>> retrieveComments(List<String> urls, String keyword, String searchIdStr) {
-        List<Map<String, Object>> result = new ArrayList<>();
+    public static class CollectionResult {
 
-        // ── Monta o payload ──────────────────────────────────────────────────
+        private final List<Map<String, Object>> comments;
+        private final List<String> warnings;
+
+        public CollectionResult(List<Map<String, Object>> comments, List<String> warnings) {
+            this.comments = comments;
+            this.warnings = warnings;
+        }
+
+        public List<Map<String, Object>> getComments() {
+            return comments;
+        }
+
+        public List<String> getWarnings() {
+            return warnings;
+        }
+    }
+
+    /**
+     * Coleta comentários via API de mineração e persiste no banco.
+     * Retorna CollectionResult com comentários e avisos amigáveis para URLs sem resultado.
+     */
+    public CollectionResult retrieveComments(List<String> urls, String keyword, String searchIdStr) {
+        List<Map<String, Object>> comments = new ArrayList<>();
+        List<String> warnings = new ArrayList<>();
+
         Map<String, Object> requestPayload = new HashMap<>();
         requestPayload.put("urls", urls);
         requestPayload.put("keyword", keyword);
         requestPayload.put("search", searchIdStr);
-        // maxCommentsPerUrl pode ser configurado aqui se necessário
-        // requestPayload.put("maxCommentsPerUrl", 100);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -61,7 +76,6 @@ public class CommentsCollectorService {
             String jsonBody = objectMapper.writeValueAsString(requestPayload);
             HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
 
-            // ── Chamada única ao endpoint /comments/extract ──────────────────
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
                 EXTRACT_URL,
                 HttpMethod.POST,
@@ -72,33 +86,73 @@ public class CommentsCollectorService {
             if (response.getBody() != null) {
                 Map<String, Object> body = response.getBody();
 
-                // Log de stats para rastreabilidade
-                Object stats = body.get("stats");
-                if (stats != null) {
-                    log.info("Stats da coleta: {}", stats);
+                // Analisa stats e popula warnings para URLs sem resultado
+                Object statsObj = body.get("stats");
+                if (statsObj instanceof List<?>) {
+                    analyzeStats((List<?>) statsObj, warnings);
                 }
 
-                extractComments(body, result);
+                extractComments(body, comments);
             }
 
-            saveComments(result, Long.parseLong(searchIdStr));
+            if (searchIdStr != null && !searchIdStr.isBlank()) {
+                saveComments(comments, Long.parseLong(searchIdStr));
+            }
         } catch (Exception e) {
             log.error("Erro ao recuperar comentários: {}", e.getMessage());
-            result.add(Map.of("error", "Falha ao buscar comentários: " + e.getMessage()));
+            warnings.add("Falha ao comunicar com a API de mineração: " + e.getMessage());
         }
 
-        return result;
+        return new CollectionResult(comments, warnings);
     }
 
-    // ── Extrai a lista "comments" do corpo da resposta ───────────────────────
+    /**
+     * Analisa os stats retornados pela API e gera mensagens amigáveis
+     * para URLs com source "none" (sem resultado) ou "error" (falha).
+     */
+    @SuppressWarnings("unchecked")
+    private void analyzeStats(List<?> stats, List<String> warnings) {
+        for (Object statObj : stats) {
+            if (!(statObj instanceof Map<?, ?>)) continue;
+            Map<String, Object> stat = (Map<String, Object>) statObj;
+
+            String source = String.valueOf(stat.getOrDefault("source", ""));
+            String domain = String.valueOf(stat.getOrDefault("domain", stat.getOrDefault("url", "")));
+            Object errorObj = stat.get("error");
+
+            log.info(
+                "Stats [{}]: source={}, fetcher={}, comments={}, elapsed={}s",
+                domain,
+                source,
+                stat.getOrDefault("fetcher", "-"),
+                stat.getOrDefault("commentsCount", 0),
+                stat.getOrDefault("elapsedSec", 0)
+            );
+
+            if ("error".equals(source)) {
+                String detail = errorObj != null ? ": " + errorObj : "";
+                warnings.add(
+                    "Não foi possível processar \"" + domain + "\"" + detail + ". " + "Verifique se a URL está correta e acessível."
+                );
+            } else if ("none".equals(source)) {
+                warnings.add(
+                    "Nenhum comentário encontrado em \"" +
+                    domain +
+                    "\". " +
+                    "O site pode bloquear coleta automática, não ter comentários públicos, " +
+                    "ou não ser suportado pela ferramenta."
+                );
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
     private void extractComments(Map<String, Object> body, List<Map<String, Object>> result) {
         Object commentsObj = body.get("comments");
         if (commentsObj instanceof List<?>) {
             ((List<?>) commentsObj).forEach(item -> {
                     if (item instanceof Map<?, ?>) {
-                        @SuppressWarnings("unchecked")
-                        Map<String, Object> commentMap = (Map<String, Object>) item;
-                        result.add(commentMap);
+                        result.add((Map<String, Object>) item);
                     }
                 });
         } else {
@@ -106,65 +160,36 @@ public class CommentsCollectorService {
         }
     }
 
-    // ── Persiste cada comentário na entidade Comment ─────────────────────────
     private void saveComments(List<Map<String, Object>> comments, Long searchId) {
-        Search search = searchRepository
-            .findById(searchId)
-            .orElseThrow(() -> new RuntimeException("Search não encontrada com ID: " + searchId));
+        Search search = searchRepository.findById(searchId).orElseThrow(() -> new RuntimeException("Search não encontrada: " + searchId));
 
         comments.forEach(commentMap -> {
-            // Ignora entradas de erro retornadas pela API
             if (commentMap.containsKey("error")) {
                 log.warn("Comentário ignorado (erro da API): {}", commentMap.get("error"));
                 return;
             }
-
             try {
                 Comment comment = new Comment();
-
                 comment.setKeyword(String.valueOf(commentMap.getOrDefault("keyword", "")));
                 comment.setBody(String.valueOf(commentMap.getOrDefault("body", "")));
-
-                // ── Parse de data robusto ────────────────────────────────────
-                // A API v3 retorna ISO 8601 com timezone, ex: "2024-03-15T14:22:00Z"
-                // ou "2026-05-12T16:53:07.489543+00:00".
-                // OffsetDateTime suporta ambos os formatos.
-                String createDateStr = String.valueOf(commentMap.getOrDefault("createDate", ""));
-                Instant instant = parseDate(createDateStr);
-                comment.setCreateDate(instant);
-
+                comment.setCreateDate(parseDate(String.valueOf(commentMap.getOrDefault("createDate", ""))));
                 comment.setSearch(search);
                 commentRepository.save(comment);
             } catch (Exception e) {
-                log.error("Erro ao salvar comentário '{}': {}", commentMap.get("body"), e.getMessage());
+                log.error("Erro ao salvar comentário: {}", e.getMessage());
             }
         });
     }
 
-    /**
-     * Converte uma string de data ISO 8601 em Instant.
-     * Suporta os formatos retornados pela API v3:
-     *   - "2024-03-15T14:22:00Z"
-     *   - "2026-05-12T16:53:07.489543+00:00"
-     *   - "2024-03-15" (data simples, assume meia-noite UTC)
-     * Retorna Instant.now() como fallback se não for possível parsear.
-     */
     private Instant parseDate(String dateStr) {
-        if (dateStr == null || dateStr.isBlank() || dateStr.equals("null")) {
-            return Instant.now();
-        }
-
-        // Tenta OffsetDateTime (cobre Z e +00:00)
+        if (dateStr == null || dateStr.isBlank() || dateStr.equals("null")) return Instant.now();
         try {
             return OffsetDateTime.parse(dateStr).toInstant();
         } catch (DateTimeParseException ignored) {}
-
-        // Tenta data simples "yyyy-MM-dd"
         try {
             return java.time.LocalDate.parse(dateStr).atStartOfDay(java.time.ZoneOffset.UTC).toInstant();
         } catch (DateTimeParseException ignored) {}
-
-        log.warn("Não foi possível parsear a data '{}', usando Instant.now()", dateStr);
+        log.warn("Data não parseável '{}', usando Instant.now()", dateStr);
         return Instant.now();
     }
 }
