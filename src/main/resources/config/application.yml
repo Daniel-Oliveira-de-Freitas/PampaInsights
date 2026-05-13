@@ -93,6 +93,14 @@ management:
 spring:
   application:
     name: pampaInsights
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      base-url: https://api.groq.com/openai
+      chat:
+        options:
+          model: llama-3.3-70b-versatile
+          temperature: 0.5
   docker:
     compose:
       enabled: true

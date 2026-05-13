@@ -33,6 +33,9 @@ export default defineComponent({
     const comments: Ref<IComment[]> = ref([]);
     const isFetching = ref(false);
 
+    // Avisos retornados pela API para URLs sem resultado
+    const collectionWarnings: Ref<string[]> = ref([]);
+
     const clear = () => {};
 
     const retrieveCommentsBySearchId = async (searchId: any) => {
@@ -49,10 +52,15 @@ export default defineComponent({
 
     const retrieveCommentsApi = async (payload: { urls: string[]; keyword: string | null; search: string | null }) => {
       isFetching.value = true;
+      collectionWarnings.value = []; // limpa avisos anteriores
+
       try {
         const res = await commentsCollectorService().retrieveCommentApi(payload);
-        comments.value = res;
-        console.log('comments', res);
+
+        // Atualiza comentários e avisos a partir da resposta estruturada
+        comments.value = res.comments ?? [];
+        collectionWarnings.value = res.warnings ?? [];
+
         eventBus.emit('sentiment-data', sentimentData.value);
       } catch (err: any) {
         alertService.showHttpError(err?.response ?? { data: { message: err.message }, status: 500 });
@@ -64,7 +72,6 @@ export default defineComponent({
     onMounted(async () => {
       await retrieveCommentsBySearchId(props.searchId);
       eventBus.on('analyze-request', async (payload: { urls: string[]; keyword: string | null; search: string | null }) => {
-        console.log('Received analyze request:', payload);
         if (payload.urls.length > 0) {
           await retrieveCommentsApi(payload);
         }
@@ -101,6 +108,7 @@ export default defineComponent({
     return {
       comments,
       isFetching,
+      collectionWarnings,
       retrieveCommentsBySearchId,
       retrieveCommentsApi,
       clear,
