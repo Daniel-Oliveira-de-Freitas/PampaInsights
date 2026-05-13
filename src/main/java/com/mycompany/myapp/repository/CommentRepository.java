@@ -2,6 +2,7 @@ package com.mycompany.myapp.repository;
 
 import com.mycompany.myapp.domain.Comment;
 import com.mycompany.myapp.service.dto.CommentDTO;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findBySearchId(Long searchId);
+
+    @Transactional
+    void deleteBySearchId(Long searchId);
 }
