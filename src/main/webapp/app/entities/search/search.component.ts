@@ -22,6 +22,7 @@ export default defineComponent({
     const searches: Ref<ISearch[]> = ref([]);
     const isFetching = ref(false);
     const newSearchName = ref('');
+    const selectedSort = ref('all');
 
     const retrieveSearches = async () => {
       isFetching.value = true;
@@ -35,8 +36,28 @@ export default defineComponent({
       }
     };
 
+    const retrieveSearchesFavorites = async () => {
+      isFetching.value = true;
+      try {
+        const res = await searchService().retrieveFavorites();
+        searches.value = res.data;
+      } catch (err) {
+        alertService.showHttpError(err.response);
+      } finally {
+        isFetching.value = false;
+      }
+    };
+
     const handleSyncList = () => {
-      retrieveSearches();
+      if (selectedSort.value === 'favorite') {
+        retrieveSearchesFavorites();
+      } else {
+        retrieveSearches();
+      }
+    };
+
+    const handleSortChange = () => {
+      handleSyncList();
     };
 
     onMounted(async () => {
@@ -72,7 +93,9 @@ export default defineComponent({
       search.favorite = !search.favorite;
       searchService()
         .update(search)
+        .then(() => handleSyncList())
         .catch(err => {
+          search.favorite = !search.favorite;
           alertService.showHttpError(err.response);
         });
     };
@@ -115,6 +138,8 @@ export default defineComponent({
     return {
       searches,
       handleSyncList,
+      handleSortChange,
+      selectedSort,
       isFetching,
       retrieveSearches,
       removeId,

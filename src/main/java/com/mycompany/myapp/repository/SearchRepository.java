@@ -13,4 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface SearchRepository extends JpaRepository<Search, Long> {
     @Query("select search from Search search where search.user.login = ?#{authentication.name}")
     List<Search> findByUserIsCurrentUser();
+
+    @Query("select search from Search search where search.favorite = true and search.user.login = ?#{authentication.name}")
+    List<Search> findByFavoriteAndUserIsCurrentUser();
 }

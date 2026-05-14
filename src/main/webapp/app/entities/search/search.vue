@@ -1,9 +1,13 @@
 <template>
   <div>
-    <h2 id="page-heading" data-cy="SearchHeading">
-      <span v-text="t$('pampaInsightsApp.search.home.title')" id="search-heading"></span>
-      <div class="d-flex justify-content-end">
-        <button class="btn btn-info mr-2" @click="handleSyncList" :disabled="isFetching">
+    <div id="page-heading" data-cy="SearchHeading" class="d-flex justify-content-between align-items-center">
+      <h2 id="search-heading" v-text="t$('pampaInsightsApp.search.home.title')"></h2>
+      <div class="d-flex align-items-center gap-2">
+        <select v-model="selectedSort" @change="handleSortChange" class="form-select mr-1" style="width: 130px; height: 37px">
+          <option value="all">Todas</option>
+          <option value="favorite">Favoritas</option>
+        </select>
+        <button class="btn btn-info mr-1" @click="handleSyncList" :disabled="isFetching">
           <font-awesome-icon icon="sync" :spin="isFetching"></font-awesome-icon>
           <span v-text="t$('pampaInsightsApp.search.home.refreshListLabel')"></span>
         </button>
@@ -12,7 +16,7 @@
           <span v-text="t$('pampaInsightsApp.search.home.createLabel')"></span>
         </button>
       </div>
-    </h2>
+    </div>
 
     <br />
     <div class="alert alert-warning" v-if="!isFetching && searches.length === 0">
@@ -21,7 +25,7 @@
 
     <div class="row" v-if="searches.length > 0">
       <div class="col-md-3" v-for="search in searches" :key="search.id">
-        <div class="card search-card">
+        <div class="card search-card mt-4">
           <div class="card-header d-flex justify-content-between align-items-center">
             <button @click="toggleFavorite(search)" class="btn btn-secondary">
               <font-awesome-icon :icon="['fas', 'star']" :class="{ 'text-warning': search.favorite, 'text-white': !search.favorite }" />
@@ -45,7 +49,7 @@
 
       <b-form @submit.prevent="saveSearch">
         <div class="modal-body">
-          <b-form-group label="Nome da Pesquisa" @submit.prevent="saveSearch">
+          <b-form-group label="Nome da Pesquisa">
             <b-form-input v-model="search.name" placeholder="Digite o nome da pesquisa"></b-form-input>
           </b-form-group>
         </div>

@@ -163,6 +163,8 @@ public class CommentsCollectorService {
     private void saveComments(List<Map<String, Object>> comments, Long searchId) {
         Search search = searchRepository.findById(searchId).orElseThrow(() -> new RuntimeException("Search não encontrada: " + searchId));
 
+        commentRepository.deleteBySearchId(searchId);
+
         comments.forEach(commentMap -> {
             if (commentMap.containsKey("error")) {
                 log.warn("Comentário ignorado (erro da API): {}", commentMap.get("error"));

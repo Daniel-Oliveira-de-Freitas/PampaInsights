@@ -14,13 +14,13 @@ import FilterUpdate from '@/entities/filter/filter-update.vue';
 import Comment from '@/entities/comment/comment.vue';
 
 export default defineComponent({
+  name: 'SearchUpdate',
   components: {
     comment: Comment,
     'filter-update': FilterUpdate,
     'parameter-update': ParameterUpdate,
   },
   compatConfig: { MODE: 3 },
-  name: 'SearchUpdate',
   setup() {
     const searchService = inject('searchService', () => new SearchService());
     const alertService = inject('alertService', () => useAlertService(), true);
