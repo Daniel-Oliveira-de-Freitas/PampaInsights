@@ -175,11 +175,6 @@
           ></button>
         </form>
         <p></p>
-        <div class="alert alert-warning">
-          <span v-text="t$('global.messages.info.authenticated.prefix')"></span>
-          <a class="alert-link" @click="openLogin()" v-text="t$('global.messages.info.authenticated.link')"></a
-          ><span v-html="t$('global.messages.info.authenticated.suffix')"></span>
-        </div>
       </div>
     </div>
   </div>
