@@ -2,6 +2,8 @@ import { type ComputedRef, defineComponent, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import type LoginService from '@/account/login.service';
+import example1Img from '../../../content/images/example1.png';
+import example2Img from '../../../content/images/example2.png';
 
 export default defineComponent({
   compatConfig: { MODE: 3 },
@@ -30,6 +32,8 @@ export default defineComponent({
       onSlideEnd,
       sliding,
       slide,
+      example1Img,
+      example2Img,
     };
   },
 });

@@ -34,7 +34,14 @@
           <font-awesome-icon icon="desktop" />
           <span>IA Chat</span>
         </b-nav-item>
-        <b-nav-item-dropdown right id="entity-menu" v-if="authenticated" active-class="active" class="pointer" data-cy="entity">
+        <b-nav-item-dropdown
+          right
+          id="entity-menu"
+          v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+          active-class="active"
+          class="pointer"
+          data-cy="entity"
+        >
           <template #button-content>
             <span class="navbar-dropdown-menu">
               <font-awesome-icon icon="th-list" />

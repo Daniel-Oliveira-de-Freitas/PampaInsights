@@ -29,31 +29,38 @@ export default defineComponent({
     const commentService = inject('commentService', () => new CommentService());
     const commentsCollectorService = inject('commentsCollectorService', () => new CommentsCollectorService());
     const alertService = inject('alertService', () => useAlertService(), true);
-
     const comments: Ref<IComment[]> = ref([]);
-    const isFetching = ref(false);
+    const isLoadingSavedComments = ref(false);
+    const isCollectingComments = ref(false);
+    const isFetching = computed(() => isLoadingSavedComments.value || isCollectingComments.value);
 
-    // Avisos retornados pela API para URLs sem resultado
+    const loadingMessage = computed(() =>
+      isCollectingComments.value ? 'Buscando comentários na API...' : 'Carregando comentários salvos...',
+    );
+
     const collectionWarnings: Ref<string[]> = ref([]);
-
     const clear = () => {};
 
-    const retrieveCommentsBySearchId = async (searchId: any) => {
-      isFetching.value = true;
+    const retrieveCommentsBySearchId = async (searchId?: number | string | null) => {
+      if (!searchId) {
+        comments.value = [];
+        return;
+      }
+      isLoadingSavedComments.value = true;
       try {
         const res = await commentService().retrieveCommentsBySearchId(searchId);
-        comments.value = res.data;
+        comments.value = res.data ?? [];
+        eventBus.emit('sentiment-data', sentimentData.value);
       } catch (err: any) {
         alertService.showHttpError(err.response);
       } finally {
-        isFetching.value = false;
+        isLoadingSavedComments.value = false;
       }
     };
 
-    const retrieveCommentsApi = async (payload: { urls: string[]; keyword: string | null; search: string | null }) => {
-      isFetching.value = true;
+    const retrieveCommentsApi = async (payload: { urls: string[]; keyword: string | null; search: number | string | null }) => {
+      isCollectingComments.value = true;
       collectionWarnings.value = [];
-
       try {
         const res = await commentsCollectorService().retrieveCommentApi(payload);
         collectionWarnings.value = res.warnings ?? [];
@@ -65,7 +72,7 @@ export default defineComponent({
       } catch (err: any) {
         alertService.showHttpError(err?.response ?? { data: { message: err.message }, status: 500 });
       } finally {
-        isFetching.value = false;
+        isCollectingComments.value = false;
       }
     };
 
@@ -114,6 +121,7 @@ export default defineComponent({
     return {
       comments,
       isFetching,
+      loadingMessage,
       collectionWarnings,
       retrieveCommentsBySearchId,
       retrieveCommentsApi,

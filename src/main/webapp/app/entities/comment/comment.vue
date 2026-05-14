@@ -5,7 +5,7 @@
     </h2>
     <div v-if="isFetching" class="alert alert-info mt-3 d-flex align-items-center gap-2" role="status" aria-live="polite">
       <span class="spinner-border spinner-border-sm flex-shrink-0 mr-2" aria-hidden="true"></span>
-      <span> Buscando comentários...</span>
+      <span>{{ loadingMessage }}</span>
     </div>
     <div v-if="collectionWarnings.length > 0" class="mt-3">
       <div

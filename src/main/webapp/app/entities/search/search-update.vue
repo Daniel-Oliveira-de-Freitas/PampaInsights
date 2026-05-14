@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-3">
-        <parameter-update v-if="search.id" :searchId="search.id" />
+        <parameter-update v-if="search.id" :search-id="search.id" />
       </div>
       <div class="col-md-6">
-        <comment v-if="search.id" :searchId="search.id" />
+        <comment v-if="search.id" :search-id="search.id" />
       </div>
       <div class="col-md-3">
-        <filter-update v-if="search.id" :searchId="search.id" />
+        <filter-update v-if="search.id" :search-id="search.id" />
       </div>
     </div>
   </div>

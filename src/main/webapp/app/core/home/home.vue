@@ -50,9 +50,8 @@
               @sliding-start="onSlideStart"
               @sliding-end="onSlideEnd"
             >
-              <b-carousel-slide img-src="/content/images/example1.png"></b-carousel-slide>
-
-              <b-carousel-slide img-src="/content/images/example2.png"> </b-carousel-slide>
+              <b-carousel-slide :img-src="example1Img"></b-carousel-slide>
+              <b-carousel-slide :img-src="example2Img"></b-carousel-slide>
             </b-carousel>
           </div>
         </div>
