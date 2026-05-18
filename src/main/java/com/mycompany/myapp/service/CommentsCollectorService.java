@@ -5,6 +5,8 @@ import com.mycompany.myapp.domain.Comment;
 import com.mycompany.myapp.domain.Search;
 import com.mycompany.myapp.repository.CommentRepository;
 import com.mycompany.myapp.repository.SearchRepository;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.PersistenceUnit;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
@@ -28,22 +30,25 @@ public class CommentsCollectorService {
     private final SearchRepository searchRepository;
     private final CommentRepository commentRepository;
 
+    @PersistenceUnit
+    private EntityManagerFactory entityManagerFactory;
+
     public CommentsCollectorService(SearchRepository searchRepository, CommentRepository commentRepository) {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(10_000); // 10s para conectar
-        factory.setReadTimeout(600_000); // 10min para leitura (Reclame Aqui pode paginar muito)
+        factory.setConnectTimeout(10_000);
+        factory.setReadTimeout(600_000);
         this.restTemplate = new RestTemplate(factory);
         this.searchRepository = searchRepository;
         this.commentRepository = commentRepository;
     }
 
-    public List<Map<String, Object>> retrieveComments(List<String> urls, String keyword, String searchIdStr) {
+    public List<Map<String, Object>> retrieveComments(List<String> urls, String keyword, String searchIdStr, int maxPages) {
         List<Map<String, Object>> comments = new ArrayList<>();
-
         Map<String, Object> requestPayload = new HashMap<>();
         requestPayload.put("urls", urls);
         requestPayload.put("keyword", keyword);
         requestPayload.put("search", searchIdStr);
+        requestPayload.put("maxPages", maxPages);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -95,6 +100,7 @@ public class CommentsCollectorService {
         Search search = searchRepository.findById(searchId).orElseThrow(() -> new RuntimeException("Search não encontrada: " + searchId));
 
         commentRepository.deleteBySearchId(searchId);
+        entityManagerFactory.getCache().evict(Search.class, searchId);
 
         comments.forEach(commentMap -> {
             if (commentMap.containsKey("error")) {

@@ -1,10 +1,13 @@
 <template>
   <div class="mt-5">
-    <h2 id="page-heading" data-cy="CommentHeading">
-      <span v-text="t$('pampaInsightsApp.comment.home.title')" id="comment-heading"></span>
-    </h2>
-    <div v-if="isFetching" class="alert alert-info mt-3 d-flex align-items-center gap-2" role="status" aria-live="polite">
-      <span class="spinner-border spinner-border-sm flex-shrink-0 mr-2" aria-hidden="true"></span>
+    <div class="d-flex align-items-center gap-3 mb-1" id="page-heading" data-cy="CommentHeading">
+      <h2 class="mb-0" v-text="t$('pampaInsightsApp.comment.home.title')"></h2>
+      <span v-if="comments.length > 0" class="badge rounded-pill bg-primary px-3 py-2" style="font-size: 1rem; font-weight: 600">
+        {{ comments.length }}
+      </span>
+    </div>
+    <div v-if="isFetching" class="alert alert-info mt-3 d-flex align-items-center gap-3" role="status" aria-live="polite">
+      <span class="spinner-border spinner-border flex-shrink-0 mr-2" aria-hidden="true"></span>
       <span>{{ loadingMessage }}</span>
     </div>
     <div class="alert alert-info mt-3" v-if="!isFetching && comments && comments.length === 0">

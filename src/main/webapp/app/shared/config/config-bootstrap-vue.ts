@@ -2,6 +2,7 @@ import {
   BAlert,
   BBadge,
   BButton,
+  BCard,
   BCarousel,
   BCarouselSlide,
   BCollapse,
@@ -16,18 +17,18 @@ import {
   BInputGroupPrepend,
   BLink,
   BModal,
-  BNavItem,
-  BNavItemDropdown,
   BNavbar,
   BNavbarBrand,
   BNavbarNav,
   BNavbarToggle,
+  BNavItem,
+  BNavItemDropdown,
   BPagination,
+  BPopover,
   BProgress,
   BProgressBar,
   ToastPlugin,
   VBModal,
-  BCard,
 } from 'bootstrap-vue';
 
 export function initBootstrapVue(vue: any) {
@@ -61,4 +62,5 @@ export function initBootstrapVue(vue: any) {
   vue.component('BCarousel', BCarousel);
   vue.component('BCarouselSlide', BCarouselSlide);
   vue.component('BCard', BCard);
+  vue.component('BPopover', BPopover);
 }

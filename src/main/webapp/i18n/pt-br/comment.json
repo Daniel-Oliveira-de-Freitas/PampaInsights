@@ -2,7 +2,7 @@
   "pampaInsightsApp": {
     "comment": {
       "home": {
-        "title": "Comments",
+        "title": "Comentários",
         "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Comment",
         "createOrEditLabel": "Criar ou editar Comment",

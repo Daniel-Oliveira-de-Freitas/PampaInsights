@@ -39,6 +39,7 @@ export default defineComponent({
     const router = useRouter();
     const isEditing = ref(true);
     const isFetching = ref(false);
+    const maxPages = ref(10);
 
     const previousState = () => router.go(-1);
 
@@ -65,6 +66,7 @@ export default defineComponent({
         urls,
         keyword: parameter.value.terms,
         search: props.searchId,
+        maxPages: maxPages.value,
       };
 
       console.log('Emitting payload:', payload);
@@ -123,6 +125,7 @@ export default defineComponent({
       showSidebar,
       validations,
       isEditing,
+      maxPages,
       searchComments,
       v$,
       ...useDateFormat({ entityRef: parameter }),

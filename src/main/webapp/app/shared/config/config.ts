@@ -46,6 +46,8 @@ import { faMeh } from '@fortawesome/free-solid-svg-icons/faMeh';
 import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons/faUserCircle';
 import { faDesktop } from '@fortawesome/free-solid-svg-icons/faDesktop';
+import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo';
 
 const datetimeFormats: IntlDateTimeFormats = {
   'pt-br': {
@@ -124,6 +126,7 @@ export function initFortAwesome(vue: any) {
     faEdit,
     faUserCircle,
     faDesktop,
+    faCircleInfo,
   );
 }
 export function initI18N(opts: any = {}) {
