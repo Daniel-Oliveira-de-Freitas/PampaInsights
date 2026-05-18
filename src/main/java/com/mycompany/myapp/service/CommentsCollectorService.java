@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,40 +29,16 @@ public class CommentsCollectorService {
     private final CommentRepository commentRepository;
 
     public CommentsCollectorService(SearchRepository searchRepository, CommentRepository commentRepository) {
-        this.restTemplate = new RestTemplate();
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(10_000); // 10s para conectar
+        factory.setReadTimeout(600_000); // 10min para leitura (Reclame Aqui pode paginar muito)
+        this.restTemplate = new RestTemplate(factory);
         this.searchRepository = searchRepository;
         this.commentRepository = commentRepository;
     }
 
-    /**
-     * Resultado da coleta: comentários encontrados + avisos por URL sem resultado.
-     */
-    public static class CollectionResult {
-
-        private final List<Map<String, Object>> comments;
-        private final List<String> warnings;
-
-        public CollectionResult(List<Map<String, Object>> comments, List<String> warnings) {
-            this.comments = comments;
-            this.warnings = warnings;
-        }
-
-        public List<Map<String, Object>> getComments() {
-            return comments;
-        }
-
-        public List<String> getWarnings() {
-            return warnings;
-        }
-    }
-
-    /**
-     * Coleta comentários via API de mineração e persiste no banco.
-     * Retorna CollectionResult com comentários e avisos amigáveis para URLs sem resultado.
-     */
-    public CollectionResult retrieveComments(List<String> urls, String keyword, String searchIdStr) {
+    public List<Map<String, Object>> retrieveComments(List<String> urls, String keyword, String searchIdStr) {
         List<Map<String, Object>> comments = new ArrayList<>();
-        List<String> warnings = new ArrayList<>();
 
         Map<String, Object> requestPayload = new HashMap<>();
         requestPayload.put("urls", urls);
@@ -84,66 +61,20 @@ public class CommentsCollectorService {
             );
 
             if (response.getBody() != null) {
-                Map<String, Object> body = response.getBody();
-
-                // Analisa stats e popula warnings para URLs sem resultado
-                Object statsObj = body.get("stats");
-                if (statsObj instanceof List<?>) {
-                    analyzeStats((List<?>) statsObj, warnings);
-                }
-
-                extractComments(body, comments);
+                extractComments(response.getBody(), comments);
             }
 
             if (searchIdStr != null && !searchIdStr.isBlank()) {
                 saveComments(comments, Long.parseLong(searchIdStr));
             }
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             log.error("Erro ao recuperar comentários: {}", e.getMessage());
-            warnings.add("Falha ao comunicar com a API de mineração: " + e.getMessage());
+            throw new RuntimeException("Falha ao comunicar com a API de mineração: " + e.getMessage());
         }
 
-        return new CollectionResult(comments, warnings);
-    }
-
-    /**
-     * Analisa os stats retornados pela API e gera mensagens amigáveis
-     * para URLs com source "none" (sem resultado) ou "error" (falha).
-     */
-    @SuppressWarnings("unchecked")
-    private void analyzeStats(List<?> stats, List<String> warnings) {
-        for (Object statObj : stats) {
-            if (!(statObj instanceof Map<?, ?>)) continue;
-            Map<String, Object> stat = (Map<String, Object>) statObj;
-
-            String source = String.valueOf(stat.getOrDefault("source", ""));
-            String domain = String.valueOf(stat.getOrDefault("domain", stat.getOrDefault("url", "")));
-            Object errorObj = stat.get("error");
-
-            log.info(
-                "Stats [{}]: source={}, fetcher={}, comments={}, elapsed={}s",
-                domain,
-                source,
-                stat.getOrDefault("fetcher", "-"),
-                stat.getOrDefault("commentsCount", 0),
-                stat.getOrDefault("elapsedSec", 0)
-            );
-
-            if ("error".equals(source)) {
-                String detail = errorObj != null ? ": " + errorObj : "";
-                warnings.add(
-                    "Não foi possível processar \"" + domain + "\"" + detail + ". " + "Verifique se a URL está correta e acessível."
-                );
-            } else if ("none".equals(source)) {
-                warnings.add(
-                    "Nenhum comentário encontrado em \"" +
-                    domain +
-                    "\". " +
-                    "O site pode bloquear coleta automática, não ter comentários públicos, " +
-                    "ou não ser suportado pela ferramenta."
-                );
-            }
-        }
+        return comments;
     }
 
     @SuppressWarnings("unchecked")

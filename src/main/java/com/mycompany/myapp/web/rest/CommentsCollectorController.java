@@ -1,7 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.service.CommentsCollectorService;
-import com.mycompany.myapp.service.CommentsCollectorService.CollectionResult;
 import java.util.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +16,6 @@ public class CommentsCollectorController {
         this.commentsCollectorService = commentsCollectorService;
     }
 
-    /**
-     * POST /api/comments-collector/collect
-     *
-     * Body: { urls: string[], keyword: string, search: string }
-     *
-     * Resposta:
-     * {
-     *   "comments": [...],   // comentários coletados
-     *   "warnings": [...]    // avisos para URLs sem resultado (pode ser lista vazia)
-     * }
-     */
     @PostMapping("/collect")
     public ResponseEntity<Map<String, Object>> collectComments(@RequestBody Map<String, Object> body) {
         @SuppressWarnings("unchecked")
@@ -37,18 +25,14 @@ public class CommentsCollectorController {
         String search = searchObj != null ? searchObj.toString() : null;
 
         if (urls == null || urls.isEmpty() || keyword == null || keyword.isEmpty()) {
-            Map<String, Object> error = new HashMap<>();
-            error.put("comments", Collections.emptyList());
-            error.put("warnings", Collections.singletonList("urls e keyword são obrigatórios"));
-            return ResponseEntity.badRequest().body(error);
+            return ResponseEntity.badRequest().body(Map.of("message", "urls e keyword são obrigatórios"));
         }
 
-        CollectionResult result = commentsCollectorService.retrieveComments(urls, keyword, search);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("comments", result.getComments());
-        response.put("warnings", result.getWarnings());
-
-        return ResponseEntity.ok(response);
+        try {
+            List<Map<String, Object>> comments = commentsCollectorService.retrieveComments(urls, keyword, search);
+            return ResponseEntity.ok(Map.of("comments", comments));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(Map.of("message", e.getMessage()));
+        }
     }
 }

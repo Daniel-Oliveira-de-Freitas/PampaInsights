@@ -4,7 +4,6 @@ const baseApiUrl = 'api/comments-collector';
 
 export interface CollectResponse {
   comments: any[];
-  warnings: string[];
 }
 
 export default class CommentsCollectorService {

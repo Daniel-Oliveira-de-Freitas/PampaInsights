@@ -19,11 +19,11 @@
       },
       "id": "ID",
       "terms": "Termos(Palavra Chave)",
-      "webSite": "Web Site",
-      "instagram": "Instagram",
-      "facebook": "Facebook",
-      "linkedin": "Linkedin",
-      "x": "X",
+      "webSite": "Web Site URL 1",
+      "instagram": "Web Site URL 2",
+      "facebook": "Web Site URL 3",
+      "linkedin": "Web Site URL 4",
+      "x": "Web Site URL 5",
       "createDate": "Create Date",
       "search": "Search"
     }

@@ -7,18 +7,7 @@
       <span class="spinner-border spinner-border-sm flex-shrink-0 mr-2" aria-hidden="true"></span>
       <span>{{ loadingMessage }}</span>
     </div>
-    <div v-if="collectionWarnings.length > 0" class="mt-3">
-      <div
-        v-for="(warning, index) in collectionWarnings"
-        :key="index"
-        class="alert alert-warning d-flex align-items-start gap-2"
-        role="alert"
-      >
-        <font-awesome-icon icon="fa-solid fa-triangle-exclamation" class="mt-1 flex-shrink-0" />
-        <span>{{ warning }}</span>
-      </div>
-    </div>
-    <div class="alert alert-info mt-3" v-if="!isFetching && comments && comments.length === 0 && collectionWarnings.length === 0">
+    <div class="alert alert-info mt-3" v-if="!isFetching && comments && comments.length === 0">
       <span v-text="t$('pampaInsightsApp.comment.home.notFound')"></span>
     </div>
     <div v-if="comments && comments.length > 0" class="comments-container mt-5 overflow-auto p-2" style="max-height: 70vh">
@@ -33,7 +22,7 @@
             <font-awesome-icon v-else-if="comment.sentiment < 0" icon="fa-solid fa-frown" class="negative" />
             <font-awesome-icon v-else icon="fa-solid fa-meh" class="neutral" />
           </div>
-          <span class="author">{{ comment.author }}</span>
+          <span class="author">{{ comment.author || 'Desconhecido' }}</span>
         </div>
       </div>
     </div>

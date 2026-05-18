@@ -64,7 +64,7 @@ export default defineComponent({
       const payload = {
         urls,
         keyword: parameter.value.terms,
-        search: parameter.value.search?.id,
+        search: props.searchId,
       };
 
       console.log('Emitting payload:', payload);

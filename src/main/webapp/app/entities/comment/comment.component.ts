@@ -38,7 +38,6 @@ export default defineComponent({
       isCollectingComments.value ? 'Buscando comentários na API...' : 'Carregando comentários salvos...',
     );
 
-    const collectionWarnings: Ref<string[]> = ref([]);
     const clear = () => {};
 
     const retrieveCommentsBySearchId = async (searchId?: number | string | null) => {
@@ -60,19 +59,14 @@ export default defineComponent({
 
     const retrieveCommentsApi = async (payload: { urls: string[]; keyword: string | null; search: number | string | null }) => {
       isCollectingComments.value = true;
-      collectionWarnings.value = [];
       try {
-        const res = await commentsCollectorService().retrieveCommentApi(payload);
-        collectionWarnings.value = res.warnings ?? [];
-
-        // Re-busca do banco para garantir dados persistidos sem duplicação
-        await retrieveCommentsBySearchId(props.searchId);
-
-        eventBus.emit('sentiment-data', sentimentData.value);
+        await commentsCollectorService().retrieveCommentApi(payload);
       } catch (err: any) {
         alertService.showHttpError(err?.response ?? { data: { message: err.message }, status: 500 });
       } finally {
         isCollectingComments.value = false;
+        await retrieveCommentsBySearchId(props.searchId);
+        eventBus.emit('sentiment-data', sentimentData.value);
       }
     };
 
@@ -122,7 +116,6 @@ export default defineComponent({
       comments,
       isFetching,
       loadingMessage,
-      collectionWarnings,
       retrieveCommentsBySearchId,
       retrieveCommentsApi,
       clear,
