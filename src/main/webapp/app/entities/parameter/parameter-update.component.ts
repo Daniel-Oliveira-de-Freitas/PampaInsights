@@ -161,5 +161,16 @@ export default defineComponent({
     toggleEdit() {
       this.isEditing = !this.isEditing;
     },
+    validateMaxPages() {
+      if (this.maxPages < 1) {
+        this.maxPages = 1;
+        return false;
+      }
+      if (this.maxPages > 30) {
+        this.maxPages = 30;
+        return false;
+      }
+      return true;
+    },
   },
 });

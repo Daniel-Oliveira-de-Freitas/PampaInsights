@@ -60,7 +60,15 @@
                 {{ t$('pampaInsightsApp.parameter.tooltip.maxPages') }}
               </b-popover>
             </div>
-            <input type="number" class="form-control" name="maxPages" id="parameter-maxPages" v-model.number="maxPages" min="1" max="50" />
+            <input
+              @input="validateMaxPages"
+              type="number"
+              class="form-control"
+              name="maxPages"
+              id="parameter-maxPages"
+              v-model.number="maxPages"
+              :readonly="!isEditing"
+            />
           </div>
           <div class="form-group">
             <div class="d-flex align-items-center gap-2 mb-1">
