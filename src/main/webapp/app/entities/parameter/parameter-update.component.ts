@@ -39,7 +39,7 @@ export default defineComponent({
     const router = useRouter();
     const isEditing = ref(true);
     const isFetching = ref(false);
-    const maxPages = ref(10);
+    const maxPages = ref('');
 
     const previousState = () => router.go(-1);
 
