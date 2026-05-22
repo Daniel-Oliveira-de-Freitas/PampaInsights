@@ -2,23 +2,23 @@
   "pampaInsightsApp": {
     "search": {
       "home": {
-        "title": "Searches",
+        "title": "Minhas Pesquisas",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Search",
-        "createOrEditLabel": "Criar ou editar Search",
-        "notFound": "Nenhum Search encontrado"
+        "createLabel": "Criar nova Pesquisa",
+        "createOrEditLabel": "Criar ou editar Pesquisa",
+        "notFound": "Nenhuma Pesquisa encontrada"
       },
-      "created": "Um novo Search foi criado com o identificador { param }",
-      "updated": "Um Search foi atualizado com o identificador { param }",
-      "deleted": "Um Search foi excluído com o identificador { param }",
+      "created": "Uma nova Pesquisa foi criada com o identificador { param }",
+      "updated": "Uma Pesquisa foi atualizada com o identificador { param }",
+      "deleted": "Uma Pesquisa foi excluída com o identificador { param }",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Search { id }?"
+        "question": "Tem certeza de que deseja excluir Pesquisa { id }?"
       },
       "detail": {
-        "title": "Search"
+        "title": "Pesquisa"
       },
       "id": "ID",
-      "name": "Name",
+      "name": "Nome",
       "favorite": "Favorite",
       "createDate": "Create Date",
       "filter": "Filter",

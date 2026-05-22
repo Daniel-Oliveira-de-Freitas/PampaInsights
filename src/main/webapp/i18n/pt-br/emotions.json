@@ -2,9 +2,9 @@
   "pampaInsightsApp": {
     "Emotions": {
       "null": "",
-      "ALL": "ALL",
-      "POSITIVE": "POSITIVE",
-      "NEGATIVE": "NEGATIVE"
+      "ALL": "Todas",
+      "POSITIVE": "Positivas",
+      "NEGATIVE": "Negativas"
     }
   }
 }

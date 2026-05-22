@@ -4,18 +4,18 @@
       "home": {
         "title": "Comentários",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Comment",
-        "createOrEditLabel": "Criar ou editar Comment",
-        "notFound": "Nenhum Comment encontrado"
+        "createLabel": "Criar novo Comentário",
+        "createOrEditLabel": "Criar ou editar Comentário",
+        "notFound": "Nenhum Comentário encontrado"
       },
-      "created": "Um novo Comment foi criado com o identificador { param }",
-      "updated": "Um Comment foi atualizado com o identificador { param }",
-      "deleted": "Um Comment foi excluído com o identificador { param }",
+      "created": "Um novo Comentário foi criado com o identificador { param }",
+      "updated": "Um Comentário foi atualizado com o identificador { param }",
+      "deleted": "Um Comentário foi excluído com o identificador { param }",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Comment { id }?"
+        "question": "Tem certeza de que deseja excluir Comentário { id }?"
       },
       "detail": {
-        "title": "Comment"
+        "title": "Comentário"
       },
       "id": "ID",
       "body": "Body",

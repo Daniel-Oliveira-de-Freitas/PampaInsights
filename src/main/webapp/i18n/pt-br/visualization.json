@@ -2,9 +2,9 @@
   "pampaInsightsApp": {
     "Visualization": {
       "null": "",
-      "ALL": "ALL",
-      "WEB": "WEB",
-      "SOCIAL": "SOCIAL"
+      "ALL": "Todas",
+      "WEB": "Web",
+      "SOCIAL": "Social"
     }
   }
 }

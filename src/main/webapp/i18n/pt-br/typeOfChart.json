@@ -2,9 +2,9 @@
   "pampaInsightsApp": {
     "TypeOfChart": {
       "null": "",
-      "PIZZA": "PIZZA",
-      "COLUNAS": "COLUNAS",
-      "BARRAS": "BARRAS"
+      "PIZZA": "Pizza",
+      "COLUNAS": "Colunas",
+      "BARRAS": "Barras"
     }
   }
 }

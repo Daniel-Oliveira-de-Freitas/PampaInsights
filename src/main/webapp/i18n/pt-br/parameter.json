@@ -2,17 +2,17 @@
   "pampaInsightsApp": {
     "parameter": {
       "home": {
-        "title": "Parameters",
+        "title": "Parâmetros",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Parameter",
-        "createOrEditLabel": "Parametros",
-        "notFound": "Nenhum Parameter encontrado"
+        "createLabel": "Criar novo Parâmetro",
+        "createOrEditLabel": "Parâmetros",
+        "notFound": "Nenhum Parâmetro encontrado"
       },
-      "created": "Um novo Parameter foi criado com o identificador { param }",
-      "updated": "Um Parameter foi atualizado com o identificador { param }",
-      "deleted": "Um Parameter foi excluído com o identificador { param }",
+      "created": "Um novo Parâmetro foi criado com o identificador { param }",
+      "updated": "Um Parâmetro foi atualizado com o identificador { param }",
+      "deleted": "Um Parâmetro foi excluído com o identificador { param }",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Parameter { id }?"
+        "question": "Tem certeza de que deseja excluir Parâmetro { id }?"
       },
       "detail": {
         "title": "Parameter"
@@ -30,7 +30,7 @@
       "tooltip": {
         "terms": "Palavra-chave principal da pesquisa. Será usada para contextualizar a extração dos comentários. Ex: Shop Mundo Digital, Nike, Produto X",
         "webSite": "URL da página de reclamações da empresa no Reclame Aqui. O sistema irá percorrer automaticamente as páginas de listagem de acordo com o número configurado abaixo. Ex: https://www.reclameaqui.com.br/empresa/nome-da-empresa/lista-reclamacoes/",
-        "maxPages": "Número de páginas de listagem a percorrer no Reclame Aqui. Cada página contém em média 10 reclamações. Ex: 10 páginas → ~100 reclamações. Máximo recomendado: 30.",
+        "maxPages": "Número de páginas de listagem a percorrer no Reclame Aqui. Cada página contém em média 5 reclamações. Ex: 10 páginas → ~50 reclamações. Máximo recomendado: 30.",
         "webSiteUrl": "URL adicional para extração de comentários. Pode ser qualquer site público com avaliações ou comentários sobre a empresa ou produto pesquisado."
       }
     }
