@@ -14,8 +14,8 @@ import { Visualization } from '@/shared/model/enumerations/visualization.model';
 import { TypeOfChart } from '@/shared/model/enumerations/type-of-chart.model';
 import { Emotions } from '@/shared/model/enumerations/emotions.model';
 import eventBus from '../../../../../event-bus.ts';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-import { Pie, Bar } from 'vue-chartjs';
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Tooltip } from 'chart.js';
+import { Bar, Pie } from 'vue-chartjs';
 import { SentimentAnalysisType } from '@/shared/model/enumerations/sentiment-analysis-type.model.ts';
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
@@ -69,6 +69,19 @@ export default defineComponent({
         }
       } catch (error) {
         console.log('Pesquisa sem Filtros');
+      } finally {
+        if (!filter.value.sentimentAnalysisType) {
+          filter.value.sentimentAnalysisType = SentimentAnalysisType.EMOTION_POLARITY;
+        }
+        if (!filter.value.visualization) {
+          filter.value.visualization = Visualization.ALL as any;
+        }
+        if (!filter.value.emotions) {
+          filter.value.emotions = Emotions.ALL as any;
+        }
+        if (!filter.value.typeOfChart) {
+          filter.value.typeOfChart = TypeOfChart.PIZZA as any;
+        }
       }
     };
 
@@ -77,6 +90,7 @@ export default defineComponent({
         selectedChartData.value = data;
       });
       await retrieveFilter(props.searchId);
+      applyFilters();
     });
 
     const initRelationships = () => {
@@ -111,6 +125,7 @@ export default defineComponent({
 
     const applyFilters = () => {
       showChart.value = true;
+      eventBus.emit('apply-emotions-filter', v$.value.emotions.$model ?? Emotions.ALL);
     };
 
     return {

@@ -9,18 +9,26 @@
           class="mb-4"
         ></h2>
         <div class="form-group">
-          <label
-            class="form-control-label"
-            v-text="t$('pampaInsightsApp.filter.sentimentAnalysisType')"
-            for="filter-sentimentAnalysisType"
-          ></label>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <label class="form-control-label mb-0" for="filter-sentimentAnalysisType">
+              {{ t$('pampaInsightsApp.filter.sentimentAnalysisType') }}
+            </label>
+            <font-awesome-icon
+              id="tooltip-sentimentAnalysisType"
+              icon="circle-info"
+              class="text-primary"
+              style="cursor: pointer; font-size: 13px"
+            />
+            <b-popover target="tooltip-sentimentAnalysisType" triggers="hover focus" placement="right">
+              {{ t$('pampaInsightsApp.filter.tooltip.sentimentAnalysisType') }}
+            </b-popover>
+          </div>
           <select
-            :disabled="!isEditing"
+            disabled
             class="form-control"
             name="sentimentAnalysisType"
             id="filter-sentimentAnalysisType"
             data-cy="sentimentAnalysisType"
-            :class="{ valid: !v$.sentimentAnalysisType.$invalid, invalid: v$.sentimentAnalysisType.$invalid }"
             v-model="v$.sentimentAnalysisType.$model"
           >
             <option
@@ -33,8 +41,17 @@
             </option>
           </select>
         </div>
+
         <div class="form-group">
-          <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.emotions')" for="filter-emotions"></label>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <label class="form-control-label mb-0" for="filter-emotions">
+              {{ t$('pampaInsightsApp.filter.emotions') }}
+            </label>
+            <font-awesome-icon id="tooltip-emotions" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
+            <b-popover target="tooltip-emotions" triggers="hover focus" placement="right">
+              {{ t$('pampaInsightsApp.filter.tooltip.emotions') }}
+            </b-popover>
+          </div>
           <select
             :disabled="!isEditing"
             class="form-control"
@@ -54,16 +71,29 @@
             </option>
           </select>
         </div>
+
         <div class="form-group">
-          <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.visualization')" for="filter-visualization"></label>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <label class="form-control-label mb-0" for="filter-visualization">
+              {{ t$('pampaInsightsApp.filter.visualization') }}
+            </label>
+            <font-awesome-icon
+              id="tooltip-visualization"
+              icon="circle-info"
+              class="text-primary"
+              style="cursor: pointer; font-size: 13px"
+            />
+            <b-popover target="tooltip-visualization" triggers="hover focus" placement="right">
+              {{ t$('pampaInsightsApp.filter.tooltip.visualization') }}
+            </b-popover>
+          </div>
           <select
-            :disabled="!isEditing"
+            disabled
             class="form-control"
             name="visualization"
-            :class="{ valid: !v$.visualization.$invalid, invalid: v$.visualization.$invalid }"
-            v-model="v$.visualization.$model"
             id="filter-visualization"
             data-cy="visualization"
+            v-model="v$.visualization.$model"
           >
             <option
               v-for="visualization in visualizationValues"
@@ -77,7 +107,15 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" v-text="t$('pampaInsightsApp.filter.typeOfChart')" for="filter-typeOfChart"></label>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <label class="form-control-label mb-0" for="filter-typeOfChart">
+              {{ t$('pampaInsightsApp.filter.typeOfChart') }}
+            </label>
+            <font-awesome-icon id="tooltip-typeOfChart" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
+            <b-popover target="tooltip-typeOfChart" triggers="hover focus" placement="right">
+              {{ t$('pampaInsightsApp.filter.tooltip.typeOfChart') }}
+            </b-popover>
+          </div>
           <select
             :disabled="!isEditing"
             class="form-control"

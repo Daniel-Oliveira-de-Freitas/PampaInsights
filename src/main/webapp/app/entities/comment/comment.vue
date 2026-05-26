@@ -2,19 +2,19 @@
   <div class="mt-5">
     <div class="d-flex align-items-center gap-3 mb-1" id="page-heading" data-cy="CommentHeading">
       <h2 class="mb-0" v-text="t$('pampaInsightsApp.comment.home.title')"></h2>
-      <span v-if="comments.length > 0" class="badge rounded-pill bg-primary px-3 py-2" style="font-size: 1rem; font-weight: 600">
-        {{ comments.length }}
+      <span v-if="filteredComments.length > 0" class="badge rounded-pill bg-primary px-3 py-2" style="font-size: 1rem; font-weight: 600">
+        {{ filteredComments.length }}
       </span>
     </div>
     <div v-if="isFetching" class="alert alert-info mt-3 d-flex align-items-center gap-3" role="status" aria-live="polite">
       <span class="spinner-border spinner-border flex-shrink-0 mr-2" aria-hidden="true"></span>
       <span>{{ loadingMessage }}</span>
     </div>
-    <div class="alert alert-info mt-3" v-if="!isFetching && comments && comments.length === 0">
+    <div class="alert alert-info mt-3" v-if="!isFetching && filteredComments && filteredComments.length === 0">
       <span v-text="t$('pampaInsightsApp.comment.home.notFound')"></span>
     </div>
-    <div v-if="comments && comments.length > 0" class="comments-container mt-5 overflow-auto p-2" style="max-height: 70vh">
-      <div v-for="comment in comments" :key="comment.id" class="comment-bubble">
+    <div v-if="filteredComments && filteredComments.length > 0" class="comments-container mt-5 overflow-auto p-2" style="max-height: 70vh">
+      <div v-for="comment in filteredComments" :key="comment.id" class="comment-bubble">
         <div class="comment-content">
           <p class="comment-body">{{ comment.body }}</p>
           <span class="date">{{ formatDateShort(comment.createDate) || '' }}</span>

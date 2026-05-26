@@ -30,6 +30,7 @@ export default defineComponent({
     const commentsCollectorService = inject('commentsCollectorService', () => new CommentsCollectorService());
     const alertService = inject('alertService', () => useAlertService(), true);
     const comments: Ref<IComment[]> = ref([]);
+    const emotionsFilter = ref('ALL');
     const isLoadingSavedComments = ref(false);
     const isCollectingComments = ref(false);
     const isFetching = computed(() => isLoadingSavedComments.value || isCollectingComments.value);
@@ -70,6 +71,16 @@ export default defineComponent({
       }
     };
 
+    const filteredComments = computed(() => {
+      if (emotionsFilter.value === 'POSITIVE') return comments.value.filter(c => (c.sentiment ?? 0) > 0);
+      if (emotionsFilter.value === 'NEGATIVE') return comments.value.filter(c => (c.sentiment ?? 0) < 0);
+      return comments.value;
+    });
+
+    const onEmotionsFilter = (emotions: string) => {
+      emotionsFilter.value = emotions;
+    };
+
     const onAnalyzeRequest = async (payload: { urls: string[]; keyword: string | null; search: string | null }) => {
       if (payload.urls.length > 0) {
         await retrieveCommentsApi(payload);
@@ -79,10 +90,12 @@ export default defineComponent({
     onMounted(async () => {
       await retrieveCommentsBySearchId(props.searchId);
       eventBus.on('analyze-request', onAnalyzeRequest);
+      eventBus.on('apply-emotions-filter', onEmotionsFilter);
     });
 
     onUnmounted(() => {
       eventBus.off('analyze-request', onAnalyzeRequest);
+      eventBus.off('apply-emotions-filter', onEmotionsFilter);
     });
 
     const sentimentCounts = computed(() => {
@@ -114,6 +127,7 @@ export default defineComponent({
 
     return {
       comments,
+      filteredComments,
       isFetching,
       loadingMessage,
       retrieveCommentsBySearchId,

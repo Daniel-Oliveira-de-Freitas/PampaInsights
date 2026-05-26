@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -29,17 +30,23 @@ public class CommentsCollectorService {
     private final RestTemplate restTemplate;
     private final SearchRepository searchRepository;
     private final CommentRepository commentRepository;
+    private final AnalysisService analysisService;
 
     @PersistenceUnit
     private EntityManagerFactory entityManagerFactory;
 
-    public CommentsCollectorService(SearchRepository searchRepository, CommentRepository commentRepository) {
+    public CommentsCollectorService(
+        SearchRepository searchRepository,
+        CommentRepository commentRepository,
+        AnalysisService analysisService
+    ) {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(10_000);
         factory.setReadTimeout(600_000);
         this.restTemplate = new RestTemplate(factory);
         this.searchRepository = searchRepository;
         this.commentRepository = commentRepository;
+        this.analysisService = analysisService;
     }
 
     public List<Map<String, Object>> retrieveComments(List<String> urls, String keyword, String searchIdStr, int maxPages) {
@@ -67,6 +74,21 @@ public class CommentsCollectorService {
 
             if (response.getBody() != null) {
                 extractComments(response.getBody(), comments);
+            }
+
+            List<String> validBodies = comments
+                .stream()
+                .filter(c -> !c.containsKey("error"))
+                .map(c -> String.valueOf(c.getOrDefault("body", "")))
+                .collect(Collectors.toList());
+
+            List<Integer> sentiments = analysisService.predict(validBodies);
+
+            int sentimentIdx = 0;
+            for (Map<String, Object> commentMap : comments) {
+                if (!commentMap.containsKey("error") && sentimentIdx < sentiments.size()) {
+                    commentMap.put("sentiment", sentiments.get(sentimentIdx++));
+                }
             }
 
             if (searchIdStr != null && !searchIdStr.isBlank()) {
@@ -113,6 +135,10 @@ public class CommentsCollectorService {
                 comment.setBody(String.valueOf(commentMap.getOrDefault("body", "")));
                 comment.setCreateDate(parseDate(String.valueOf(commentMap.getOrDefault("createDate", ""))));
                 comment.setSearch(search);
+                Object sentimentVal = commentMap.get("sentiment");
+                if (sentimentVal instanceof Integer) {
+                    comment.setSentiment(((Integer) sentimentVal).longValue());
+                }
                 commentRepository.save(comment);
             } catch (Exception e) {
                 log.error("Erro ao salvar comentário: {}", e.getMessage());

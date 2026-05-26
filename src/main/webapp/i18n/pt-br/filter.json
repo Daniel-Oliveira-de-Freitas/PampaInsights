@@ -22,7 +22,13 @@
       "visualization": "Tipo de Visualisação",
       "typeOfChart": "Tipo de Gráfico",
       "emotions": "Emoções",
-      "search": "Search"
+      "search": "Search",
+      "tooltip": {
+        "sentimentAnalysisType": "Define o método de análise de sentimentos. Atualmente utiliza Polaridade Emocional.",
+        "emotions": "Filtre os comentários por sentimento: Todos, Positivos ou Negativos.",
+        "visualization": "Define as fontes de dados a visualizar. Atualmente exibe todas as fontes.",
+        "typeOfChart": "Escolha o tipo de gráfico para exibir os resultados de sentimento."
+      }
     }
   }
 }
