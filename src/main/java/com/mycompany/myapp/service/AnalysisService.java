@@ -15,12 +15,10 @@ import org.springframework.web.client.RestTemplate;
 public class AnalysisService {
 
     private static final Logger log = LoggerFactory.getLogger(AnalysisService.class);
-
-    private final String predictUrl;
     private final RestTemplate restTemplate;
+    private static final String PREDICT_URL = "https://pampainsights-sentiment-analysis-api-production.up.railway.app/predict";
 
-    public AnalysisService(@Value("${app.analysis.url}") String baseUrl) {
-        this.predictUrl = baseUrl + "/predict";
+    public AnalysisService() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(10_000);
         factory.setReadTimeout(120_000);
@@ -40,7 +38,7 @@ public class AnalysisService {
         log.debug("Enviando {} comentários para análise de sentimento", texts.size());
 
         ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-            predictUrl,
+            PREDICT_URL,
             HttpMethod.POST,
             entity,
             new ParameterizedTypeReference<Map<String, Object>>() {}

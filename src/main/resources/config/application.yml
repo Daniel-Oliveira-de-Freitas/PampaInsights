@@ -232,7 +232,3 @@ jhipster:
 # ===================================================================
 
 # application:
-
-app:
-  analysis:
-    url: pampainsights-sentiment-analysis-api-production.up.railway.app
