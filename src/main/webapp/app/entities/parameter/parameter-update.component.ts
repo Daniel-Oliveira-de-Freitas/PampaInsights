@@ -39,7 +39,6 @@ export default defineComponent({
     const router = useRouter();
     const isEditing = ref(true);
     const isFetching = ref(false);
-    const maxPages = ref('');
 
     const previousState = () => router.go(-1);
 
@@ -66,7 +65,7 @@ export default defineComponent({
         urls,
         keyword: parameter.value.terms,
         search: props.searchId,
-        maxPages: maxPages.value,
+        maxPages: parameter.value.maxPages,
       };
 
       console.log('Emitting payload:', payload);
@@ -92,6 +91,7 @@ export default defineComponent({
     const validationRules = {
       terms: { required },
       webSite: {},
+      maxPages: {},
       instagram: {},
       facebook: {},
       linkedin: {},
@@ -125,7 +125,6 @@ export default defineComponent({
       showSidebar,
       validations,
       isEditing,
-      maxPages,
       searchComments,
       v$,
       ...useDateFormat({ entityRef: parameter }),
@@ -139,6 +138,7 @@ export default defineComponent({
       if (this.parameter.id) {
         try {
           const param = await this.parameterService().update(this.parameter);
+          this.parameter = param;
           this.alertService.showInfo(this.t$('pampaInsightsApp.parameter.updated', { param: param.id }));
           this.isEditing = false;
         } catch (error: any) {
@@ -149,6 +149,7 @@ export default defineComponent({
       } else {
         try {
           const param = await this.parameterService().create(this.parameter, this.searchId);
+          this.parameter = param;
           this.alertService.showSuccess(this.t$('pampaInsightsApp.parameter.created', { param: param.id }).toString());
           this.isEditing = false;
         } catch (error: any) {

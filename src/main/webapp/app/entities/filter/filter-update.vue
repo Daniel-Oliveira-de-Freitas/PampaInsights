@@ -44,36 +44,6 @@
 
         <div class="form-group">
           <div class="d-flex align-items-center gap-2 mb-1">
-            <label class="form-control-label mb-0" for="filter-emotions">
-              {{ t$('pampaInsightsApp.filter.emotions') }}
-            </label>
-            <font-awesome-icon id="tooltip-emotions" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
-            <b-popover target="tooltip-emotions" triggers="hover focus" placement="right">
-              {{ t$('pampaInsightsApp.filter.tooltip.emotions') }}
-            </b-popover>
-          </div>
-          <select
-            :disabled="!isEditing"
-            class="form-control"
-            name="emotions"
-            :class="{ valid: !v$.emotions.$invalid, invalid: v$.emotions.$invalid }"
-            v-model="v$.emotions.$model"
-            id="filter-emotions"
-            data-cy="emotions"
-          >
-            <option
-              v-for="emotions in emotionsValues"
-              :key="emotions"
-              :value="emotions"
-              :label="t$('pampaInsightsApp.Emotions.' + emotions)"
-            >
-              {{ emotions }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <div class="d-flex align-items-center gap-2 mb-1">
             <label class="form-control-label mb-0" for="filter-visualization">
               {{ t$('pampaInsightsApp.filter.visualization') }}
             </label>
@@ -102,6 +72,36 @@
               :label="t$('pampaInsightsApp.Visualization.' + visualization)"
             >
               {{ visualization }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <label class="form-control-label mb-0" for="filter-emotions">
+              {{ t$('pampaInsightsApp.filter.emotions') }}
+            </label>
+            <font-awesome-icon id="tooltip-emotions" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
+            <b-popover target="tooltip-emotions" triggers="hover focus" placement="right">
+              {{ t$('pampaInsightsApp.filter.tooltip.emotions') }}
+            </b-popover>
+          </div>
+          <select
+            :disabled="!isEditing"
+            class="form-control"
+            name="emotions"
+            :class="{ valid: !v$.emotions.$invalid, invalid: v$.emotions.$invalid }"
+            v-model="v$.emotions.$model"
+            id="filter-emotions"
+            data-cy="emotions"
+          >
+            <option
+              v-for="emotions in emotionsValues"
+              :key="emotions"
+              :value="emotions"
+              :label="t$('pampaInsightsApp.Emotions.' + emotions)"
+            >
+              {{ emotions }}
             </option>
           </select>
         </div>
@@ -165,7 +165,7 @@
           </button>
         </div>
 
-        <div class="mt-4" v-if="showChart && !isEditing">
+        <div class="mt-4" v-if="showChart">
           <div v-if="v$.typeOfChart.$model === TypeOfChart.PIZZA && selectedChartData">
             <PieChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
           </div>

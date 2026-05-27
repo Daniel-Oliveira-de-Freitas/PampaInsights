@@ -8,9 +8,9 @@
         "createOrEditLabel": "Filtros",
         "notFound": "Nenhum Filter encontrado"
       },
-      "created": "Um novo Filter foi criado com o identificador { param }",
-      "updated": "Um Filter foi atualizado com o identificador { param }",
-      "deleted": "Um Filter foi excluído com o identificador { param }",
+      "created": "Filtro salvo com sucesso.",
+      "updated": "Filtro atualizado com sucesso.",
+      "deleted": "Um Filter foi excluído com o identificador { id }",
       "delete": {
         "question": "Tem certeza de que deseja excluir Filter { id }?"
       },
@@ -19,15 +19,15 @@
       },
       "id": "ID",
       "sentimentAnalysisType": "Análise de Sentimentos",
-      "visualization": "Tipo de Visualisação",
+      "visualization": "Tipo de Visualização",
       "typeOfChart": "Tipo de Gráfico",
       "emotions": "Emoções",
       "search": "Search",
       "tooltip": {
-        "sentimentAnalysisType": "Define o método de análise de sentimentos. Atualmente utiliza Polaridade Emocional.",
-        "emotions": "Filtre os comentários por sentimento: Todos, Positivos ou Negativos.",
-        "visualization": "Define as fontes de dados a visualizar. Atualmente exibe todas as fontes.",
-        "typeOfChart": "Escolha o tipo de gráfico para exibir os resultados de sentimento."
+        "sentimentAnalysisType": "Método utilizado para classificar o sentimento dos comentários. Atualmente fixo em Polaridade Emocional (positivo, negativo ou neutro).",
+        "emotions": "Filtre os comentários exibidos por sentimento: Todos, somente Positivos ou somente Negativos. Clique em 'Aplicar Filtros' para atualizar.",
+        "visualization": "Define as fontes de dados que serão consideradas na visualização. Atualmente configurado para exibir todas as fontes disponíveis.",
+        "typeOfChart": "Escolha o formato visual para exibir a distribuição de sentimentos: Pizza, Barras verticais ou Barras horizontais (Colunas)."
       }
     }
   }

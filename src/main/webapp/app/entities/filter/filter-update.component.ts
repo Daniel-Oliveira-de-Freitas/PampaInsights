@@ -88,6 +88,7 @@ export default defineComponent({
     onMounted(async () => {
       eventBus.on('sentiment-data', data => {
         selectedChartData.value = data;
+        if (data) showChart.value = true;
       });
       await retrieveFilter(props.searchId);
       applyFilters();
@@ -160,8 +161,10 @@ export default defineComponent({
           .update(this.filter)
           .then(param => {
             this.isSaving = false;
+            this.filter = param;
             this.alertService.showInfo(this.t$('pampaInsightsApp.filter.updated', { param: param.id }));
             this.isEditing = false;
+            this.applyFilters();
           })
           .catch(error => {
             this.isSaving = false;
@@ -172,8 +175,10 @@ export default defineComponent({
           .create(this.filter, this.searchId)
           .then(param => {
             this.isSaving = false;
+            this.filter = param;
             this.alertService.showSuccess(this.t$('pampaInsightsApp.filter.created', { param: param.id }).toString());
             this.isEditing = false;
+            this.applyFilters();
           })
           .catch(error => {
             this.isSaving = false;

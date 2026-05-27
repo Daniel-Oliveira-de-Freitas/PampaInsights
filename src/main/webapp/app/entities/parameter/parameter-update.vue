@@ -66,7 +66,7 @@
               class="form-control"
               name="maxPages"
               id="parameter-maxPages"
-              v-model.number="maxPages"
+              v-model="v$.maxPages.$model"
               :readonly="!isEditing"
             />
           </div>
@@ -77,7 +77,7 @@
               </label>
               <font-awesome-icon id="tooltip-instagram" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-instagram" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.webSiteUrl') }}
+                {{ t$('pampaInsightsApp.parameter.tooltip.instagram') }}
               </b-popover>
             </div>
             <input
@@ -97,7 +97,7 @@
               </label>
               <font-awesome-icon id="tooltip-facebook" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-facebook" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.webSiteUrl') }}
+                {{ t$('pampaInsightsApp.parameter.tooltip.facebook') }}
               </b-popover>
             </div>
             <input
@@ -117,7 +117,7 @@
               </label>
               <font-awesome-icon id="tooltip-linkedin" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-linkedin" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.webSiteUrl') }}
+                {{ t$('pampaInsightsApp.parameter.tooltip.linkedin') }}
               </b-popover>
             </div>
             <input
@@ -137,7 +137,7 @@
               </label>
               <font-awesome-icon id="tooltip-x" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-x" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.webSiteUrl') }}
+                {{ t$('pampaInsightsApp.parameter.tooltip.x') }}
               </b-popover>
             </div>
             <input type="text" class="form-control" name="x" id="parameter-x" data-cy="x" v-model="v$.x.$model" :readonly="!isEditing" />
