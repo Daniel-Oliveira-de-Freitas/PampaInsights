@@ -27,27 +27,6 @@
               data-cy="terms"
               :class="{ valid: !v$.terms.$invalid, invalid: v$.terms.$invalid }"
               v-model="v$.terms.$model"
-              :readonly="!isEditing"
-            />
-          </div>
-          <div class="form-group">
-            <div class="d-flex align-items-center gap-2 mb-1">
-              <label class="form-control-label mb-0" for="parameter-webSite">
-                {{ t$('pampaInsightsApp.parameter.webSite') }}
-              </label>
-              <font-awesome-icon id="tooltip-webSite" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
-              <b-popover target="tooltip-webSite" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.webSite') }}
-              </b-popover>
-            </div>
-            <input
-              type="text"
-              class="form-control"
-              name="webSite"
-              id="parameter-webSite"
-              data-cy="webSite"
-              v-model="v$.webSite.$model"
-              :readonly="!isEditing"
             />
           </div>
           <div class="form-group">
@@ -66,9 +45,20 @@
               class="form-control"
               name="maxPages"
               id="parameter-maxPages"
-              v-model.number="maxPages"
-              :readonly="!isEditing"
+              v-model="v$.maxPages.$model"
             />
+          </div>
+          <div class="form-group">
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <label class="form-control-label mb-0" for="parameter-webSite">
+                {{ t$('pampaInsightsApp.parameter.webSite') }}
+              </label>
+              <font-awesome-icon id="tooltip-webSite" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
+              <b-popover target="tooltip-webSite" triggers="hover focus" placement="right">
+                {{ t$('pampaInsightsApp.parameter.tooltip.webSite') }}
+              </b-popover>
+            </div>
+            <input type="text" class="form-control" name="webSite" id="parameter-webSite" data-cy="webSite" v-model="v$.webSite.$model" />
           </div>
           <div class="form-group">
             <div class="d-flex align-items-center gap-2 mb-1">
@@ -77,7 +67,7 @@
               </label>
               <font-awesome-icon id="tooltip-instagram" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-instagram" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.webSiteUrl') }}
+                {{ t$('pampaInsightsApp.parameter.tooltip.instagram') }}
               </b-popover>
             </div>
             <input
@@ -87,7 +77,6 @@
               id="parameter-instagram"
               data-cy="instagram"
               v-model="v$.instagram.$model"
-              :readonly="!isEditing"
             />
           </div>
           <div class="form-group">
@@ -97,7 +86,7 @@
               </label>
               <font-awesome-icon id="tooltip-facebook" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-facebook" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.webSiteUrl') }}
+                {{ t$('pampaInsightsApp.parameter.tooltip.facebook') }}
               </b-popover>
             </div>
             <input
@@ -107,7 +96,6 @@
               id="parameter-facebook"
               data-cy="facebook"
               v-model="v$.facebook.$model"
-              :readonly="!isEditing"
             />
           </div>
           <div class="form-group">
@@ -117,7 +105,7 @@
               </label>
               <font-awesome-icon id="tooltip-linkedin" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-linkedin" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.webSiteUrl') }}
+                {{ t$('pampaInsightsApp.parameter.tooltip.linkedin') }}
               </b-popover>
             </div>
             <input
@@ -127,7 +115,6 @@
               id="parameter-linkedin"
               data-cy="linkedin"
               v-model="v$.linkedin.$model"
-              :readonly="!isEditing"
             />
           </div>
           <div class="form-group">
@@ -137,35 +124,20 @@
               </label>
               <font-awesome-icon id="tooltip-x" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-x" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.webSiteUrl') }}
+                {{ t$('pampaInsightsApp.parameter.tooltip.x') }}
               </b-popover>
             </div>
-            <input type="text" class="form-control" name="x" id="parameter-x" data-cy="x" v-model="v$.x.$model" :readonly="!isEditing" />
+            <input type="text" class="form-control" name="x" id="parameter-x" data-cy="x" v-model="v$.x.$model" />
           </div>
         </div>
         <div class="d-flex flex-column">
-          <div class="d-flex justify-content-between mb-2">
-            <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" @click="previousState()">
-              <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.cancel')"></span>
-            </button>
-            <div>
-              <button v-if="!isEditing" type="button" id="edit-save" class="btn btn-info me-2" @click="toggleEdit()">
-                <font-awesome-icon icon="edit"></font-awesome-icon>&nbsp;<span>Editar</span>
-              </button>
-              <button
-                v-if="isEditing"
-                type="submit"
-                id="save-entity"
-                data-cy="entityCreateSaveButton"
-                :disabled="v$.$invalid || isSaving"
-                class="btn btn-primary"
-              >
-                <font-awesome-icon icon="save" />
-                &nbsp;<span>Salvar</span>
-              </button>
-            </div>
-          </div>
-          <button :disabled="isEditing" type="button" class="btn btn-secondary w-100 mb-4 mt-4" @click="searchComments()">
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            class="btn btn-secondary w-100 mb-4 mt-4"
+            @click="searchComments()"
+          >
             <font-awesome-icon icon="search" />
             &nbsp;<span>Buscar Comentários</span>
           </button>

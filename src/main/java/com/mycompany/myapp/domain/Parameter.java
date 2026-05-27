@@ -30,6 +30,9 @@ public class Parameter implements Serializable {
     @Column(name = "web_site")
     private String webSite;
 
+    @Column(name = "max_pages")
+    private Integer maxPages;
+
     @Column(name = "instagram")
     private String instagram;
 
@@ -89,6 +92,19 @@ public class Parameter implements Serializable {
 
     public void setWebSite(String webSite) {
         this.webSite = webSite;
+    }
+
+    public Integer getMaxPages() {
+        return this.maxPages;
+    }
+
+    public void setMaxPages(Integer maxPages) {
+        this.maxPages = maxPages;
+    }
+
+    public Parameter maxPages(Integer maxPages) {
+        this.setMaxPages(maxPages);
+        return this;
     }
 
     public String getInstagram() {
@@ -188,18 +204,37 @@ public class Parameter implements Serializable {
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "Parameter{" +
-            "id=" + getId() +
-            ", terms='" + getTerms() + "'" +
-            ", webSite='" + getWebSite() + "'" +
-            ", instagram='" + getInstagram() + "'" +
-            ", facebook='" + getFacebook() + "'" +
-            ", linkedin='" + getLinkedin() + "'" +
-            ", x='" + getX() + "'" +
-            ", createDate='" + getCreateDate() + "'" +
-            "}";
+        return (
+            "Parameter{" +
+            "id=" +
+            id +
+            ", terms='" +
+            terms +
+            '\'' +
+            ", webSite='" +
+            webSite +
+            '\'' +
+            ", maxPages=" +
+            maxPages +
+            ", instagram='" +
+            instagram +
+            '\'' +
+            ", facebook='" +
+            facebook +
+            '\'' +
+            ", linkedin='" +
+            linkedin +
+            '\'' +
+            ", x='" +
+            x +
+            '\'' +
+            ", createDate=" +
+            createDate +
+            ", search=" +
+            search +
+            '}'
+        );
     }
 }

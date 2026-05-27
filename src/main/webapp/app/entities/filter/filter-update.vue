@@ -44,36 +44,6 @@
 
         <div class="form-group">
           <div class="d-flex align-items-center gap-2 mb-1">
-            <label class="form-control-label mb-0" for="filter-emotions">
-              {{ t$('pampaInsightsApp.filter.emotions') }}
-            </label>
-            <font-awesome-icon id="tooltip-emotions" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
-            <b-popover target="tooltip-emotions" triggers="hover focus" placement="right">
-              {{ t$('pampaInsightsApp.filter.tooltip.emotions') }}
-            </b-popover>
-          </div>
-          <select
-            :disabled="!isEditing"
-            class="form-control"
-            name="emotions"
-            :class="{ valid: !v$.emotions.$invalid, invalid: v$.emotions.$invalid }"
-            v-model="v$.emotions.$model"
-            id="filter-emotions"
-            data-cy="emotions"
-          >
-            <option
-              v-for="emotions in emotionsValues"
-              :key="emotions"
-              :value="emotions"
-              :label="t$('pampaInsightsApp.Emotions.' + emotions)"
-            >
-              {{ emotions }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <div class="d-flex align-items-center gap-2 mb-1">
             <label class="form-control-label mb-0" for="filter-visualization">
               {{ t$('pampaInsightsApp.filter.visualization') }}
             </label>
@@ -108,6 +78,35 @@
 
         <div class="form-group">
           <div class="d-flex align-items-center gap-2 mb-1">
+            <label class="form-control-label mb-0" for="filter-emotions">
+              {{ t$('pampaInsightsApp.filter.emotions') }}
+            </label>
+            <font-awesome-icon id="tooltip-emotions" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
+            <b-popover target="tooltip-emotions" triggers="hover focus" placement="right">
+              {{ t$('pampaInsightsApp.filter.tooltip.emotions') }}
+            </b-popover>
+          </div>
+          <select
+            class="form-control"
+            name="emotions"
+            :class="{ valid: !v$.emotions.$invalid, invalid: v$.emotions.$invalid }"
+            v-model="v$.emotions.$model"
+            id="filter-emotions"
+            data-cy="emotions"
+          >
+            <option
+              v-for="emotions in emotionsValues"
+              :key="emotions"
+              :value="emotions"
+              :label="t$('pampaInsightsApp.Emotions.' + emotions)"
+            >
+              {{ emotions }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="d-flex align-items-center gap-2 mb-1">
             <label class="form-control-label mb-0" for="filter-typeOfChart">
               {{ t$('pampaInsightsApp.filter.typeOfChart') }}
             </label>
@@ -117,7 +116,6 @@
             </b-popover>
           </div>
           <select
-            :disabled="!isEditing"
             class="form-control"
             name="typeOfChart"
             :class="{ valid: !v$.typeOfChart.$invalid, invalid: v$.typeOfChart.$invalid }"
@@ -137,44 +135,21 @@
           </select>
         </div>
         <div class="d-flex flex-column">
-          <div class="d-flex justify-content-between mb-2">
-            <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" @click="previousState()">
-              <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.cancel')"></span>
-            </button>
-            <div>
-              <button v-if="!isEditing" type="button" id="edit-save" class="btn btn-info me-2" @click="toggleEdit()">
-                <font-awesome-icon icon="edit"></font-awesome-icon>&nbsp;<span>Editar</span>
-              </button>
-              <button
-                v-if="isEditing"
-                type="submit"
-                id="save-entity"
-                data-cy="entityCreateSaveButton"
-                :disabled="v$.$invalid || isSaving"
-                class="btn btn-primary"
-              >
-                <font-awesome-icon icon="save" />
-                &nbsp;<span>Salvar</span>
-              </button>
-            </div>
-          </div>
-
-          <button :disabled="isEditing" type="button" class="btn btn-secondary w-100 mb-4 mt-4" @click="applyFilters">
+          <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" class="btn btn-secondary w-100 mb-4 mt-4">
             <font-awesome-icon icon="search" />
             &nbsp;<span>Aplicar Filtros</span>
           </button>
         </div>
-
-        <div class="mt-4" v-if="showChart && !isEditing">
-          <div v-if="v$.typeOfChart.$model === TypeOfChart.PIZZA && selectedChartData">
+        <div class="mt-4" v-if="showChart">
+          <div v-if="appliedTypeOfChart === TypeOfChart.PIZZA && selectedChartData">
             <PieChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
           </div>
 
-          <div v-else-if="v$.typeOfChart.$model === TypeOfChart.BARRAS && selectedChartData">
+          <div v-else-if="appliedTypeOfChart === TypeOfChart.COLUNAS && selectedChartData">
             <BarChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
           </div>
 
-          <div v-else-if="v$.typeOfChart.$model === TypeOfChart.COLUNAS && selectedChartData">
+          <div v-else-if="appliedTypeOfChart === TypeOfChart.BARRAS && selectedChartData">
             <BarChart
               :data="selectedChartData"
               :options="{ indexAxis: 'y', responsive: true, maintainAspectRatio: false }"

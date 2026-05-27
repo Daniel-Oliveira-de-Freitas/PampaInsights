@@ -16,6 +16,8 @@ public class ParameterDTO implements Serializable {
 
     private String webSite;
 
+    private Integer maxPages;
+
     private String instagram;
 
     private String facebook;
@@ -50,6 +52,14 @@ public class ParameterDTO implements Serializable {
 
     public void setWebSite(String webSite) {
         this.webSite = webSite;
+    }
+
+    public Integer getMaxPages() {
+        return maxPages;
+    }
+
+    public void setMaxPages(Integer maxPages) {
+        this.maxPages = maxPages;
     }
 
     public String getInstagram() {

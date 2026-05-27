@@ -4,6 +4,7 @@ export interface IParameter {
   id?: number;
   terms?: string | null;
   webSite?: string | null;
+  maxPages?: number | null;
   instagram?: string | null;
   facebook?: string | null;
   linkedin?: string | null;
@@ -17,6 +18,7 @@ export class Parameter implements IParameter {
     public id?: number,
     public terms?: string | null,
     public webSite?: string | null,
+    public maxPages?: number | null,
     public instagram?: string | null,
     public facebook?: string | null,
     public linkedin?: string | null,
