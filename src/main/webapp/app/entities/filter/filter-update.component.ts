@@ -144,7 +144,6 @@ export default defineComponent({
       closeSidebar,
       applyFilters,
       showSidebar,
-      isEditing,
       selectedChartData,
       sentimentAnalysisTypeValues,
       showChart,
@@ -163,7 +162,6 @@ export default defineComponent({
             this.isSaving = false;
             this.filter = param;
             this.alertService.showInfo(this.t$('pampaInsightsApp.filter.updated', { param: param.id }));
-            this.isEditing = false;
             this.applyFilters();
           })
           .catch(error => {
@@ -177,7 +175,6 @@ export default defineComponent({
             this.isSaving = false;
             this.filter = param;
             this.alertService.showSuccess(this.t$('pampaInsightsApp.filter.created', { param: param.id }).toString());
-            this.isEditing = false;
             this.applyFilters();
           })
           .catch(error => {
@@ -185,9 +182,6 @@ export default defineComponent({
             this.alertService.showHttpError(error.response);
           });
       }
-    },
-    toggleEdit() {
-      this.isEditing = !this.isEditing;
     },
   },
 });

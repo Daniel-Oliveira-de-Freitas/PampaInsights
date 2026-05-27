@@ -87,7 +87,6 @@
             </b-popover>
           </div>
           <select
-            :disabled="!isEditing"
             class="form-control"
             name="emotions"
             :class="{ valid: !v$.emotions.$invalid, invalid: v$.emotions.$invalid }"
@@ -117,7 +116,6 @@
             </b-popover>
           </div>
           <select
-            :disabled="!isEditing"
             class="form-control"
             name="typeOfChart"
             :class="{ valid: !v$.typeOfChart.$invalid, invalid: v$.typeOfChart.$invalid }"
@@ -137,44 +135,27 @@
           </select>
         </div>
         <div class="d-flex flex-column">
-          <div class="d-flex justify-content-between mb-2">
-            <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" @click="previousState()">
-              <font-awesome-icon icon="ban"></font-awesome-icon>&nbsp;<span v-text="t$('entity.action.cancel')"></span>
-            </button>
-            <div>
-              <button v-if="!isEditing" type="button" id="edit-save" class="btn btn-info me-2" @click="toggleEdit()">
-                <font-awesome-icon icon="edit"></font-awesome-icon>&nbsp;<span>Editar</span>
-              </button>
-              <button
-                v-if="isEditing"
-                type="submit"
-                id="save-entity"
-                data-cy="entityCreateSaveButton"
-                :disabled="v$.$invalid || isSaving"
-                class="btn btn-primary"
-              >
-                <font-awesome-icon icon="save" />
-                &nbsp;<span>Salvar</span>
-              </button>
-            </div>
-          </div>
-
-          <button :disabled="isEditing" type="button" class="btn btn-secondary w-100 mb-4 mt-4" @click="applyFilters">
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            class="btn btn-secondary w-100 mb-4 mt-4"
+            @click="applyFilters"
+          >
             <font-awesome-icon icon="search" />
             &nbsp;<span>Aplicar Filtros</span>
           </button>
         </div>
-
         <div class="mt-4" v-if="showChart">
           <div v-if="v$.typeOfChart.$model === TypeOfChart.PIZZA && selectedChartData">
             <PieChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
           </div>
 
-          <div v-else-if="v$.typeOfChart.$model === TypeOfChart.BARRAS && selectedChartData">
+          <div v-else-if="v$.typeOfChart.$model === TypeOfChart.COLUNAS && selectedChartData">
             <BarChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
           </div>
 
-          <div v-else-if="v$.typeOfChart.$model === TypeOfChart.COLUNAS && selectedChartData">
+          <div v-else-if="v$.typeOfChart.$model === TypeOfChart.BARRAS && selectedChartData">
             <BarChart
               :data="selectedChartData"
               :options="{ indexAxis: 'y', responsive: true, maintainAspectRatio: false }"
