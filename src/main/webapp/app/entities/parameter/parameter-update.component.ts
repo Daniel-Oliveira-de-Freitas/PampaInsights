@@ -37,7 +37,6 @@ export default defineComponent({
     const showSidebar = ref(false);
     const route = useRoute();
     const router = useRouter();
-    const isEditing = ref(true);
     const isFetching = ref(false);
 
     const previousState = () => router.go(-1);
@@ -45,9 +44,6 @@ export default defineComponent({
     const retrieveParameter = async (searchId: any) => {
       try {
         parameter.value = await parameterService().findBySearchId(searchId);
-        if (parameter.value.id) {
-          isEditing.value = false;
-        }
       } catch (error) {
         console.log('Pesquisa sem Parametros');
       }
@@ -124,7 +120,6 @@ export default defineComponent({
       closeSidebar,
       showSidebar,
       validations,
-      isEditing,
       searchComments,
       v$,
       ...useDateFormat({ entityRef: parameter }),
@@ -137,10 +132,8 @@ export default defineComponent({
       this.isSaving = true;
       if (this.parameter.id) {
         try {
-          const param = await this.parameterService().update(this.parameter);
-          this.parameter = param;
-          this.alertService.showInfo(this.t$('pampaInsightsApp.parameter.updated', { param: param.id }));
-          this.isEditing = false;
+          this.parameter = await this.parameterService().update(this.parameter);
+          // this.alertService.showInfo(this.t$('pampaInsightsApp.parameter.updated', { param: param.id }));
         } catch (error: any) {
           this.alertService.showHttpError(error.response);
         } finally {
@@ -148,10 +141,8 @@ export default defineComponent({
         }
       } else {
         try {
-          const param = await this.parameterService().create(this.parameter, this.searchId);
-          this.parameter = param;
-          this.alertService.showSuccess(this.t$('pampaInsightsApp.parameter.created', { param: param.id }).toString());
-          this.isEditing = false;
+          this.parameter = await this.parameterService().create(this.parameter, this.searchId);
+          // this.alertService.showSuccess(this.t$('pampaInsightsApp.parameter.created', { param: param.id }).toString());
         } catch (error: any) {
           this.alertService.showHttpError(error.response);
         } finally {
@@ -159,16 +150,13 @@ export default defineComponent({
         }
       }
     },
-    toggleEdit() {
-      this.isEditing = !this.isEditing;
-    },
     validateMaxPages() {
-      if (this.maxPages < 1) {
-        this.maxPages = 1;
+      if (this.parameter.maxPages < 1) {
+        this.parameter.maxPages = 1;
         return false;
       }
-      if (this.maxPages > 30) {
-        this.maxPages = 30;
+      if (this.parameter.maxPages > 50) {
+        this.parameter.maxPages = 50;
         return false;
       }
       return true;

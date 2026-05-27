@@ -30,7 +30,7 @@
       "tooltip": {
         "terms": "Palavra-chave principal da pesquisa. Será usada para contextualizar a extração dos comentários. Ex: Shop Mundo Digital, Nike, Produto X",
         "webSite": "URL da página de reclamações da empresa no Reclame Aqui. O sistema irá percorrer automaticamente as páginas de listagem de acordo com o número configurado abaixo. Ex: https://www.reclameaqui.com.br/empresa/nome-da-empresa/lista-reclamacoes/",
-        "maxPages": "Número de páginas de listagem a percorrer no Reclame Aqui. Cada página contém em média 5 reclamações. Ex: 10 páginas → ~50 reclamações. Máximo recomendado: 30.",
+        "maxPages": "Número de páginas de listagem a percorrer no Reclame Aqui. Cada página contém em média 5 reclamações. Ex: 10 páginas → ~50 reclamações. Máximo recomendado: 50.",
         "webSiteUrl": "URL adicional para extração de comentários. Pode ser qualquer site público com avaliações ou comentários sobre a empresa ou produto pesquisado."
       }
     }

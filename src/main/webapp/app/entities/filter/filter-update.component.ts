@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject, onMounted, type PropType, type Ref, ref } from 'vue';
+import { computed, defineComponent, inject, onMounted, onUnmounted, type PropType, type Ref, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
@@ -45,6 +45,7 @@ export default defineComponent({
 
     const searchService = inject('searchService', () => new SearchService());
     const selectedChartData: any = ref(null);
+    const appliedTypeOfChart = ref<TypeOfChart | null>(null);
 
     const searches: Ref<ISearch[]> = ref([]);
     const visualizationValues: Ref<string[]> = ref(Object.keys(Visualization));
@@ -63,7 +64,7 @@ export default defineComponent({
 
     const retrieveFilter = async (filterId: any) => {
       try {
-        filter.value = await filterService().findBySearchId(filterId);
+        filter.value = ((await filterService().findBySearchId(filterId)) as IFilter) ?? new Filter();
         if (filter.value.id) {
           isEditing.value = false;
         }
@@ -85,13 +86,19 @@ export default defineComponent({
       }
     };
 
+    const onSentimentData = (data: any) => {
+      selectedChartData.value = data;
+      if (data) showChart.value = true;
+    };
+
     onMounted(async () => {
-      eventBus.on('sentiment-data', data => {
-        selectedChartData.value = data;
-        if (data) showChart.value = true;
-      });
+      eventBus.on('sentiment-data', onSentimentData);
       await retrieveFilter(props.searchId);
       applyFilters();
+    });
+
+    onUnmounted(() => {
+      eventBus.off('sentiment-data', onSentimentData);
     });
 
     const initRelationships = () => {
@@ -125,6 +132,7 @@ export default defineComponent({
     };
 
     const applyFilters = () => {
+      appliedTypeOfChart.value = v$.value.typeOfChart.$model as TypeOfChart | null;
       showChart.value = true;
       eventBus.emit('apply-emotions-filter', v$.value.emotions.$model ?? Emotions.ALL);
     };
@@ -145,6 +153,7 @@ export default defineComponent({
       applyFilters,
       showSidebar,
       selectedChartData,
+      appliedTypeOfChart,
       sentimentAnalysisTypeValues,
       showChart,
       v$,
@@ -161,7 +170,7 @@ export default defineComponent({
           .then(param => {
             this.isSaving = false;
             this.filter = param;
-            this.alertService.showInfo(this.t$('pampaInsightsApp.filter.updated', { param: param.id }));
+            // this.alertService.showInfo(this.t$('pampaInsightsApp.filter.updated', { param: param.id }));
             this.applyFilters();
           })
           .catch(error => {
@@ -174,7 +183,7 @@ export default defineComponent({
           .then(param => {
             this.isSaving = false;
             this.filter = param;
-            this.alertService.showSuccess(this.t$('pampaInsightsApp.filter.created', { param: param.id }).toString());
+            // this.alertService.showSuccess(this.t$('pampaInsightsApp.filter.created', { param: param.id }).toString());
             this.applyFilters();
           })
           .catch(error => {

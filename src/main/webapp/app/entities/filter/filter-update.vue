@@ -135,27 +135,21 @@
           </select>
         </div>
         <div class="d-flex flex-column">
-          <button
-            type="submit"
-            id="save-entity"
-            data-cy="entityCreateSaveButton"
-            class="btn btn-secondary w-100 mb-4 mt-4"
-            @click="applyFilters"
-          >
+          <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" class="btn btn-secondary w-100 mb-4 mt-4">
             <font-awesome-icon icon="search" />
             &nbsp;<span>Aplicar Filtros</span>
           </button>
         </div>
         <div class="mt-4" v-if="showChart">
-          <div v-if="v$.typeOfChart.$model === TypeOfChart.PIZZA && selectedChartData">
+          <div v-if="appliedTypeOfChart === TypeOfChart.PIZZA && selectedChartData">
             <PieChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
           </div>
 
-          <div v-else-if="v$.typeOfChart.$model === TypeOfChart.COLUNAS && selectedChartData">
+          <div v-else-if="appliedTypeOfChart === TypeOfChart.COLUNAS && selectedChartData">
             <BarChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
           </div>
 
-          <div v-else-if="v$.typeOfChart.$model === TypeOfChart.BARRAS && selectedChartData">
+          <div v-else-if="appliedTypeOfChart === TypeOfChart.BARRAS && selectedChartData">
             <BarChart
               :data="selectedChartData"
               :options="{ indexAxis: 'y', responsive: true, maintainAspectRatio: false }"
