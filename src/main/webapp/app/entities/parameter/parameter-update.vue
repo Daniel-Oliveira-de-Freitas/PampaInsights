@@ -31,18 +31,6 @@
           </div>
           <div class="form-group">
             <div class="d-flex align-items-center gap-2 mb-1">
-              <label class="form-control-label mb-0" for="parameter-webSite">
-                {{ t$('pampaInsightsApp.parameter.webSite') }}
-              </label>
-              <font-awesome-icon id="tooltip-webSite" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
-              <b-popover target="tooltip-webSite" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.webSite') }}
-              </b-popover>
-            </div>
-            <input type="text" class="form-control" name="webSite" id="parameter-webSite" data-cy="webSite" v-model="v$.webSite.$model" />
-          </div>
-          <div class="form-group">
-            <div class="d-flex align-items-center gap-2 mb-1">
               <label class="form-control-label mb-0" for="parameter-maxPages">
                 {{ t$('pampaInsightsApp.parameter.maxPages') }}
               </label>
@@ -59,6 +47,18 @@
               id="parameter-maxPages"
               v-model="v$.maxPages.$model"
             />
+          </div>
+          <div class="form-group">
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <label class="form-control-label mb-0" for="parameter-webSite">
+                {{ t$('pampaInsightsApp.parameter.webSite') }}
+              </label>
+              <font-awesome-icon id="tooltip-webSite" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
+              <b-popover target="tooltip-webSite" triggers="hover focus" placement="right">
+                {{ t$('pampaInsightsApp.parameter.tooltip.webSite') }}
+              </b-popover>
+            </div>
+            <input type="text" class="form-control" name="webSite" id="parameter-webSite" data-cy="webSite" v-model="v$.webSite.$model" />
           </div>
           <div class="form-group">
             <div class="d-flex align-items-center gap-2 mb-1">
