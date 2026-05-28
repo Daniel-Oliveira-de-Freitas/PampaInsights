@@ -47,8 +47,8 @@ public class ParameterService {
         Parameter parameter = parameterMapper.toEntity(parameterDTO);
         Search search = searchRepository.findById(searchId).orElseThrow(() -> new RuntimeException("Search not found with id " + searchId));
         parameter.setSearch(search);
-        Optional<Parameter> existing = Optional.of(parameterRepository.findBySearchId(searchId).orElseThrow());
-        parameter.setId(existing.get().getId());
+        Optional<Parameter> existing = parameterRepository.findBySearchId(searchId);
+        parameter.setId(existing.orElseThrow().getId());
         parameter = parameterRepository.save(parameter);
         return parameterMapper.toDto(parameter);
     }
