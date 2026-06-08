@@ -6,11 +6,11 @@ eg $input-color: red;
 ****************************/
 // Override Boostrap variables
 // Import Bootstrap source files from node_modules
-@import 'bootswatch/dist/darkly/variables';
+@import 'bootswatch/dist/flatly/variables';
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-vue/src/index.scss';
-@import 'bootswatch/dist/darkly/bootswatch';
-/* Dirty fix on navbar active link with bootswatch theme */
+@import 'bootswatch/dist/flatly/bootswatch';
+/* Fix on navbar active link with bootswatch theme */
 nav li.router-link-active .navbar-dropdown-menu {
   color: $navbar-dark-active-color;
 }

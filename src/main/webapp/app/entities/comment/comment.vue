@@ -2,7 +2,7 @@
   <div class="mt-5">
     <div class="d-flex align-items-center gap-3 mb-1" id="page-heading" data-cy="CommentHeading">
       <h2 class="mb-0" v-text="t$('pampaInsightsApp.comment.home.title')"></h2>
-      <span v-if="filteredComments.length > 0" class="badge rounded-pill bg-primary px-3 py-2" style="font-size: 1rem; font-weight: 600">
+      <span v-if="filteredComments.length > 0" class="badge rounded-pill bg-secondary px-3 py-2" style="font-size: 1rem; font-weight: 600">
         {{ filteredComments.length }}
       </span>
     </div>
@@ -45,10 +45,11 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  background: #f8f9fa;
+  background: #eaf6f6;
+  border-left: 4px solid #18bc9c;
   border-radius: 12px;
   padding: 12px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.07);
   max-width: 100%;
   position: relative;
 }
