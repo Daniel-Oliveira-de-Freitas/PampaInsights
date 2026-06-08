@@ -1,8 +1,8 @@
 <template>
-  <div id="chatBox" class="container">
+  <div id="chatBox" class="container mt-4">
     <div class="row h-100">
-      <div id="conversationsList" class="col-3 p-3 border-right">
-        <h5>Conversations</h5>
+      <div id="conversationsList" class="col-3 p-3 border-right" style="background-color: #c8e6e6; border-radius: 8px 0 0 8px">
+        <h5>Meus Chats</h5>
         <ul class="list-group mb-3">
           <li
             v-for="conversation in conversations"
@@ -13,11 +13,16 @@
             {{ conversation.name }}
           </li>
         </ul>
-        <button class="btn btn-primary btn-block" @click="createNewConversation">New Conversation</button>
+        <button class="btn btn-primary btn-block" @click="createNewConversation">Novo Chat</button>
       </div>
 
       <div id="chatContainer" class="col-9 p-3 d-flex flex-column justify-content-between">
-        <div id="chatArea" ref="chatArea" class="border rounded p-3 mb-3" style="height: 550px; overflow-y: scroll">
+        <div
+          id="chatArea"
+          ref="chatArea"
+          class="border rounded p-3 mb-3"
+          style="height: 550px; overflow-y: scroll; background-color: #ffffff"
+        >
           <div v-for="(message, index) in messages" :key="index" :class="['chat-message', message.role, 'my-2', 'p-2', 'rounded']">
             <span v-if="message.role === 'agent'">
               <font-awesome-icon icon="desktop" class="mr-2" />
@@ -39,10 +44,10 @@
             class="form-control"
             v-model="chatInput"
             @keydown.enter.exact.prevent="submitChat"
-            placeholder="Type your message..."
+            placeholder="Digite sua mensagem..."
           />
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button" @click="submitChat">Send</button>
+            <button class="btn btn-primary" type="button" @click="submitChat">Enviar</button>
           </div>
         </div>
       </div>
@@ -56,13 +61,14 @@
 #chatBox {
   width: 80%;
   height: 80%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid #b2d8d8;
+  border-radius: 8px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: #eaf6f6;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
 }
 
 #chatContainer {

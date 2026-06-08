@@ -2,12 +2,15 @@
   <div>
     <div id="page-heading" data-cy="SearchHeading" class="d-flex justify-content-between align-items-center">
       <h2 id="search-heading" v-text="t$('pampaInsightsApp.search.home.title')"></h2>
-      <div class="d-flex align-items-center gap-2">
-        <select v-model="selectedSort" @change="handleSortChange" class="form-select mr-1" style="width: 130px; height: 37px">
-          <option value="all">Todas</option>
-          <option value="favorite">Favoritas</option>
-        </select>
-        <button class="btn btn-info mr-1" @click="handleSyncList" :disabled="isFetching">
+      <div class="d-flex align-items-end gap-2">
+        <div class="mr-3">
+          <label class="d-block mb-1" style="font-size: 0.75rem; color: #6c757d">Filtrar por</label>
+          <select v-model="selectedSort" @change="handleSortChange" class="form-control" style="width: 130px; height: 37px">
+            <option value="all">Todas</option>
+            <option value="favorite">Favoritas</option>
+          </select>
+        </div>
+        <button class="btn btn-info mr-3" @click="handleSyncList" :disabled="isFetching">
           <font-awesome-icon icon="sync" :spin="isFetching"></font-awesome-icon>
           <span v-text="t$('pampaInsightsApp.search.home.refreshListLabel')"></span>
         </button>
@@ -25,18 +28,18 @@
 
     <div class="row" v-if="searches.length > 0">
       <div class="col-md-3" v-for="search in searches" :key="search.id">
-        <div class="card search-card mt-4">
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <button @click="toggleFavorite(search)" class="btn btn-secondary">
-              <font-awesome-icon :icon="['fas', 'star']" :class="{ 'text-warning': search.favorite, 'text-white': !search.favorite }" />
+        <div class="card search-card mt-4 shadow-sm" style="border-left: 4px solid #18bc9c">
+          <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #e8f8f5">
+            <button @click="toggleFavorite(search)" class="btn btn-outline-secondary btn-sm">
+              <font-awesome-icon :icon="['fas', 'star']" :class="{ 'text-warning': search.favorite, 'text-muted': !search.favorite }" />
             </button>
-            <button @click="prepareRemove(search)" class="btn btn-secondary">
-              <font-awesome-icon icon="trash" class="text-danger" />
+            <button @click="prepareRemove(search)" class="btn btn-outline-danger btn-sm">
+              <font-awesome-icon icon="trash" />
             </button>
           </div>
-          <div class="card-body" @click="goToEdit(search.id)">
+          <div class="card-body" style="background-color: #f4fcfa" @click="goToEdit(search.id)">
             <h5 class="card-title">{{ search.name }}</h5>
-            <p class="card-text">{{ formatDateShort(search.createDate) }}</p>
+            <p class="card-text text-muted small">{{ formatDateShort(search.createDate) }}</p>
           </div>
         </div>
       </div>
