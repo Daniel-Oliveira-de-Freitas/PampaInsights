@@ -279,3 +279,44 @@ ui bootstrap tweaks
 .card {
   border-color: #dee2e6;
 }
+
+/* ==========================================================================
+Tema escuro (toggle claro/escuro da navbar)
+========================================================================== */
+body.theme-dark {
+  background-color: #212529;
+  color: #e0e0e0;
+}
+body.theme-dark .card {
+  background-color: #343a40;
+  border-color: #454d55;
+}
+body.theme-dark .navbar {
+  background-color: #0f3318 !important;
+}
+body.theme-dark .list-group-item {
+  background-color: #343a40;
+  border-color: #454d55;
+  color: #e0e0e0;
+}
+body.theme-dark .form-control {
+  background-color: #2b3035;
+  border-color: #454d55;
+  color: #e0e0e0;
+}
+body.theme-dark select.form-control {
+  background-color: #2b3035;
+  color: #e0e0e0;
+}
+body.theme-dark .modal-content {
+  background-color: #343a40;
+  color: #e0e0e0;
+}
+body.theme-dark .modal-header,
+body.theme-dark .modal-footer {
+  border-color: #454d55;
+}
+body.theme-dark .modal-header .close {
+  color: #e0e0e0;
+  text-shadow: none;
+}

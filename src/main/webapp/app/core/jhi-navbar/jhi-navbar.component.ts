@@ -30,6 +30,19 @@ export default defineComponent({
     const version = `v${APP_VERSION}`;
     const hasAnyAuthorityValues: Ref<any> = ref({});
 
+    const isDarkTheme = ref(localStorage.getItem('pampa-theme') === 'dark');
+
+    const toggleTheme = () => {
+      isDarkTheme.value = !isDarkTheme.value;
+      if (isDarkTheme.value) {
+        document.body.classList.add('theme-dark');
+        localStorage.setItem('pampa-theme', 'dark');
+      } else {
+        document.body.classList.remove('theme-dark');
+        localStorage.setItem('pampa-theme', 'light');
+      }
+    };
+
     const openAPIEnabled = computed(() => store.activeProfiles.indexOf('api-docs') > -1);
     const inProduction = computed(() => store.activeProfiles.indexOf('prod') > -1);
     const authenticated = computed(() => store.authenticated);
@@ -68,6 +81,8 @@ export default defineComponent({
       openAPIEnabled,
       inProduction,
       authenticated,
+      isDarkTheme,
+      toggleTheme,
       t$: useI18n().t,
     };
   },

@@ -146,15 +146,11 @@
           </div>
 
           <div v-else-if="appliedTypeOfChart === TypeOfChart.COLUNAS && selectedChartData">
-            <BarChart :data="selectedChartData" :options="{ responsive: true, maintainAspectRatio: false }" style="height: 300px" />
+            <BarChart :data="selectedChartData" :options="columnChartOptions" style="height: 300px" />
           </div>
 
           <div v-else-if="appliedTypeOfChart === TypeOfChart.BARRAS && selectedChartData">
-            <BarChart
-              :data="selectedChartData"
-              :options="{ indexAxis: 'y', responsive: true, maintainAspectRatio: false }"
-              style="height: 300px"
-            />
+            <BarChart :data="selectedChartData" :options="barChartOptions" style="height: 300px" />
           </div>
 
           <div v-else class="text-center text-muted">Nenhum gráfico selecionado.</div>

@@ -79,6 +79,10 @@
 #chatArea {
   display: flex;
   flex-direction: column;
+  /* Preenche o espaço disponível para o input ficar logo abaixo das mensagens */
+  flex: 1 1 auto;
+  height: auto !important;
+  min-height: 0;
 }
 
 .chat-message {
@@ -90,17 +94,39 @@
 
 .chat-message.user {
   background-color: #67ac8f;
+  color: #ffffff;
   align-self: flex-end;
   border-radius: 5px 5px 0 5px;
 }
 
 .chat-message.agent {
   background-color: #69baff;
+  color: #ffffff;
   align-self: flex-start;
   border-radius: 5px 5px 5px 0;
 }
 
 .input-group {
   margin-top: 10px;
+}
+
+/* ==========================================================================
+Tema escuro do chat
+========================================================================== */
+body.theme-dark #chatBox {
+  background-color: #2b3035;
+  border-color: #454d55;
+}
+body.theme-dark #conversationsList {
+  background-color: #212529 !important;
+  color: #e0e0e0;
+  border-color: #454d55 !important;
+}
+body.theme-dark #conversationsList h5 {
+  color: #e0e0e0;
+}
+body.theme-dark #chatArea {
+  background-color: #212529 !important;
+  border-color: #454d55 !important;
 }
 </style>
