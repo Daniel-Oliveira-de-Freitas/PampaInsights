@@ -48,7 +48,8 @@ public class FilterService {
         Search search = searchRepository.findById(searchId).orElseThrow(() -> new RuntimeException("Search not found with id " + searchId));
         filter.setSearch(search);
         Optional<Filter> existing = filterRepository.findBySearchId(searchId);
-        filter.setId(existing.orElseThrow().getId());
+        Filter finalFilter = filter;
+        existing.ifPresent(value -> finalFilter.setId(value.getId()));
         filter = filterRepository.save(filter);
         return filterMapper.toDto(filter);
     }

@@ -88,4 +88,19 @@
 .search-card:hover {
   transform: scale(1.05);
 }
+
+/* Tema escuro: sobrescreve os fundos inline dos cards */
+body.theme-dark .search-card {
+  background-color: #343a40;
+}
+body.theme-dark .search-card .card-header {
+  background-color: #2b3035 !important;
+  border-bottom-color: #454d55;
+}
+body.theme-dark .search-card .card-body {
+  background-color: #343a40 !important;
+}
+body.theme-dark .search-card .card-title {
+  color: #e0e0e0;
+}
 </style>

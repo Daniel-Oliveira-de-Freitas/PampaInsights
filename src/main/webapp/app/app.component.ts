@@ -1,4 +1,4 @@
-import { defineComponent, provide } from 'vue';
+import { defineComponent, onMounted, provide } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Ribbon from '@/core/ribbon/ribbon.vue';
 import JhiFooter from '@/core/jhi-footer/jhi-footer.vue';
@@ -20,6 +20,12 @@ export default defineComponent({
   },
   setup() {
     provide('alertService', useAlertService());
+
+    onMounted(() => {
+      if (localStorage.getItem('pampa-theme') === 'dark') {
+        document.body.classList.add('theme-dark');
+      }
+    });
 
     return {
       t$: useI18n().t,

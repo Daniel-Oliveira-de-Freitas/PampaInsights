@@ -1,8 +1,8 @@
 <template>
-  <b-navbar data-cy="navbar" toggleable="md" type="dark" class="bg-primary">
+  <b-navbar data-cy="navbar" toggleable="md" type="dark" class="navbar-unipampa">
     <b-navbar-brand class="logo px-0" b-link to="/">
       <span class="logo-img px-0"></span>
-      <!-- <span v-text="t$('global.title')" class="navbar-title"></span> <span class="navbar-version">{{ version }}</span> -->
+      <span v-text="t$('global.title')" class="navbar-title"></span>
     </b-navbar-brand>
     <b-navbar-toggle
       right
@@ -145,6 +145,13 @@
             <span v-text="t$('global.menu.account.register')"></span>
           </b-dropdown-item>
         </b-nav-item-dropdown>
+        <b-nav-item id="theme-toggle" data-cy="themeToggle" href="javascript:void(0);" @click="toggleTheme()">
+          <span class="theme-toggle-pill">
+            <font-awesome-icon v-if="isDarkTheme" icon="moon" />
+            <font-awesome-icon v-else icon="sun" />
+            <span class="ml-1">{{ isDarkTheme ? 'Escuro' : 'Claro' }}</span>
+          </span>
+        </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -161,6 +168,56 @@
   font-size: 0.65em;
 }
 
+/* Verde institucional UNIPAMPA */
+.navbar-unipampa {
+  background-color: #135526;
+}
+
+/* Texto e links legíveis sobre o verde */
+.navbar-unipampa :deep(.nav-link),
+.navbar-unipampa :deep(.navbar-nav .nav-link),
+.navbar-unipampa :deep(.navbar-brand),
+.navbar-unipampa :deep(.dropdown-toggle) {
+  color: #d8f0de;
+}
+
+.navbar-unipampa :deep(.nav-link:hover),
+.navbar-unipampa :deep(.nav-link:focus),
+.navbar-unipampa :deep(.navbar-nav .show > .nav-link),
+.navbar-unipampa :deep(.navbar-nav .active > .nav-link) {
+  color: #ffffff;
+}
+
+/* Itens da navbar um pouco maiores (o toggle mantém seu próprio tamanho via .theme-toggle-pill) */
+.navbar-unipampa :deep(.navbar-nav .nav-link) {
+  font-size: 1.1rem;
+}
+
+/* Pílula do toggle de tema */
+.theme-toggle-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #d8f0de;
+  border-radius: 20px;
+  padding: 2px 12px;
+  font-size: 0.9rem;
+  color: #d8f0de;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+#theme-toggle:hover .theme-toggle-pill {
+  background-color: #d8f0de;
+  color: #135526;
+}
+
+/* Alinha o toggle verticalmente com os demais itens da navbar */
+#theme-toggle :deep(.nav-link) {
+  display: flex;
+  align-items: center;
+}
+
 @media screen and (min-width: 768px) {
   .jh-navbar-toggler {
     display: none;
@@ -175,25 +232,41 @@
 
 .navbar-title {
   display: inline-block;
+  vertical-align: middle;
+  margin-left: 24px;
+  color: #1d5c2e;
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  /* Contorno branco para destacar o verde sobre a navbar (igual ao visual da logo) */
+  text-shadow:
+    -1.5px -1.5px 0 #ffffff,
+    1.5px -1.5px 0 #ffffff,
+    -1.5px 1.5px 0 #ffffff,
+    1.5px 1.5px 0 #ffffff,
+    0 0 3px rgba(255, 255, 255, 0.6);
 }
 
 /* ==========================================================================
     Logo styles
     ========================================================================== */
 .navbar-brand.logo {
-  padding: 0 7px;
+  padding: 0 5px;
+  margin-left: 24px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .logo .logo-img {
-  height: 60px;
-  width: 300px;
+  height: 96px;
+  width: 96px;
   display: inline-block;
   vertical-align: middle;
 }
 
 .logo-img {
   height: 100%;
-  background: url('/content/images/logo_final.png') no-repeat center center;
+  background: url('/content/images/logo_tree.png') no-repeat center center;
   background-size: contain;
   width: 100%;
   filter: drop-shadow(0 0 0.05rem white);

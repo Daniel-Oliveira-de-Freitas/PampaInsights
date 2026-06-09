@@ -137,7 +137,43 @@ export default defineComponent({
       eventBus.emit('apply-emotions-filter', v$.value.emotions.$model ?? Emotions.ALL);
     };
 
+    // Legenda por categoria (Positivo/Negativo/Neutro) para os gráficos de barra,
+    // espelhando o comportamento do gráfico de pizza e evitando o label "undefined".
+    const categoryLegend = {
+      legend: {
+        labels: {
+          generateLabels: (chart: any) => {
+            const { labels = [], datasets = [] } = chart.data;
+            const colors = datasets[0]?.backgroundColor ?? [];
+            return labels.map((label: string, i: number) => ({
+              text: label,
+              fillStyle: colors[i],
+              strokeStyle: colors[i],
+              lineWidth: 0,
+              hidden: false,
+              index: i,
+            }));
+          },
+        },
+      },
+    };
+
+    const columnChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: categoryLegend,
+    };
+
+    const barChartOptions = {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: categoryLegend,
+    };
+
     return {
+      columnChartOptions,
+      barChartOptions,
       filterService,
       alertService,
       filter,

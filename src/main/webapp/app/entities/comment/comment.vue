@@ -97,4 +97,21 @@
   font-size: 12px;
   color: #555;
 }
+
+/* ==========================================================================
+Tema escuro dos cards de comentários
+========================================================================== */
+body.theme-dark .comment-bubble {
+  background: #343a40;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+body.theme-dark .comment-body {
+  color: #e0e0e0;
+}
+body.theme-dark .date {
+  color: #adb5bd;
+}
+body.theme-dark .author {
+  color: #ced4da;
+}
 </style>

@@ -48,7 +48,8 @@ public class ParameterService {
         Search search = searchRepository.findById(searchId).orElseThrow(() -> new RuntimeException("Search not found with id " + searchId));
         parameter.setSearch(search);
         Optional<Parameter> existing = parameterRepository.findBySearchId(searchId);
-        parameter.setId(existing.orElseThrow().getId());
+        Parameter finalParameter = parameter;
+        existing.ifPresent(value -> finalParameter.setId(value.getId()));
         parameter = parameterRepository.save(parameter);
         return parameterMapper.toDto(parameter);
     }
