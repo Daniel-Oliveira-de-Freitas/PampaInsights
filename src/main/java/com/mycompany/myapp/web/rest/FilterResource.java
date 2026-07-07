@@ -157,7 +157,7 @@ public class FilterResource {
     public ResponseEntity<FilterDTO> getFilterBySearchId(@PathVariable("searchId") Long searchId) {
         LOG.debug("REST request to get Filter by search id: {}", searchId);
         Optional<FilterDTO> filterDTO = filterService.findBySearchId(searchId);
-        return ResponseUtil.wrapOrNotFound(filterDTO);
+        return filterDTO.map(ResponseEntity::ok).orElse(ResponseEntity.noContent().build());
     }
 
     /**

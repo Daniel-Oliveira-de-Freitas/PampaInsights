@@ -157,7 +157,7 @@ public class ParameterResource {
     public ResponseEntity<ParameterDTO> getParameterBySearchId(@PathVariable("searchId") Long searchId) {
         LOG.debug("REST request to get Parameter by search id: {}", searchId);
         Optional<ParameterDTO> parameterDTO = parameterService.findBySearchId(searchId);
-        return ResponseUtil.wrapOrNotFound(parameterDTO);
+        return parameterDTO.map(ResponseEntity::ok).orElse(ResponseEntity.noContent().build());
     }
 
     /**

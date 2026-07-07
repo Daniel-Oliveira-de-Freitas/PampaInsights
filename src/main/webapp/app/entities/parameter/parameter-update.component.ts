@@ -42,11 +42,8 @@ export default defineComponent({
     const previousState = () => router.go(-1);
 
     const retrieveParameter = async (searchId: any) => {
-      try {
-        parameter.value = await parameterService().findBySearchId(searchId);
-      } catch (error) {
-        console.log('Pesquisa sem Parametros');
-      }
+      const result = await parameterService().findBySearchId(searchId);
+      parameter.value = result?.id ? result : new Parameter();
     };
 
     const searchComments = () => {

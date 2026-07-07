@@ -21,12 +21,6 @@ import { SentimentAnalysisType } from '@/shared/model/enumerations/sentiment-ana
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 export default defineComponent({
-  computed: {
-    TypeOfChart() {
-      return TypeOfChart;
-    },
-  },
-  compatConfig: { MODE: 3 },
   name: 'FilterUpdate',
   components: {
     PieChart: Pie as any,
@@ -64,7 +58,8 @@ export default defineComponent({
 
     const retrieveFilter = async (filterId: any) => {
       try {
-        filter.value = ((await filterService().findBySearchId(filterId)) as IFilter) ?? new Filter();
+        const result = await filterService().findBySearchId(filterId);
+        filter.value = (result?.id ? result : new Filter()) as IFilter;
         if (filter.value.id) {
           isEditing.value = false;
         }
@@ -196,6 +191,12 @@ export default defineComponent({
       t$,
     };
   },
+  computed: {
+    TypeOfChart() {
+      return TypeOfChart;
+    },
+  },
+  compatConfig: { MODE: 3 },
   created(): void {},
   methods: {
     save(): void {
