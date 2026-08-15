@@ -23,15 +23,15 @@ public class CommentsCollectorController {
         String keyword = (String) body.get("keyword");
         Object searchObj = body.get("search");
         String search = searchObj != null ? searchObj.toString() : null;
-        Object maxPagesObj = body.get("maxPages");
-        int maxPages = maxPagesObj != null ? Integer.parseInt(maxPagesObj.toString()) : 10;
+        Object maxCommentsObj = body.get("maxComments");
+        int maxComments = maxCommentsObj != null ? Integer.parseInt(maxCommentsObj.toString()) : 200;
 
         if (urls == null || urls.isEmpty() || keyword == null || keyword.isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of("message", "urls e keyword são obrigatórios"));
         }
 
         try {
-            List<Map<String, Object>> comments = commentsCollectorService.retrieveComments(urls, keyword, search, maxPages);
+            List<Map<String, Object>> comments = commentsCollectorService.retrieveComments(urls, keyword, search, maxComments);
             return ResponseEntity.ok(Map.of("comments", comments));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(Map.of("message", e.getMessage()));

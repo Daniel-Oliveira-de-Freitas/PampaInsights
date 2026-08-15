@@ -31,21 +31,26 @@
           </div>
           <div class="form-group">
             <div class="d-flex align-items-center gap-2 mb-1">
-              <label class="form-control-label mb-0" for="parameter-maxPages">
-                {{ t$('pampaInsightsApp.parameter.maxPages') }}
+              <label class="form-control-label mb-0" for="parameter-maxComments">
+                {{ t$('pampaInsightsApp.parameter.maxComments') }}
               </label>
-              <font-awesome-icon id="tooltip-maxPages" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
-              <b-popover target="tooltip-maxPages" triggers="hover focus" placement="right">
-                {{ t$('pampaInsightsApp.parameter.tooltip.maxPages') }}
+              <font-awesome-icon
+                id="tooltip-maxComments"
+                icon="circle-info"
+                class="text-primary"
+                style="cursor: pointer; font-size: 13px"
+              />
+              <b-popover target="tooltip-maxComments" triggers="hover focus" placement="right">
+                {{ t$('pampaInsightsApp.parameter.tooltip.maxComments') }}
               </b-popover>
             </div>
             <input
-              @input="validateMaxPages"
+              @input="validateMaxComments"
               type="number"
               class="form-control"
-              name="maxPages"
-              id="parameter-maxPages"
-              v-model="v$.maxPages.$model"
+              name="maxComments"
+              id="parameter-maxComments"
+              v-model="v$.maxComments.$model"
             />
           </div>
           <div class="form-group">

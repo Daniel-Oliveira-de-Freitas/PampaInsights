@@ -14,6 +14,11 @@ import { required } from '@vuelidate/validators';
 import type { IComment } from '@/shared/model/comment.model.ts';
 import eventBus from '../../../../../event-bus.ts';
 
+// Limites do campo maxComments (nº máximo de comentários por URL).
+// O teto é um valor de teste: ajuste conforme o servidor/coleta aguentar.
+const MAX_COMMENTS_MIN = 1;
+const MAX_COMMENTS_MAX = 200;
+
 export default defineComponent({
   compatConfig: { MODE: 3 },
   name: 'ParameterUpdate',
@@ -58,7 +63,7 @@ export default defineComponent({
         urls,
         keyword: parameter.value.terms,
         search: props.searchId,
-        maxPages: parameter.value.maxPages,
+        maxComments: parameter.value.maxComments,
       };
 
       console.log('Emitting payload:', payload);
@@ -82,9 +87,9 @@ export default defineComponent({
     const { t: t$ } = useI18n();
     const validations = useValidation();
     const validationRules = {
-      terms: { required },
+      terms: {},
       webSite: {},
-      maxPages: {},
+      maxComments: {},
       instagram: {},
       facebook: {},
       linkedin: {},
@@ -147,13 +152,13 @@ export default defineComponent({
         }
       }
     },
-    validateMaxPages() {
-      if (this.parameter.maxPages < 1) {
-        this.parameter.maxPages = 1;
+    validateMaxComments() {
+      if (this.parameter.maxComments < MAX_COMMENTS_MIN) {
+        this.parameter.maxComments = MAX_COMMENTS_MIN;
         return false;
       }
-      if (this.parameter.maxPages > 50) {
-        this.parameter.maxPages = 50;
+      if (this.parameter.maxComments > MAX_COMMENTS_MAX) {
+        this.parameter.maxComments = MAX_COMMENTS_MAX;
         return false;
       }
       return true;

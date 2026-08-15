@@ -30,8 +30,8 @@ public class Parameter implements Serializable {
     @Column(name = "web_site")
     private String webSite;
 
-    @Column(name = "max_pages")
-    private Integer maxPages;
+    @Column(name = "max_comments")
+    private Integer maxComments;
 
     @Column(name = "instagram")
     private String instagram;
@@ -94,16 +94,16 @@ public class Parameter implements Serializable {
         this.webSite = webSite;
     }
 
-    public Integer getMaxPages() {
-        return this.maxPages;
+    public Integer getMaxComments() {
+        return this.maxComments;
     }
 
-    public void setMaxPages(Integer maxPages) {
-        this.maxPages = maxPages;
+    public void setMaxComments(Integer maxComments) {
+        this.maxComments = maxComments;
     }
 
-    public Parameter maxPages(Integer maxPages) {
-        this.setMaxPages(maxPages);
+    public Parameter maxComments(Integer maxComments) {
+        this.setMaxComments(maxComments);
         return this;
     }
 
@@ -216,8 +216,8 @@ public class Parameter implements Serializable {
             ", webSite='" +
             webSite +
             '\'' +
-            ", maxPages=" +
-            maxPages +
+            ", maxComments=" +
+            maxComments +
             ", instagram='" +
             instagram +
             '\'' +

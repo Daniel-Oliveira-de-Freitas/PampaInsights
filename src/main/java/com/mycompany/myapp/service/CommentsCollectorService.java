@@ -25,7 +25,11 @@ public class CommentsCollectorService {
 
     private static final Logger log = LoggerFactory.getLogger(CommentsCollectorService.class);
 
-    private static final String EXTRACT_URL = "https://mining-comments-api.vercel.app/comments/extract";
+    // production URL
+    //private static final String EXTRACT_URL = "https://mining-comments-api.vercel.app/comments/extract";
+
+    //local testing
+    private static final String EXTRACT_URL = "http://localhost:5000/comments/extract";
 
     private final RestTemplate restTemplate;
     private final SearchRepository searchRepository;
@@ -49,13 +53,13 @@ public class CommentsCollectorService {
         this.analysisService = analysisService;
     }
 
-    public List<Map<String, Object>> retrieveComments(List<String> urls, String keyword, String searchIdStr, int maxPages) {
+    public List<Map<String, Object>> retrieveComments(List<String> urls, String keyword, String searchIdStr, int maxComments) {
         List<Map<String, Object>> comments = new ArrayList<>();
         Map<String, Object> requestPayload = new HashMap<>();
         requestPayload.put("urls", urls);
         requestPayload.put("keyword", keyword);
         requestPayload.put("search", searchIdStr);
-        requestPayload.put("maxPages", maxPages);
+        requestPayload.put("maxComments", maxComments);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -133,6 +137,8 @@ public class CommentsCollectorService {
                 Comment comment = new Comment();
                 comment.setKeyword(String.valueOf(commentMap.getOrDefault("keyword", "")));
                 comment.setBody(String.valueOf(commentMap.getOrDefault("body", "")));
+                Object authorVal = commentMap.get("author");
+                comment.setAuthor(authorVal != null ? authorVal.toString() : null);
                 comment.setCreateDate(parseDate(String.valueOf(commentMap.getOrDefault("createDate", ""))));
                 comment.setSearch(search);
                 Object sentimentVal = commentMap.get("sentiment");
