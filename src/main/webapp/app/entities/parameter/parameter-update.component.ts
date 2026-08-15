@@ -87,9 +87,9 @@ export default defineComponent({
     const { t: t$ } = useI18n();
     const validations = useValidation();
     const validationRules = {
-      terms: {},
-      webSite: {},
-      maxComments: {},
+      terms: { required },
+      maxComments: { required },
+      webSite: { required },
       instagram: {},
       facebook: {},
       linkedin: {},

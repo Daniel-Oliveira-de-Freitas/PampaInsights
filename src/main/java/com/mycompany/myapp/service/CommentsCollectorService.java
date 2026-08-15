@@ -26,10 +26,10 @@ public class CommentsCollectorService {
     private static final Logger log = LoggerFactory.getLogger(CommentsCollectorService.class);
 
     // production URL
-    //private static final String EXTRACT_URL = "https://mining-comments-api.vercel.app/comments/extract";
+    private static final String EXTRACT_URL = "https://mining-comments-api.vercel.app/comments/extract";
 
     //local testing
-    private static final String EXTRACT_URL = "http://localhost:5000/comments/extract";
+    // private static final String EXTRACT_URL = "http://localhost:5000/comments/extract";
 
     private final RestTemplate restTemplate;
     private final SearchRepository searchRepository;

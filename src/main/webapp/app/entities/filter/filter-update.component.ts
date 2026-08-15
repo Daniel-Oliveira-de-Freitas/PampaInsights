@@ -132,6 +132,14 @@ export default defineComponent({
       eventBus.emit('apply-emotions-filter', v$.value.emotions.$model ?? Emotions.ALL);
     };
 
+    // Habilita "Aplicar Filtros" apenas quando há comentários carregados
+    // (soma dos sentimentos recebidos via evento sentiment-data > 0).
+    const hasComments = computed(() => {
+      const arr = selectedChartData.value?.datasets?.[0]?.data;
+      if (!Array.isArray(arr)) return false;
+      return arr.reduce((sum: number, v: any) => sum + (Number(v) || 0), 0) > 0;
+    });
+
     // Legenda por categoria (Positivo/Negativo/Neutro) para os gráficos de barra,
     // espelhando o comportamento do gráfico de pizza e evitando o label "undefined".
     const categoryLegend = {
@@ -182,6 +190,7 @@ export default defineComponent({
       toggleSidebar,
       closeSidebar,
       applyFilters,
+      hasComments,
       showSidebar,
       selectedChartData,
       appliedTypeOfChart,

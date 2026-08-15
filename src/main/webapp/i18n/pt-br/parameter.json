@@ -29,9 +29,12 @@
       "search": "Search",
       "tooltip": {
         "terms": "Palavra-chave principal da pesquisa. Será usada para contextualizar a extração dos comentários. Ex: Shop Mundo Digital, Nike, Produto X",
-        "webSite": "URL da página de reclamações da empresa no Reclame Aqui. O sistema irá percorrer automaticamente as páginas de listagem de acordo com o número configurado abaixo. Ex: https://www.reclameaqui.com.br/empresa/nome-da-empresa/lista-reclamacoes/",
+        "webSite": "Cole a URL pública de onde coletar comentários. Fontes suportadas: Reclame Aqui, YouTube, Facebook, Reddit e Trustpilot. Ex.: link de um vídeo do YouTube, de um post/reel do Facebook ou da página de reclamações no Reclame Aqui.",
         "maxComments": "Número máximo de comentários a coletar por URL informada. Vale para todas as fontes (Reclame Aqui, YouTube, Facebook, Reddit, Trustpilot). Ex: 50 → até 50 comentários por site.",
-        "webSiteUrl": "URL adicional para extração de comentários. Pode ser qualquer site público com avaliações ou comentários sobre a empresa ou produto pesquisado."
+        "instagram": "URL adicional de outra fonte pública suportada (Reclame Aqui, YouTube, Facebook, Reddit ou Trustpilot).",
+        "facebook": "URL adicional de outra fonte pública suportada (Reclame Aqui, YouTube, Facebook, Reddit ou Trustpilot).",
+        "linkedin": "URL adicional de outra fonte pública suportada (Reclame Aqui, YouTube, Facebook, Reddit ou Trustpilot).",
+        "x": "URL adicional de outra fonte pública suportada (Reclame Aqui, YouTube, Facebook, Reddit ou Trustpilot)."
       }
     }
   }

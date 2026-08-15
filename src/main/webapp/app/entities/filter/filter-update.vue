@@ -135,10 +135,18 @@
           </select>
         </div>
         <div class="d-flex flex-column">
-          <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" class="btn btn-secondary w-100 mb-4 mt-4">
-            <font-awesome-icon icon="search" />
-            &nbsp;<span>Aplicar Filtros</span>
-          </button>
+          <div class="w-100" :title="!hasComments ? 'Colete comentários antes de aplicar filtros.' : ''">
+            <button
+              type="submit"
+              id="save-entity"
+              data-cy="entityCreateSaveButton"
+              class="btn btn-secondary w-100 mb-4 mt-4"
+              :disabled="!hasComments"
+            >
+              <font-awesome-icon icon="search" />
+              &nbsp;<span>Aplicar Filtros</span>
+            </button>
+          </div>
         </div>
         <div class="mt-4" v-if="showChart">
           <div v-if="appliedTypeOfChart === TypeOfChart.PIZZA && selectedChartData">

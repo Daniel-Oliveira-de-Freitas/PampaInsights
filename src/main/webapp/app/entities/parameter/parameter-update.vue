@@ -51,25 +51,30 @@
               name="maxComments"
               id="parameter-maxComments"
               v-model="v$.maxComments.$model"
+              :class="{ valid: !v$.maxComments.$invalid, invalid: v$.maxComments.$invalid }"
             />
           </div>
           <div class="form-group">
             <div class="d-flex align-items-center gap-2 mb-1">
-              <label class="form-control-label mb-0" for="parameter-webSite">
-                {{ t$('pampaInsightsApp.parameter.webSite') }}
-              </label>
+              <label class="form-control-label mb-0" for="parameter-webSite"> {{ t$('pampaInsightsApp.parameter.webSite') }} </label>
               <font-awesome-icon id="tooltip-webSite" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-webSite" triggers="hover focus" placement="right">
                 {{ t$('pampaInsightsApp.parameter.tooltip.webSite') }}
               </b-popover>
             </div>
-            <input type="text" class="form-control" name="webSite" id="parameter-webSite" data-cy="webSite" v-model="v$.webSite.$model" />
+            <input
+              type="text"
+              class="form-control"
+              name="webSite"
+              id="parameter-webSite"
+              data-cy="webSite"
+              v-model="v$.webSite.$model"
+              :class="{ valid: !v$.webSite.$invalid, invalid: v$.webSite.$invalid }"
+            />
           </div>
           <div class="form-group">
             <div class="d-flex align-items-center gap-2 mb-1">
-              <label class="form-control-label mb-0" for="parameter-instagram">
-                {{ t$('pampaInsightsApp.parameter.instagram') }}
-              </label>
+              <label class="form-control-label mb-0" for="parameter-instagram"> {{ t$('pampaInsightsApp.parameter.instagram') }} </label>
               <font-awesome-icon id="tooltip-instagram" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-instagram" triggers="hover focus" placement="right">
                 {{ t$('pampaInsightsApp.parameter.tooltip.instagram') }}
@@ -82,13 +87,12 @@
               id="parameter-instagram"
               data-cy="instagram"
               v-model="v$.instagram.$model"
+              :class="{ valid: !v$.instagram.$invalid, invalid: v$.instagram.$invalid }"
             />
           </div>
           <div class="form-group">
             <div class="d-flex align-items-center gap-2 mb-1">
-              <label class="form-control-label mb-0" for="parameter-facebook">
-                {{ t$('pampaInsightsApp.parameter.facebook') }}
-              </label>
+              <label class="form-control-label mb-0" for="parameter-facebook"> {{ t$('pampaInsightsApp.parameter.facebook') }} </label>
               <font-awesome-icon id="tooltip-facebook" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-facebook" triggers="hover focus" placement="right">
                 {{ t$('pampaInsightsApp.parameter.tooltip.facebook') }}
@@ -101,13 +105,12 @@
               id="parameter-facebook"
               data-cy="facebook"
               v-model="v$.facebook.$model"
+              :class="{ valid: !v$.facebook.$invalid, invalid: v$.facebook.$invalid }"
             />
           </div>
           <div class="form-group">
             <div class="d-flex align-items-center gap-2 mb-1">
-              <label class="form-control-label mb-0" for="parameter-linkedin">
-                {{ t$('pampaInsightsApp.parameter.linkedin') }}
-              </label>
+              <label class="form-control-label mb-0" for="parameter-linkedin"> {{ t$('pampaInsightsApp.parameter.linkedin') }} </label>
               <font-awesome-icon id="tooltip-linkedin" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-linkedin" triggers="hover focus" placement="right">
                 {{ t$('pampaInsightsApp.parameter.tooltip.linkedin') }}
@@ -120,40 +123,45 @@
               id="parameter-linkedin"
               data-cy="linkedin"
               v-model="v$.linkedin.$model"
+              :class="{ valid: !v$.linkedin.$invalid, invalid: v$.linkedin.$invalid }"
             />
           </div>
           <div class="form-group">
             <div class="d-flex align-items-center gap-2 mb-1">
-              <label class="form-control-label mb-0" for="parameter-x">
-                {{ t$('pampaInsightsApp.parameter.x') }}
-              </label>
+              <label class="form-control-label mb-0" for="parameter-x"> {{ t$('pampaInsightsApp.parameter.x') }} </label>
               <font-awesome-icon id="tooltip-x" icon="circle-info" class="text-primary" style="cursor: pointer; font-size: 13px" />
               <b-popover target="tooltip-x" triggers="hover focus" placement="right">
                 {{ t$('pampaInsightsApp.parameter.tooltip.x') }}
               </b-popover>
             </div>
-            <input type="text" class="form-control" name="x" id="parameter-x" data-cy="x" v-model="v$.x.$model" />
+            <input
+              type="text"
+              class="form-control"
+              name="x"
+              id="parameter-x"
+              data-cy="x"
+              v-model="v$.x.$model"
+              :class="{ valid: !v$.x.$invalid, invalid: v$.x.$invalid }"
+            />
           </div>
         </div>
         <div class="d-flex flex-column">
-          <button
-            type="submit"
-            id="save-entity"
-            data-cy="entityCreateSaveButton"
-            class="btn btn-secondary w-100 mb-4 mt-4"
-            @click="searchComments()"
-          >
-            <font-awesome-icon icon="search" />
-            &nbsp;<span>Buscar Comentários</span>
-          </button>
+          <div class="w-100" :title="v$.$invalid ? 'Preencha os campos obrigatórios para buscar comentários.' : ''">
+            <button
+              type="submit"
+              id="save-entity"
+              data-cy="entityCreateSaveButton"
+              class="btn btn-secondary w-100 mb-4 mt-4"
+              :disabled="v$.$invalid || isSaving"
+              @click="searchComments()"
+            >
+              <font-awesome-icon icon="search" />
+              &nbsp;<span>Buscar Comentários</span>
+            </button>
+          </div>
         </div>
       </form>
     </div>
   </div>
 </template>
 <script lang="ts" src="./parameter-update.component.ts"></script>
-<style scoped>
-.invalid {
-  border-color: black;
-}
-</style>
