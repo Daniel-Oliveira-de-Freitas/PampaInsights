@@ -51,7 +51,7 @@ export default defineComponent({
       akipAiService.createConversation().then(res => {
         const newConversation = res.data;
         selectedConversationId.value = newConversation.conversationId;
-        messages.value = [new Message('agent', 'Hello, I am Akip AI GPT. How can I help you?')];
+        messages.value = [new Message('agent', 'Olá, eu sou o Pampa Insights AI. Como posso ajudar?')];
       });
     };
 
@@ -79,7 +79,7 @@ export default defineComponent({
         } catch (error) {
           console.error('Error submitting chat:', error);
           currentOutputMessageContent.value = '';
-          messages.value.push(new Message('agent', 'Sorry, there was an error. Please try again later.'));
+          messages.value.push(new Message('agent', 'Desculpe, ocorreu um erro. Por favor tente mais tarde.'));
         }
       }
     };
