@@ -24,7 +24,7 @@ public class ChatGptResource {
     @Value("https://api.groq.com/openai/v1/chat/completions")
     private String chatGptUrl;
 
-    @Value("llama-3.3-70b-versatile")
+    @Value("openai/gpt-oss-20b")
     private String chatGptModel;
 
     @GetMapping("/bot/{message}")

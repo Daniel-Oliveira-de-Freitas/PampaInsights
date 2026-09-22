@@ -16,6 +16,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 @Service
 public class ChatService {
@@ -50,6 +51,24 @@ public class ChatService {
             throw new RuntimeException("Failed to generate AI response: " + e.getMessage());
         }
         return conversation;
+    }
+
+    public Flux<String> chatStream(Message message, String conversationId) {
+        Conversation conversation = findConversationById(conversationId);
+        StringBuilder fullResponse = new StringBuilder();
+        return chatClient
+            .prompt()
+            .user(message.getContent())
+            .advisors(a ->
+                a.param(CHAT_MEMORY_CONVERSATION_ID_KEY, conversation.getConversationId()).param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 5000)
+            )
+            .stream()
+            .content()
+            .doOnNext(fullResponse::append)
+            .doOnComplete(() -> {
+                conversation.getMessages().add(message);
+                conversation.getMessages().add(new Message("agent", fullResponse.toString()));
+            });
     }
 
     public Conversation createNewConversation() {

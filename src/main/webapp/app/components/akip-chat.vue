@@ -17,12 +17,7 @@
       </div>
 
       <div id="chatContainer" class="col-9 p-3 d-flex flex-column justify-content-between">
-        <div
-          id="chatArea"
-          ref="chatArea"
-          class="border rounded p-3 mb-3"
-          style="height: 550px; overflow-y: scroll; background-color: #ffffff"
-        >
+        <div id="chatArea" ref="chatArea" class="border rounded p-3 mb-3" style="background-color: #ffffff">
           <div v-for="(message, index) in messages" :key="index" :class="['chat-message', message.role, 'my-2', 'p-2', 'rounded']">
             <span v-if="message.role === 'agent'">
               <font-awesome-icon icon="desktop" class="mr-2" />
@@ -59,37 +54,52 @@
 
 <style scoped>
 #chatBox {
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  max-width: 1200px;
+  height: calc(100vh - 150px);
+  margin: 20px auto;
   border: 1px solid #b2d8d8;
   border-radius: 8px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: #eaf6f6;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* A linha ocupa toda a altura do box, sem as margens negativas padrão do Bootstrap */
+#chatBox > .row {
+  height: 100%;
+  margin: 0;
+}
+
+#conversationsList {
+  height: 100%;
+  overflow-y: auto;
 }
 
 #chatContainer {
-  overflow-y: auto;
-  padding: 10px;
+  height: 100%;
+  overflow: hidden;
+  padding: 12px;
 }
 
 #chatArea {
   display: flex;
   flex-direction: column;
-  /* Preenche o espaço disponível para o input ficar logo abaixo das mensagens */
+  /* Única área rolável; ocupa o espaço disponível e mantém o input embaixo */
   flex: 1 1 auto;
-  height: auto !important;
   min-height: 0;
+  overflow-y: auto;
 }
 
 .chat-message {
   margin: 10px 0;
   padding: 10px;
   border-radius: 5px;
-  max-width: 60%;
+  max-width: 75%;
+  /* Evita que respostas longas (ou tokens sem espaço) vazem do balão */
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .chat-message.user {

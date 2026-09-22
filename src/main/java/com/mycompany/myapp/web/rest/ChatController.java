@@ -5,7 +5,9 @@ import com.mycompany.myapp.domain.Message;
 import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.ChatService;
 import java.util.List;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/api")
@@ -20,6 +22,11 @@ public class ChatController {
     @PostMapping("ai/chat/{conversationId}")
     public Conversation chat(@RequestBody Message message, @PathVariable String conversationId) {
         return chatService.chat(message, conversationId);
+    }
+
+    @PostMapping(value = "ai/chat/{conversationId}/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> chatStream(@RequestBody Message message, @PathVariable String conversationId) {
+        return chatService.chatStream(message, conversationId);
     }
 
     @PostMapping("ai/chat/create-conversation")

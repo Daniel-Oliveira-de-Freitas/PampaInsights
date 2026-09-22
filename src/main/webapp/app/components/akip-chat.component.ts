@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, nextTick, onMounted, ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import AkipAiService from '@/entities/akip-ai/akip-ai.service';
 import { Message } from '@/shared/model/message.model';
@@ -12,6 +12,14 @@ export default defineComponent({
     const currentOutputMessageContent = ref('');
     const conversations = ref<any[]>([]);
     const selectedConversationId = ref('');
+    const chatArea = ref<HTMLElement | null>(null);
+
+    const scrollToBottom = async () => {
+      await nextTick();
+      if (chatArea.value) {
+        chatArea.value.scrollTop = chatArea.value.scrollHeight;
+      }
+    };
 
     onMounted(async () => {
       try {
@@ -33,6 +41,7 @@ export default defineComponent({
         console.log(conversationId);
         const response = await akipAiService.getMessages(conversationId);
         messages.value = response.data;
+        await scrollToBottom();
       } catch (error) {
         console.error('Error loading messages:', error);
       }
@@ -55,16 +64,21 @@ export default defineComponent({
         const inputMessage = new Message('user', chatInput.value);
         messages.value.push(inputMessage);
         chatInput.value = '';
+        currentOutputMessageContent.value = '';
+        await scrollToBottom();
 
         try {
-          akipAiService.sendMessage(inputMessage, selectedConversationId.value!).then(res => {
-            selectedConversationId.value = res.data.conversationId;
-            console.log(res.data);
-            messages.value = res.data.messages;
-            retrieveConverations();
+          await akipAiService.streamMessage(inputMessage, selectedConversationId.value!, token => {
+            currentOutputMessageContent.value += token;
+            scrollToBottom();
           });
+          messages.value.push(new Message('agent', currentOutputMessageContent.value));
+          currentOutputMessageContent.value = '';
+          await scrollToBottom();
+          retrieveConverations();
         } catch (error) {
           console.error('Error submitting chat:', error);
+          currentOutputMessageContent.value = '';
           messages.value.push(new Message('agent', 'Sorry, there was an error. Please try again later.'));
         }
       }
@@ -79,6 +93,7 @@ export default defineComponent({
       selectedConversationId,
       loadMessages,
       createNewConversation,
+      chatArea,
     };
   },
 });
