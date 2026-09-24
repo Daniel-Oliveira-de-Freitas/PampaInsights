@@ -207,7 +207,7 @@ jhipster:
   #   allow-credentials: true
   #   max-age: 1800
   mail:
-    from: pampaInsights@localhost
+    from: ${MAIL_FROM:pampaInsights@localhost}
   api-docs:
     default-include-pattern: /api/**
     management-include-pattern: /management/**
