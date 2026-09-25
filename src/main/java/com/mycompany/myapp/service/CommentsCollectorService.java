@@ -86,12 +86,24 @@ public class CommentsCollectorService {
                 .map(c -> String.valueOf(c.getOrDefault("body", "")))
                 .collect(Collectors.toList());
 
-            List<Integer> sentiments = analysisService.predict(validBodies);
+            List<Integer> sentiments;
+            try {
+                sentiments = analysisService.predict(validBodies);
+            } catch (Exception e) {
+                // Se a análise de sentimento falhar (ex.: API indisponível), ainda assim salvamos
+                // os comentários coletados — sem sentimento — em vez de descartar a busca inteira.
+                log.error("Falha na análise de sentimento, salvando comentários sem sentimento: {}", e.getMessage());
+                sentiments = List.of();
+            }
 
             int sentimentIdx = 0;
             for (Map<String, Object> commentMap : comments) {
                 if (!commentMap.containsKey("error") && sentimentIdx < sentiments.size()) {
-                    commentMap.put("sentiment", sentiments.get(sentimentIdx++));
+                    Integer sentiment = sentiments.get(sentimentIdx++);
+                    // -1 = não classificado; não gravamos como se fosse um sentimento válido.
+                    if (sentiment != null && sentiment >= 0) {
+                        commentMap.put("sentiment", sentiment);
+                    }
                 }
             }
 
