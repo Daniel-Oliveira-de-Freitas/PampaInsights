@@ -7,10 +7,14 @@ import com.mycompany.myapp.repository.CommentRepository;
 import com.mycompany.myapp.repository.SearchRepository;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +34,12 @@ public class CommentsCollectorService {
 
     //local testing
     // private static final String EXTRACT_URL = "http://localhost:5000/comments/extract";
+
+    /** Validade da coleta em cache: comentários novos na fonte só aparecem após esse período. */
+    private static final Duration COLLECTION_CACHE_TTL = Duration.ofHours(6);
+
+    /** Cache de coleta por URL + palavra-chave (em memória; zera quando a aplicação reinicia). */
+    private final Map<String, CollectionEntry> collectionCache = new ConcurrentHashMap<>();
 
     private final RestTemplate restTemplate;
     private final SearchRepository searchRepository;
@@ -55,29 +65,10 @@ public class CommentsCollectorService {
 
     public List<Map<String, Object>> retrieveComments(List<String> urls, String keyword, String searchIdStr, int maxComments) {
         List<Map<String, Object>> comments = new ArrayList<>();
-        Map<String, Object> requestPayload = new HashMap<>();
-        requestPayload.put("urls", urls);
-        requestPayload.put("keyword", keyword);
-        requestPayload.put("search", searchIdStr);
-        requestPayload.put("maxComments", maxComments);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
 
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String jsonBody = objectMapper.writeValueAsString(requestPayload);
-            HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
-
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                EXTRACT_URL,
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<Map<String, Object>>() {}
-            );
-
-            if (response.getBody() != null) {
-                extractComments(response.getBody(), comments);
+            for (String url : urls) {
+                comments.addAll(collectUrl(url, keyword, searchIdStr, maxComments));
             }
 
             List<String> validBodies = comments
@@ -118,6 +109,98 @@ public class CommentsCollectorService {
         }
 
         return comments;
+    }
+
+    /**
+     * Coleta os comentários de uma URL, reaproveitando o cache quando possível. Usuários que
+     * pesquisam o mesmo link com a mesma palavra-chave compartilham uma única coleta, evitando
+     * chamadas repetidas à API de mineração e aos providers pagos (ex.: Apify no Facebook).
+     */
+    private List<Map<String, Object>> collectUrl(String url, String keyword, String searchIdStr, int maxComments) throws Exception {
+        String key = url.trim() + "|" + (keyword == null ? "" : keyword.trim());
+        CollectionEntry fresh = new CollectionEntry(new CompletableFuture<>(), maxComments, Instant.now());
+        CollectionEntry entry = collectionCache.compute(key, (k, existing) -> covers(existing, maxComments) ? existing : fresh);
+
+        if (entry == fresh) {
+            // Esta requisição é a responsável pela coleta; as concorrentes aguardam o mesmo resultado.
+            try {
+                List<Map<String, Object>> collected = fetchFromMiningApi(url, keyword, searchIdStr, maxComments);
+                fresh.future().complete(collected);
+                if (collected.stream().noneMatch(c -> !c.containsKey("error"))) {
+                    // Não guarda coleta vazia/com erro, para que a próxima busca tente novamente.
+                    collectionCache.remove(key, fresh);
+                }
+            } catch (Exception e) {
+                collectionCache.remove(key, fresh);
+                fresh.future().completeExceptionally(e);
+                throw e;
+            }
+        } else {
+            log.debug("Coleta reaproveitada do cache para {}", url);
+        }
+
+        List<Map<String, Object>> cached;
+        try {
+            cached = entry.future().join();
+        } catch (CompletionException e) {
+            throw e.getCause() instanceof Exception cause ? cause : e;
+        }
+
+        // Cópia por requisição: os mapas recebem o sentimento depois e não podem ser compartilhados.
+        return cached
+            .stream()
+            .limit(maxComments)
+            .map(c -> {
+                Map<String, Object> copy = new HashMap<>(c);
+                copy.put("search", searchIdStr);
+                return copy;
+            })
+            .collect(Collectors.toList());
+    }
+
+    /** Indica se a entrada em cache atende a um pedido de {@code maxComments} comentários. */
+    private boolean covers(CollectionEntry entry, int maxComments) {
+        if (entry == null || entry.isExpired()) {
+            return false;
+        }
+        if (entry.maxComments() >= maxComments) {
+            return true;
+        }
+        // Coleta anterior pediu menos, mas a fonte já se esgotou (vieram menos que o pedido).
+        CompletableFuture<List<Map<String, Object>>> future = entry.future();
+        return future.isDone() && !future.isCompletedExceptionally() && future.join().size() < entry.maxComments();
+    }
+
+    private List<Map<String, Object>> fetchFromMiningApi(String url, String keyword, String searchIdStr, int maxComments) throws Exception {
+        Map<String, Object> requestPayload = new HashMap<>();
+        requestPayload.put("urls", List.of(url));
+        requestPayload.put("keyword", keyword);
+        requestPayload.put("search", searchIdStr);
+        requestPayload.put("maxComments", maxComments);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String jsonBody = new ObjectMapper().writeValueAsString(requestPayload);
+        HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
+
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+            EXTRACT_URL,
+            HttpMethod.POST,
+            requestEntity,
+            new ParameterizedTypeReference<Map<String, Object>>() {}
+        );
+
+        List<Map<String, Object>> collected = new ArrayList<>();
+        if (response.getBody() != null) {
+            extractComments(response.getBody(), collected);
+        }
+        return collected;
+    }
+
+    private record CollectionEntry(CompletableFuture<List<Map<String, Object>>> future, int maxComments, Instant createdAt) {
+        boolean isExpired() {
+            return createdAt.plus(COLLECTION_CACHE_TTL).isBefore(Instant.now());
+        }
     }
 
     @SuppressWarnings("unchecked")
