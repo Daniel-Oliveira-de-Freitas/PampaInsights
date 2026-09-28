@@ -221,7 +221,7 @@ public class CommentsCollectorService {
         Search search = searchRepository.findById(searchId).orElseThrow(() -> new RuntimeException("Search não encontrada: " + searchId));
 
         commentRepository.deleteBySearchId(searchId);
-        entityManagerFactory.getCache().evict(Search.class, searchId);
+        evictSearchCache(searchId);
 
         comments.forEach(commentMap -> {
             if (commentMap.containsKey("error")) {
@@ -245,6 +245,20 @@ public class CommentsCollectorService {
                 log.error("Erro ao salvar comentário: {}", e.getMessage());
             }
         });
+
+        // De novo ao final: uma listagem feita durante a gravação pode ter guardado a lista incompleta.
+        evictSearchCache(searchId);
+    }
+
+    /**
+     * Remove do cache do Hibernate a pesquisa e a lista de comentários dela. Sem limpar a lista,
+     * o cache continua apontando para os comentários apagados e a listagem de pesquisas falha
+     * com erro 500 ao tentar carregá-los.
+     */
+    private void evictSearchCache(Long searchId) {
+        jakarta.persistence.Cache cache = entityManagerFactory.getCache();
+        cache.evict(Search.class, searchId);
+        cache.unwrap(org.hibernate.Cache.class).evictCollectionData(Search.class.getName() + ".comments", searchId);
     }
 
     private Instant parseDate(String dateStr) {
