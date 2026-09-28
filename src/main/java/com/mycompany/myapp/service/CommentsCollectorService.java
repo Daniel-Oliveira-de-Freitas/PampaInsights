@@ -91,8 +91,8 @@ public class CommentsCollectorService {
             for (Map<String, Object> commentMap : comments) {
                 if (!commentMap.containsKey("error") && sentimentIdx < sentiments.size()) {
                     Integer sentiment = sentiments.get(sentimentIdx++);
-                    // -1 = não classificado; não gravamos como se fosse um sentimento válido.
-                    if (sentiment != null && sentiment >= 0) {
+                    // null = não classificado. Valores negativos são sentimento negativo e devem ser gravados.
+                    if (sentiment != null) {
                         commentMap.put("sentiment", sentiment);
                     }
                 }

@@ -1,5 +1,3 @@
-import { vitest } from 'vitest';
-import { ref } from 'vue';
 import { shallowMount } from '@vue/test-utils';
 import Home from './home.vue';
 
@@ -7,44 +5,17 @@ type HomeComponentType = InstanceType<typeof Home>;
 
 describe('Home', () => {
   let home: HomeComponentType;
-  let authenticated;
-  let currentUsername;
-  const loginService = { openLogin: vitest.fn() };
 
   beforeEach(() => {
-    authenticated = ref(false);
-    currentUsername = ref('');
-    const wrapper = shallowMount(Home, {
-      global: {
-        stubs: {
-          'router-link': true,
-        },
-        provide: {
-          loginService,
-          authenticated,
-          currentUsername,
-        },
-      },
-    });
+    const wrapper = shallowMount(Home);
     home = wrapper.vm;
   });
 
-  it('should not have user data set', () => {
-    expect(home.authenticated).toBeFalsy();
-    expect(home.username).toBe('');
+  it('should list the supported sources', () => {
+    expect(home.sources).toEqual(['YouTube', 'Facebook', 'Reddit', 'Reclame Aqui', 'Trustpilot']);
   });
 
-  it('should have user data set after authentication', () => {
-    authenticated.value = true;
-    currentUsername.value = 'test';
-
-    expect(home.authenticated).toBeTruthy();
-    expect(home.username).toBe('test');
-  });
-
-  it('should use login service', () => {
-    home.openLogin();
-
-    expect(loginService.openLogin).toHaveBeenCalled();
+  it('should list the three steps of how it works', () => {
+    expect(home.steps).toEqual(['create', 'configure', 'analyze']);
   });
 });

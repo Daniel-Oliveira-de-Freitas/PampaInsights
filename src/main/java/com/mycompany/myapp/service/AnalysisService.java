@@ -85,11 +85,11 @@ public class AnalysisService {
             }
         }
 
-        // 3) Monta a resposta na mesma ordem da entrada (usa -1 quando não houver classificação).
+        // 3) Monta a resposta na mesma ordem da entrada (null quando não houver classificação;
+        //    -1 é um sentimento válido, negativo, e não pode servir de marcador).
         List<Integer> out = new ArrayList<>(texts.size());
         for (String t : texts) {
-            Integer s = t != null ? sentimentCache.get(t) : null;
-            out.add(s != null ? s : -1);
+            out.add(t != null ? sentimentCache.get(t) : null);
         }
         return out;
     }

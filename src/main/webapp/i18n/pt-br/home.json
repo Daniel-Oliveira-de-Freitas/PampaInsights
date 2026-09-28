@@ -1,29 +1,30 @@
 {
   "home": {
-    "subtitle": {
-      "p1": "Maximizando",
-      "p2": " o Potencial da Sua Marca com ",
-      "p3": "Brand Mentions"
+    "hero": {
+      "title": {
+        "p1": "Descubra o que as pessoas dizem sobre",
+        "p2": "marcas, produtos e eventos"
+      },
+      "subtitle": "Colete comentários de diferentes plataformas e veja se cada opinião é positiva, negativa ou neutra.",
+      "imageAlt": "Tela de resultados do Pampa Insights com comentários classificados por sentimento"
     },
-    "question1": {
-      "p1": "O que é ",
-      "p2": "Brand Mention",
-      "p3": "?"
+    "sources": {
+      "label": "Fontes aceitas:"
     },
-    "res1": "É o uso estratégico de menções à marca em diferentes plataformas, como redes sociais, sites de avaliações e blogs",
-    "question2": {
-      "p1": "Como as menções à marca ",
-      "p2": "impactam",
-      "p3": " a ",
-      "p4": "visibilidade",
-      "p5": " e ",
-      "p6": "reputação",
-      "p7": "?"
-    },
-    "ul": {
-      "li1": "Credibilidade e Confiança",
-      "li2": "Aumento de Exposição Online",
-      "li3": "Avaliação da Percepção do Consumidor"
+    "steps": {
+      "title": "Como funciona",
+      "create": {
+        "title": "Crie uma pesquisa",
+        "text": "Em \"Minhas Pesquisas\", crie uma pesquisa e dê um nome para ela."
+      },
+      "configure": {
+        "title": "Informe a palavra-chave e os links",
+        "text": "Preencha a palavra-chave, o número de comentários e cole os links das páginas que quer analisar."
+      },
+      "analyze": {
+        "title": "Veja os resultados",
+        "text": "Clique em \"Buscar Comentários\" e confira cada comentário classificado por sentimento, com gráfico e filtros."
+      }
     }
   }
 }

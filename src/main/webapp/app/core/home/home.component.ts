@@ -1,39 +1,21 @@
-import { type ComputedRef, defineComponent, inject } from 'vue';
+import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type LoginService from '@/account/login.service';
-import example1Img from '../../../content/images/example1.png';
-import example2Img from '../../../content/images/example2.png';
+// Print da tela de resultados. Carregado só se o arquivo existir, para a home não quebrar sem ele.
+const homeImages = import.meta.glob<string>('../../../content/images/home_resultados.png', { eager: true, import: 'default' });
+const homeResultadosImg = Object.values(homeImages)[0] ?? null;
 
 export default defineComponent({
   compatConfig: { MODE: 3 },
   setup() {
-    const loginService = inject<LoginService>('loginService');
-
-    const authenticated = inject<ComputedRef<boolean>>('authenticated');
-    const slide = 0;
-    let sliding = true;
-
-    const openLogin = () => {
-      loginService?.openLogin();
-    };
-    const onSlideStart = (_: number) => {
-      sliding = true;
-    };
-    const onSlideEnd = (_: number) => {
-      sliding = false;
-    };
+    const sources = ['YouTube', 'Facebook', 'Reddit', 'Reclame Aqui', 'Trustpilot'];
+    const steps = ['create', 'configure', 'analyze'];
 
     return {
-      authenticated,
-      openLogin,
       t$: useI18n().t,
-      onSlideStart,
-      onSlideEnd,
-      sliding,
-      slide,
-      example1Img,
-      example2Img,
+      sources,
+      steps,
+      homeResultadosImg,
     };
   },
 });
